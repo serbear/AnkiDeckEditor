@@ -1,0 +1,178 @@
+<UserControl
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+    x:Class="AnkiDeckEditor.Screens.EstonianScreen">
+    <TabControl>
+        <TabItem Header="Словарная статья">
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Изучаемое слово или выражение:" />
+                <TextBox Name="MainEntryTextBox" />
+                <TextBlock Text="Часть речи:" />
+                <WrapPanel Orientation="Horizontal">
+                    <CheckBox
+                        Content="Глагол (tegusõna)"
+                        Name="IsTegusona" />
+                    <CheckBox
+                        Content="Местоимение (asesõna)"
+                        Name="IsAsesona" />
+                    <CheckBox
+                        Content="Наречие (määrsõna)"
+                        Name="IsMaarsona" />
+                    <CheckBox
+                        Content="Прилагательное (omadussõna)"
+                        Name="IsOmadussona" />
+                    <CheckBox
+                        Content="Существительное (nimisõna)"
+                        Name="IsNimisona" />
+                </WrapPanel>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Формы слова">
+
+            <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
+                  RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                <TextBlock
+                    Grid.Column="2"
+                    Grid.Row="0"
+                    Text="Единственное число:" />
+                <TextBlock
+                    Grid.Column="4"
+                    Grid.Row="0"
+                    Text="Множественное число:" />
+                <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Text="Nimetav:" />
+                <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Text="Omastav:" />
+                <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="3"
+                    Text="Osastav:" />
+                <TextBlock
+                    Grid.Column="0"
+                    Grid.Row="4"
+                    Grid.ColumnSpan="4"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Text="Короткий sisseütlev:" />
+
+                <TextBox
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    Name="NimetavAinsusTextBox" />
+                <TextBox
+                    Grid.Column="4"
+                    Grid.Row="1"
+                    Name="NimetavMitmusTextBox" />
+                <TextBox
+                    Grid.Column="2"
+                    Grid.Row="2"
+                    Name="OmastavAinsusTextBox" />
+                <TextBox
+                    Grid.Column="4"
+                    Grid.Row="2"
+                    Name="OmastavMitmusTextBox" />
+                <TextBox
+                    Grid.Column="2"
+                    Grid.Row="3"
+                    Name="OsastavAinsusTextBox" />
+                <TextBox
+                    Grid.Column="4"
+                    Grid.Row="3"
+                    Name="OsastavMitmusTextBox" />
+                <TextBox
+                    Grid.Column="4"
+                    Grid.Row="4"
+                    Name="SmallSisseTextBox" />
+
+
+            </Grid>
+        </TabItem>
+        <TabItem Header="Формы глагола">
+            <Grid
+                ColumnDefinitions="Auto,Auto"
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                <TextBlock
+                    Text="MA инфинитив:"
+                    Grid.Column="0"
+                    Grid.Row="0" />
+                <TextBlock
+                    Text="DA инфинитив:"
+                    Grid.Column="0"
+                    Grid.Row="2" />
+                <TextBlock
+                    Text="Настоящее (3 лицо):"
+                    Grid.Column="0"
+                    Grid.Row="4" />
+                <TextBlock
+                    Text="Причастие (TUD/DUD):"
+                    Grid.Column="0"
+                    Grid.Row="6" />
+                <TextBlock
+                    Text="Прошедшее (3 лицо):"
+                    Grid.Column="1"
+                    Grid.Row="0" />
+                <TextBlock
+                    Text="Прошедшее (NUD):"
+                    Grid.Column="1"
+                    Grid.Row="2" />
+                <TextBlock
+                    Text="Повелительное (SA):"
+                    Grid.Column="1"
+                    Grid.Row="4" />
+                <TextBlock
+                    Text="Безличная форма наст. времени:"
+                    Grid.Column="1"
+                    Grid.Row="6" />
+                <TextBlock
+                    Text="Управление глагола:"
+                    Grid.Column="0"
+                    Grid.Row="8"
+                    Grid.ColumnSpan="2" />
+                <!-- Text Boxes -->
+                <TextBox
+                    Name="MaInfTextBox"
+                    Grid.Column="0"
+                    Grid.Row="1" />
+                <TextBox
+                    Name="DaInfTextBox"
+                    Grid.Column="0"
+                    Grid.Row="3" />
+                <TextBox
+                    Name="ThirdPersonTextBox"
+                    Grid.Column="0"
+                    Grid.Row="5" />
+                <TextBox
+                    Name="TudTextBox"
+                    Grid.Column="0"
+                    Grid.Row="7" />
+                <TextBox
+                    Name="PastThirdPersonTextBox"
+                    Grid.Column="1"
+                    Grid.Row="1" />
+                <TextBox
+                    Name="FullPastTextBox"
+                    Grid.Column="1"
+                    Grid.Row="3" />
+                <TextBox
+                    Name="OrderTextBox"
+                    Grid.Column="1"
+                    Grid.Row="5" />
+                <TextBox
+                    Name="UndefPersonTextBox"
+                    Grid.Column="1"
+                    Grid.Row="7" />
+
+            </Grid>
+        </TabItem>
+        <TabItem Header="Контекст" />
+        <TabItem Header="Действия" />
+    </TabControl>
+
+</UserControl>
