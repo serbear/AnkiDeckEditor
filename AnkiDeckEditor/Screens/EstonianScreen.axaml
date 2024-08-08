@@ -18,23 +18,27 @@
                 <TextBox Name="MainEntityAnkiFieldTextBox" />
 
                 <!-- SpeechPart Anki field -->
-                <TextBlock Text="Часть речи:" />
-                <WrapPanel Orientation="Horizontal">
-                    <CheckBox
-                        Content="Глагол (tegusõna)"
-                        Name="IsTegusona" />
-                    <CheckBox
-                        Content="Местоимение (asesõna)"
-                        Name="IsAsesona" />
-                    <CheckBox
-                        Content="Наречие (määrsõna)"
-                        Name="IsMaarsona" />
-                    <CheckBox
-                        Content="Прилагательное (omadussõna)"
-                        Name="IsOmadussona" />
-                    <CheckBox
-                        Content="Существительное (nimisõna)"
-                        Name="IsNimisona" />
+                <TextBlock
+                    Text="Часть речи:" />
+                <WrapPanel
+                    Orientation="Horizontal">
+                    <ItemsRepeater
+                        ItemsSource="{Binding SpeechPartItems}">
+                        <ItemsRepeater.Layout>
+                            <StackLayout
+                                Spacing="0"
+                                Orientation="Horizontal" />
+                        </ItemsRepeater.Layout>
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox
+                                        IsChecked="{Binding IsChecked}"
+                                        Content="{Binding Title}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
                 </WrapPanel>
             </StackPanel>
         </TabItem>
@@ -198,8 +202,7 @@
                             HorizontalScrollBarVisibility="Auto">
                             <ItemsRepeater
                                 Margin="10,0,0,0"
-                                ItemsSource="{Binding ToDoItems}"
-                                Name="CrockeryItemsRepeater">
+                                ItemsSource="{Binding VerbControlItems}">
 
                                 <ItemsRepeater.Layout>
                                     <StackLayout
@@ -228,11 +231,17 @@
 
             <StackPanel>
                 <TextBlock Text="Дословный:" />
-                <TextBox Name="WordForWordTextBox " />
+                <TextBox
+                    Name="WordForWordTextBox"
+                    Tag="WordByWordTranslationAnkiField" />
                 <TextBlock Text="Литературный:" />
-                <TextBox Name="LiteraryTextBox " />
+                <TextBox
+                    Name="LiteraryTextBox"
+                    Tag="LiteraryTranslationAnkiField" />
                 <TextBlock Text="Оригинал:" />
-                <TextBox Name="OriginalTextBox " />
+                <TextBox
+                    Name="OriginalTextBox"
+                    Tag="OriginalAnkiField" />
             </StackPanel>
 
         </TabItem>
@@ -245,18 +254,18 @@
                 <Button
                     Content="Дословный перевод"
                     Command="{Binding CopyFieldClipboardCommand}"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                    Tag="WordByWordTranslationAnkiField" />
+                    CommandParameter="{Binding ElementName=WordForWordTextBox}" />
                 <Button
                     Content="Литературный перевод"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                    Tag="LiteraryTranslationAnkiField"
+                    CommandParameter="{Binding ElementName=LiteraryTextBox}"
                     Command="{Binding CopyFieldClipboardCommand}" />
                 <Button
                     Content="Оригинал"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                    Tag="OriginalAnkiField"
+                    CommandParameter="{Binding ElementName=OriginalTextBox}"
                     Command="{Binding CopyFieldClipboardCommand}" />
+
+
+                <!-- f  -->
                 <Button
                     Content="Часть речи"
                     CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
@@ -264,9 +273,37 @@
                     Command="{Binding CopyFieldClipboardCommand}" />
                 <Button
                     Content="Формы слова"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                     Tag="WordFormsAnkiField"
-                    Command="{Binding CopyFieldClipboardCommand}" />
+                    Command="{Binding CopyWordFormsFieldClipboardCommand}">
+
+                    <Button.CommandParameter>
+                        <MultiBinding>
+                            <Binding Path="#NimetavAinsusTextBox.Text" />
+                            <Binding Path="#OmastavAinsusTextBox.Text" />
+                            <Binding Path="#OsastavAinsusTextBox.Text" />
+                            <Binding Path="#NimetavMitmusTextBox.Text" />
+                            <Binding Path="#OmastavMitmusTextBox.Text" />
+                            <Binding Path="#OsastavMitmusTextBox.Text" />
+                            <Binding Path="#SmallSisseTextBox.Text" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
+                <Button
+                    Content="Формы глагола"
+                    Command="{Binding CopyVerbFormsDeckFieldClipboardCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding>
+                            <Binding Path="#MaInfTextBox.Text" />
+                            <Binding Path="#DaInfTextBox.Text" />
+                            <Binding Path="#ThirdPersonTextBox.Text" />
+                            <Binding Path="#TudTextBox.Text" />
+                            <Binding Path="#PastThirdPersonTextBox.Text" />
+                            <Binding Path="#FullPastTextBox.Text" />
+                            <Binding Path="#OrderTextBox.Text" />
+                            <Binding Path="#UndefPersonTextBox.Text" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
                 <Button
                     Content="Управление глагола"
                     CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
