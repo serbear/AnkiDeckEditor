@@ -12,8 +12,12 @@
     <TabControl Name="DeckConfigTabControl">
         <TabItem Header="Словарная статья">
             <StackPanel Orientation="Vertical">
+
+                <!-- MainEntity Anki field -->
                 <TextBlock Text="Изучаемое слово или выражение:" />
-                <TextBox Name="MainEntryTextBox" />
+                <TextBox Name="MainEntityAnkiFieldTextBox" />
+
+                <!-- SpeechPart Anki field -->
                 <TextBlock Text="Часть речи:" />
                 <WrapPanel Orientation="Horizontal">
                     <CheckBox
@@ -220,11 +224,65 @@
 
             </Grid>
         </TabItem>
-        <TabItem Header="Контекст" />
+        <TabItem Header="Контекст">
+
+            <StackPanel>
+                <TextBlock Text="Дословный:" />
+                <TextBox Name="WordForWordTextBox " />
+                <TextBlock Text="Литературный:" />
+                <TextBox Name="LiteraryTextBox " />
+                <TextBlock Text="Оригинал:" />
+                <TextBox Name="OriginalTextBox " />
+            </StackPanel>
+
+        </TabItem>
         <TabItem Header="Действия">
-            <Button
-                Content="Скопировать"
-                Command="{Binding CopyButtonCommand}" />
+
+            <StackPanel
+                HorizontalAlignment="Center">
+                <TextBlock Text="Копирование полей отдельно:" />
+
+                <Button
+                    Content="Дословный перевод"
+                    Command="{Binding CopyFieldClipboardCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Tag="WordByWordTranslationAnkiField" />
+                <Button
+                    Content="Литературный перевод"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Tag="LiteraryTranslationAnkiField"
+                    Command="{Binding CopyFieldClipboardCommand}" />
+                <Button
+                    Content="Оригинал"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Tag="OriginalAnkiField"
+                    Command="{Binding CopyFieldClipboardCommand}" />
+                <Button
+                    Content="Часть речи"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Tag="SpeechPartAnkiField"
+                    Command="{Binding CopyFieldClipboardCommand}" />
+                <Button
+                    Content="Формы слова"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Tag="WordFormsAnkiField"
+                    Command="{Binding CopyFieldClipboardCommand}" />
+                <Button
+                    Content="Управление глагола"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Tag="VerbControlAnkiField"
+                    Command="{Binding CopyFieldClipboardCommand}" />
+                <Button
+                    Content="Словарная статья"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    Tag="MainEntityAnkiField"
+                    Command="{Binding CopyFieldClipboardCommand}" />
+
+                <Button
+                    Name="ExitButton"
+                    Content="Exit"
+                    Command="{Binding CopyButtonCommand}" />
+            </StackPanel>
         </TabItem>
     </TabControl>
 

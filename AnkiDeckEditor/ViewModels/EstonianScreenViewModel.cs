@@ -2,6 +2,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Reactive;
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
 
 namespace AnkiDeckEditor.ViewModels;
@@ -9,6 +12,9 @@ namespace AnkiDeckEditor.ViewModels;
 public class EstonianScreenViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
+
+
+    public ReactiveCommand<Button, Unit> CopyFieldClipboardCommand { get; }
 
     private string? _title;
     private bool _isChecked;
@@ -28,10 +34,13 @@ public class EstonianScreenViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _isChecked, value);
     }
 
+
     public EstonianScreenViewModel()
     {
         CopyButtonCommand = ReactiveCommand.Create(CopyCommandExecute);
-        
+        CopyFieldClipboardCommand = ReactiveCommand.Create<Button>(
+            CopyDeckFieldClipboardExecute);
+
         ToDoItems.Add(new EstonianScreenViewModel("Value 0", false));
         ToDoItems.Add(new EstonianScreenViewModel("Value 1", false));
         ToDoItems.Add(new EstonianScreenViewModel("Value 2", false));
@@ -48,11 +57,27 @@ public class EstonianScreenViewModel : ViewModelBase
     {
         Title = title;
         IsChecked = isChecked;
-
     }
+
     // ReSharper disable once MemberCanBeMadeStatic.Local
     private void CopyCommandExecute()
     {
-        Console.WriteLine("CopyCommandExecute");
+        if (Application.Current?.ApplicationLifetime is
+            IClassicDesktopStyleApplicationLifetime lifetime)
+            lifetime.Shutdown();
+    }
+
+    private void CopyDeckFieldClipboardExecute(Button sender)
+    {
+        // WordByWordTranslationAnkiField 
+        // LiteraryTranslationAnkiField 
+        // OriginalAnkiField 
+        // SpeechPartAnkiField 
+        // WordFormsAnkiField 
+        // VerbControlAnkiField 
+        // MainEntityAnkiField 
+
+
+        Console.WriteLine("do");
     }
 }
