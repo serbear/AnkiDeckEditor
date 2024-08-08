@@ -6,7 +6,8 @@
     xmlns:vm="using:AnkiDeckEditor.ViewModels"
     mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
     x:Class="AnkiDeckEditor.Screens.DeckTypeSelectScreen"
-    x:DataType="vm:MainWindowViewModel">
+    x:DataType="vm:MainWindowViewModel"
+    x:CompileBindings="True">
 
     <Grid
         ColumnDefinitions="*"

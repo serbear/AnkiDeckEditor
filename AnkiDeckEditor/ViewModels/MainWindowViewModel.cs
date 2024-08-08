@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
 using Avalonia;
@@ -11,17 +12,23 @@ public class MainWindowViewModel : ViewModelBase
 {
 #pragma warning disable CA1822 // Mark members as static
     public ReactiveCommand<Unit, Unit> MyCommand { get; }
+//     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
 #pragma warning restore CA1822 // Mark members as static
 
     public MainWindowViewModel()
     {
         MyCommand = ReactiveCommand.Create(MyCommandExecute);
+        // CopyButtonCommand= ReactiveCommand.Create(CopyCommandExecute);
     }
 
+    // private void CopyCommandExecute()
+    // {
+    //     Console.WriteLine("CopyCommandExecute");
+    // }
+    //
     [SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Local")]
     private void MyCommandExecute()
     {
-        Debug.WriteLine("The submit command was run.");
         if (Application.Current?.ApplicationLifetime is
             IClassicDesktopStyleApplicationLifetime lifetime)
             lifetime.Shutdown();

@@ -3,9 +3,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-    x:Class="AnkiDeckEditor.Screens.EstonianScreen">
-    <TabControl>
+    xmlns:vm="using:AnkiDeckEditor.ViewModels"
+    mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="768"
+    x:Class="AnkiDeckEditor.Screens.EstonianScreen"
+    x:DataType="vm:EstonianScreenViewModel"
+    x:CompileBindings="True">
+
+    <TabControl Name="DeckConfigTabControl">
         <TabItem Header="Словарная статья">
             <StackPanel Orientation="Vertical">
                 <TextBlock Text="Изучаемое слово или выражение:" />
@@ -96,7 +100,7 @@
         </TabItem>
         <TabItem Header="Формы глагола">
             <Grid
-                ColumnDefinitions="Auto,Auto"
+                ColumnDefinitions="*,*"
                 RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
                 <TextBlock
                     Text="MA инфинитив:"
@@ -132,6 +136,7 @@
                     Grid.Row="6" />
                 <TextBlock
                     Text="Управление глагола:"
+                    HorizontalAlignment="Center"
                     Grid.Column="0"
                     Grid.Row="8"
                     Grid.ColumnSpan="2" />
@@ -169,10 +174,58 @@
                     Grid.Column="1"
                     Grid.Row="7" />
 
+                <!-- Управление глагола -->
+                <Panel
+                    Name="VerbControl"
+                    Grid.ColumnSpan="2"
+                    Grid.Column="0"
+                    Grid.Row="9">
+
+
+                    <Border
+                        HorizontalAlignment="Center"
+                        Width="341"
+                        Height="170"
+                        BorderThickness="1"
+                        BorderBrush="Azure">
+
+                        <ScrollViewer
+                            VerticalScrollBarVisibility="Auto"
+                            HorizontalScrollBarVisibility="Auto">
+                            <ItemsRepeater
+                                Margin="10,0,0,0"
+                                ItemsSource="{Binding ToDoItems}"
+                                Name="CrockeryItemsRepeater">
+
+                                <ItemsRepeater.Layout>
+                                    <StackLayout
+                                        Spacing="0"
+                                        Orientation="Vertical" />
+                                </ItemsRepeater.Layout>
+
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <CheckBox
+                                                IsChecked="{Binding IsChecked}"
+                                                Content="{Binding Title}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+
+                            </ItemsRepeater>
+                        </ScrollViewer>
+                    </Border>
+                </Panel>
+
             </Grid>
         </TabItem>
         <TabItem Header="Контекст" />
-        <TabItem Header="Действия" />
+        <TabItem Header="Действия">
+            <Button
+                Content="Скопировать"
+                Command="{Binding CopyButtonCommand}" />
+        </TabItem>
     </TabControl>
 
 </UserControl>
