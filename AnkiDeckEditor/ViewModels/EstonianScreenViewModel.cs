@@ -225,20 +225,22 @@ public class EstonianScreenViewModel : ViewModelBase
         {
             var filtered = SpeechPartItems.First(Filter);
 
-            var x = _fieldTags.SpeechPart
+            result = _fieldTags.SpeechPart
                 .Replace("{1}", filtered.Title)
                 .Replace("{2}", filtered.Translation);
-            Debug.WriteLine(x);
         }
+        // var clipboard = Clipboard;
 
+        TopLevel.GetTopLevel(sender)?.Clipboard?.SetTextAsync(result);
+        
 
         // WordFormsAnkiField 
         // VerbControlAnkiField 
         // MainEntityAnkiField 
     }
 
-    private bool Filter(ItemViewModel contact)
+    private bool Filter(ItemViewModel checkBoxItemView)
     {
-        return contact.IsChecked.Equals(true);
+        return checkBoxItemView.IsChecked.Equals(true);
     }
 }
