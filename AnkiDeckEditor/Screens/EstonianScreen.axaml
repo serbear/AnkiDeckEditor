@@ -34,7 +34,8 @@
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox
                                         IsChecked="{Binding IsChecked}"
-                                        Content="{Binding Title}" />
+                                        Content="{Binding Title}"
+                                        IsCheckedChanged="ToggleButton_OnIsCheckedChanged"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsRepeater.ItemTemplate>
@@ -215,7 +216,8 @@
                                         <StackPanel Orientation="Horizontal">
                                             <CheckBox
                                                 IsChecked="{Binding IsChecked}"
-                                                Content="{Binding Title}" />
+                                                Content="{Binding Title}"
+                                                />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsRepeater.ItemTemplate>
@@ -268,13 +270,13 @@
                 <!-- f  -->
                 <Button
                     Content="Часть речи"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                     Tag="SpeechPartAnkiField"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                     Command="{Binding CopyFieldClipboardCommand}" />
                 <Button
                     Content="Формы слова"
                     Tag="WordFormsAnkiField"
-                    Command="{Binding CopyWordFormsFieldClipboardCommand}">
+                    Command="{Binding CopyFieldClipboardCommand}">
 
                     <Button.CommandParameter>
                         <MultiBinding>

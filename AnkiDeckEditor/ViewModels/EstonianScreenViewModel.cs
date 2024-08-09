@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Reactive;
-using System.Text;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -85,7 +87,7 @@ public struct FieldTags()
 public class EstonianScreenViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
-    public ReactiveCommand<TextBox, Unit> CopyFieldClipboardCommand { get; }
+    public ReactiveCommand<Control, Unit> CopyFieldClipboardCommand { get; }
 
     public ReactiveCommand<object, Unit> CopyWordFormsFieldClipboardCommand
     {
@@ -99,7 +101,16 @@ public class EstonianScreenViewModel : ViewModelBase
 
 
     public ObservableCollection<VerbControlViewModel> VerbControlItems { get; }
-    public ObservableCollection<ItemViewModel> SpeechPartItems { get; }
+
+    // public ObservableCollection<ItemViewModel> SpeechPartItems { get; set; }
+    private ObservableCollection<ItemViewModel> _speechPartItems;
+
+    public ObservableCollection<ItemViewModel> SpeechPartItems
+    {
+        get => _speechPartItems;
+        set => this.RaiseAndSetIfChanged(ref _speechPartItems, value);
+    }
+
 
     private FieldTags _fieldTags = new();
 
@@ -108,7 +119,7 @@ public class EstonianScreenViewModel : ViewModelBase
     {
         // commands
         CopyButtonCommand = ReactiveCommand.Create(CopyCommandExecute);
-        CopyFieldClipboardCommand = ReactiveCommand.Create<TextBox>(
+        CopyFieldClipboardCommand = ReactiveCommand.Create<Control>(
             CopyDeckFieldClipboardExecute);
         CopyWordFormsFieldClipboardCommand =
             ReactiveCommand.Create<object>(
@@ -116,6 +127,7 @@ public class EstonianScreenViewModel : ViewModelBase
         CopyVerbFormsDeckFieldClipboardCommand =
             ReactiveCommand.Create<object>(
                 CopyVerbFormsDeckFieldClipboardExecute);
+
         // collections
         VerbControlItems =
         [
@@ -141,7 +153,7 @@ public class EstonianScreenViewModel : ViewModelBase
     }
 
 
-    // ReSharper disable once MemberCanBeMadeStatic.Local
+// ReSharper disable once MemberCanBeMadeStatic.Local
     private void CopyCommandExecute()
     {
         if (Application.Current?.ApplicationLifetime is
@@ -185,7 +197,7 @@ public class EstonianScreenViewModel : ViewModelBase
         Console.WriteLine(result);
     }
 
-    private void CopyDeckFieldClipboardExecute(TextBox sender)
+    private void CopyDeckFieldClipboardExecute(Control sender)
     {
         if (sender.Tag == null)
             throw new Exception("The TextBox has no a tag.");
@@ -197,23 +209,36 @@ public class EstonianScreenViewModel : ViewModelBase
             // todo: select <span>
             result = _fieldTags.TranslationOriginal.Replace(
                 "{1}",
-                sender.Text);
+                ((TextBox)sender).Text);
         // LiteraryTranslationAnkiField 
         if (sender.Tag.Equals("LiteraryTranslationAnkiField"))
             result = _fieldTags.TranslationOriginal.Replace(
                 "{1}",
-                sender.Text);
+                ((TextBox)sender).Text);
         // OriginalAnkiField 
         if (sender.Tag.Equals("OriginalAnkiField"))
             result = _fieldTags.TranslationOriginal.Replace(
                 "{1}",
-                sender.Text);
+                ((TextBox)sender).Text);
         // SpeechPartAnkiField 
+        if (sender.Tag.Equals("SpeechPartAnkiField"))
+        {
+            var filtered = SpeechPartItems.First(Filter);
+
+            var x = _fieldTags.SpeechPart
+                .Replace("{1}", filtered.Title)
+                .Replace("{2}", filtered.Translation);
+            Debug.WriteLine(x);
+        }
+
+
         // WordFormsAnkiField 
         // VerbControlAnkiField 
         // MainEntityAnkiField 
+    }
 
-
-        Console.WriteLine(result);
+    private bool Filter(ItemViewModel contact)
+    {
+        return contact.IsChecked.Equals(true);
     }
 }
