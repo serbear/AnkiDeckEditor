@@ -15,7 +15,9 @@
 
                 <!-- MainEntity Anki field -->
                 <TextBlock Text="Изучаемое слово или выражение:" />
-                <TextBox Name="MainEntityAnkiFieldTextBox" />
+                <TextBox
+                    Name="MainEntityAnkiFieldTextBox"
+                    Tag="MainEntityAnkiField" />
 
                 <!-- SpeechPart Anki field -->
                 <TextBlock
@@ -35,7 +37,7 @@
                                     <CheckBox
                                         IsChecked="{Binding IsChecked}"
                                         Content="{Binding Title}"
-                                        IsCheckedChanged="ToggleButton_OnIsCheckedChanged"/>
+                                        IsCheckedChanged="ToggleButton_OnIsCheckedChanged" />
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsRepeater.ItemTemplate>
@@ -216,8 +218,7 @@
                                         <StackPanel Orientation="Horizontal">
                                             <CheckBox
                                                 IsChecked="{Binding IsChecked}"
-                                                Content="{Binding Title}"
-                                                />
+                                                Content="{Binding Title}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsRepeater.ItemTemplate>
@@ -276,7 +277,7 @@
                 <Button
                     Content="Формы слова"
                     Tag="WordFormsAnkiField"
-                    Command="{Binding CopyFieldClipboardCommand}">
+                    Command="{Binding CopyWordFormsFieldClipboardCommand}">
 
                     <Button.CommandParameter>
                         <MultiBinding>
@@ -287,6 +288,7 @@
                             <Binding Path="#OmastavMitmusTextBox.Text" />
                             <Binding Path="#OsastavMitmusTextBox.Text" />
                             <Binding Path="#SmallSisseTextBox.Text" />
+                            <Binding Path="$parent" />
                         </MultiBinding>
                     </Button.CommandParameter>
                 </Button>
@@ -303,6 +305,7 @@
                             <Binding Path="#FullPastTextBox.Text" />
                             <Binding Path="#OrderTextBox.Text" />
                             <Binding Path="#UndefPersonTextBox.Text" />
+                            <Binding Path="$parent" />
                         </MultiBinding>
                     </Button.CommandParameter>
                 </Button>
@@ -313,8 +316,7 @@
                     Command="{Binding CopyFieldClipboardCommand}" />
                 <Button
                     Content="Словарная статья"
-                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                    Tag="MainEntityAnkiField"
+                    CommandParameter="{Binding  ElementName=MainEntityAnkiFieldTextBox}"
                     Command="{Binding CopyFieldClipboardCommand}" />
 
                 <Button

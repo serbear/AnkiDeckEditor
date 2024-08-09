@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
+using AnkiDeckEditor.Libs;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -14,18 +13,21 @@ namespace AnkiDeckEditor.ViewModels;
 
 public struct FieldTags()
 {
-    public string TranslationOriginal = "<div class=\"sentence\">{1}</div>";
+    public const string TranslationOriginal =
+        "<div class=\"sentence\">{1}</div>";
+
     public string SelectedEntity = "<span>{1}</span>";
 
     /// <summary>
     /// 1 - russian translation; 2 - estonian translation
     /// </summary>
-    public string SpeechPart = "{1} <span>▪️</span> {2}";
+    public const string SpeechPart = "{1} <span>▪️</span> {2}";
 
     /// <summary>
     /// 1 - items
     /// </summary>
-    public string SimpleWord = "<div class=\"word-forms-container\">{1}</div>";
+    public const string SimpleWord =
+        "<div class=\"word-forms-container\">{1}</div>";
 
     /// <summary>
     /// 1 - ains nim<br/>
@@ -36,7 +38,7 @@ public struct FieldTags()
     /// 6 - mitm os<br/>
     /// 7 - sse <br/>
     /// </summary>
-    public string SimpleWordItems =
+    public const string SimpleWordItems =
         "<div class=\"grid-item amount\">AIN.</div>\n" +
         "<div class=\"grid-item form\">{1}</div>\n" +
         "<div class=\"grid-item form\">{2}</div>\n" +
@@ -48,7 +50,7 @@ public struct FieldTags()
         "<div class=\"grid-item short-into\">L.SSE.</div>\n" +
         "<div class=\"grid-item form-short-into\">{7}</div>";
 
-    public string Verb = "<div class=\"word-forms-container\">{1}</div>";
+    public const string Verb = "<div class=\"word-forms-container\">{1}</div>";
 
     /// <summary>
     /// 1 - ma<br/>
@@ -60,7 +62,7 @@ public struct FieldTags()
     /// 7 - tud<br/>
     /// 8 - akse<br/>
     /// </summary>
-    public string VerbItems =
+    public const string VerbItems =
         "<div class=\"grid-item declension\">MA</div>\n" +
         "<div class=\"grid-item form\">{1}</div>\n" +
         "<div class=\"grid-item declension\">3P.MIN</div>\n" +
@@ -99,10 +101,8 @@ public class EstonianScreenViewModel : ViewModelBase
         get;
     }
 
-
     public ObservableCollection<VerbControlViewModel> VerbControlItems { get; }
 
-    // public ObservableCollection<ItemViewModel> SpeechPartItems { get; set; }
     private ObservableCollection<ItemViewModel> _speechPartItems;
 
     public ObservableCollection<ItemViewModel> SpeechPartItems
@@ -163,10 +163,14 @@ public class EstonianScreenViewModel : ViewModelBase
 
     private void CopyWordFormsDeckFieldClipboardExecute(object values)
     {
-        var wordForms = _fieldTags.SimpleWordItems;
+        var wordForms = FieldTags.SimpleWordItems;
         var fieldIndex = 0;
 
-        foreach (string wordForm in (IEnumerable<object>)values)
+        // Get only word forms. Skip last element.
+        var formCollection =
+            ((IEnumerable<object>)values).Reverse().Skip(1).Reverse();
+
+        foreach (string wordForm in formCollection)
         {
             fieldIndex++;
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
@@ -175,16 +179,20 @@ public class EstonianScreenViewModel : ViewModelBase
             wordForms = wordForms.Replace($"{{{fieldIndex}}}", replaceSource);
         }
 
-        var result = _fieldTags.SimpleWord.Replace("{1}", wordForms);
-        Console.WriteLine(result);
+        var result = FieldTags.SimpleWord.Replace("{1}", wordForms);
+        Clipboard.Get().SetTextAsync(result);
     }
 
     private void CopyVerbFormsDeckFieldClipboardExecute(object values)
     {
-        var wordForms = _fieldTags.VerbItems;
+        var wordForms = FieldTags.VerbItems;
         var fieldIndex = 0;
 
-        foreach (string wordForm in (IEnumerable<object>)values)
+        // Get only word forms. Skip last element.
+        var formCollection =
+            ((IEnumerable<object>)values).Reverse().Skip(1).Reverse();
+
+        foreach (string wordForm in formCollection)
         {
             fieldIndex++;
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
@@ -193,8 +201,8 @@ public class EstonianScreenViewModel : ViewModelBase
             wordForms = wordForms.Replace($"{{{fieldIndex}}}", replaceSource);
         }
 
-        var result = _fieldTags.Verb.Replace("{1}", wordForms);
-        Console.WriteLine(result);
+        var result = FieldTags.Verb.Replace("{1}", wordForms);
+        Clipboard.Get().SetTextAsync(result);
     }
 
     private void CopyDeckFieldClipboardExecute(Control sender)
@@ -207,17 +215,17 @@ public class EstonianScreenViewModel : ViewModelBase
         // WordByWordTranslationAnkiField 
         if (sender.Tag.Equals("WordByWordTranslationAnkiField"))
             // todo: select <span>
-            result = _fieldTags.TranslationOriginal.Replace(
+            result = FieldTags.TranslationOriginal.Replace(
                 "{1}",
                 ((TextBox)sender).Text);
         // LiteraryTranslationAnkiField 
         if (sender.Tag.Equals("LiteraryTranslationAnkiField"))
-            result = _fieldTags.TranslationOriginal.Replace(
+            result = FieldTags.TranslationOriginal.Replace(
                 "{1}",
                 ((TextBox)sender).Text);
         // OriginalAnkiField 
         if (sender.Tag.Equals("OriginalAnkiField"))
-            result = _fieldTags.TranslationOriginal.Replace(
+            result = FieldTags.TranslationOriginal.Replace(
                 "{1}",
                 ((TextBox)sender).Text);
         // SpeechPartAnkiField 
@@ -225,20 +233,17 @@ public class EstonianScreenViewModel : ViewModelBase
         {
             var filtered = SpeechPartItems.First(Filter);
 
-            result = _fieldTags.SpeechPart
+            result = FieldTags.SpeechPart
                 .Replace("{1}", filtered.Title)
                 .Replace("{2}", filtered.Translation);
         }
-        // var clipboard = Clipboard;
 
-        TopLevel.GetTopLevel(sender)?.Clipboard?.SetTextAsync(result);
-        
-
-        // WordFormsAnkiField 
-        // VerbControlAnkiField 
-        // MainEntityAnkiField 
+        if (sender.Tag.Equals("MainEntityAnkiField"))
+            result = ((TextBox)sender).Text;
+        Clipboard.Get().SetTextAsync(result);
     }
 
+    // ReSharper disable once MemberCanBeMadeStatic.Local
     private bool Filter(ItemViewModel checkBoxItemView)
     {
         return checkBoxItemView.IsChecked.Equals(true);
