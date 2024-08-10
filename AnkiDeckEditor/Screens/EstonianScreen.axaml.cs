@@ -1,5 +1,3 @@
-using System;
-using System.Diagnostics;
 using AnkiDeckEditor.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -29,37 +27,44 @@ public partial class EstonianScreen : UserControl
         object? sender,
         TextChangedEventArgs e)
     {
-        var splitted = ((TextBox)sender!).Text?.Trim().Split(" ");
+        if (sender is not TextBox textBox) return;
+        var splitted = textBox.Text?.Trim().Split(" ");
         if (splitted == null) return;
 
-        if (((TextBox)sender).Name.Equals("WordForWordTextBox"))
+        switch (textBox.Name)
         {
-            ((EstonianScreenViewModel)DataContext!)
-                .WordByWordContextSelectedItems.Clear();
-            foreach (var s in splitted)
+            case "WordForWordTextBox":
+            {
                 ((EstonianScreenViewModel)DataContext!)
-                    .WordByWordContextSelectedItems
-                    .Add(new ContextSelectedViewModel(s, false));
-        }
-
-        if (((TextBox)sender).Name.Equals("LiteraryTextBox"))
-        {
-            ((EstonianScreenViewModel)DataContext!).LiteraryContextSelectedItems
-                .Clear();
-            foreach (var s in splitted)
+                    .WordByWordContextSelectedItems.Clear();
+                foreach (var s in splitted)
+                    ((EstonianScreenViewModel)DataContext!)
+                        .WordByWordContextSelectedItems
+                        .Add(new ContextSelectedViewModel(s, false));
+                break;
+            }
+            case "LiteraryTextBox":
+            {
                 ((EstonianScreenViewModel)DataContext!)
                     .LiteraryContextSelectedItems
-                    .Add(new ContextSelectedViewModel(s, false));
-        }
-
-        if (((TextBox)sender).Name.Equals("OriginalTextBox"))
-        {
-            ((EstonianScreenViewModel)DataContext!).OriginalContextSelectedItems
-                .Clear();
-            foreach (var s in splitted)
+                    .Clear();
+                foreach (var s in splitted)
+                    ((EstonianScreenViewModel)DataContext!)
+                        .LiteraryContextSelectedItems
+                        .Add(new ContextSelectedViewModel(s, false));
+                break;
+            }
+            case "OriginalTextBox":
+            {
                 ((EstonianScreenViewModel)DataContext!)
                     .OriginalContextSelectedItems
-                    .Add(new ContextSelectedViewModel(s, false));
+                    .Clear();
+                foreach (var s in splitted)
+                    ((EstonianScreenViewModel)DataContext!)
+                        .OriginalContextSelectedItems
+                        .Add(new ContextSelectedViewModel(s, false));
+                break;
+            }
         }
     }
 }
