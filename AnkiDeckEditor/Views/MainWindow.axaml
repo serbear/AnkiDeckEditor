@@ -24,9 +24,8 @@
     <!-- <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/> -->
 
     <Panel>
-        <screens:DeckTypeSelectScreen
-            x:Name="DeckTypeSelectScreen"
-            IsVisible="True" />
+        <screens:DeckTypeSelectScreen x:Name="DeckTypeSelectScreen"
+                                      IsVisible="True" />
         <ContentControl x:Name="MainWindowContentArea" />
     </Panel>
 </Window>

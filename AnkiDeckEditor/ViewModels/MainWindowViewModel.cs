@@ -8,24 +8,15 @@ namespace AnkiDeckEditor.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-#pragma warning disable CA1822 // Mark members as static
-    public ReactiveCommand<Unit, Unit> MyCommand { get; }
-//     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
-#pragma warning restore CA1822 // Mark members as static
+    public ReactiveCommand<Unit, Unit> ShutdownCommand { get; }
 
     public MainWindowViewModel()
     {
-        MyCommand = ReactiveCommand.Create(MyCommandExecute);
-        // CopyButtonCommand= ReactiveCommand.Create(CopyCommandExecute);
+        ShutdownCommand = ReactiveCommand.Create(ShutdownApplicationExecute);
     }
 
-    // private void CopyCommandExecute()
-    // {
-    //     Console.WriteLine("CopyCommandExecute");
-    // }
-    //
     [SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Local")]
-    private void MyCommandExecute()
+    private void ShutdownApplicationExecute()
     {
         if (Application.Current?.ApplicationLifetime is
             IClassicDesktopStyleApplicationLifetime lifetime)

@@ -1,8 +1,8 @@
 using ReactiveUI;
 
-namespace AnkiDeckEditor.ViewModels;
+namespace AnkiDeckEditor.Models;
 
-public abstract class AbstractItemViewModel : ViewModelBase
+public class ToggleItem : ReactiveObject
 {
     private string? _title;
     private bool _isChecked;
@@ -19,7 +19,7 @@ public abstract class AbstractItemViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _isChecked, value);
     }
 
-    public AbstractItemViewModel(string title, bool isChecked)
+    public ToggleItem(string title, bool isChecked)
     {
         Title = title;
         IsChecked = isChecked;

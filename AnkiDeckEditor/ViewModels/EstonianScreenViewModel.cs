@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive;
 using System.Text;
 using AnkiDeckEditor.Libs;
+using AnkiDeckEditor.Models;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -12,7 +13,7 @@ using ReactiveUI;
 
 namespace AnkiDeckEditor.ViewModels;
 
-public struct FieldTags()
+public struct FieldTags
 {
     public const string TranslationOriginalTemplate =
         "<div class=\"sentence\">{1}</div>";
@@ -103,20 +104,20 @@ public class EstonianScreenViewModel : ViewModelBase
         get;
     }
 
-    public ObservableCollection<VerbControlViewModel> VerbControlItems { get; }
+    public ObservableCollection<ToggleItem> VerbControlItems { get; }
 
-    private ObservableCollection<ItemViewModel> _speechPartItems;
+    private ObservableCollection<SpeechPartToggleItem> _speechPartItems;
 
-    public ObservableCollection<ItemViewModel> SpeechPartItems
+    public ObservableCollection<SpeechPartToggleItem> SpeechPartItems
     {
         get => _speechPartItems;
         set => this.RaiseAndSetIfChanged(ref _speechPartItems, value);
     }
 
-    private ObservableCollection<ContextSelectedViewModel>
+    private ObservableCollection<ToggleItem>
         _wordByWordContextSelectedItems;
 
-    public ObservableCollection<ContextSelectedViewModel>
+    public ObservableCollection<ToggleItem>
         WordByWordContextSelectedItems
     {
         get => _wordByWordContextSelectedItems;
@@ -124,10 +125,10 @@ public class EstonianScreenViewModel : ViewModelBase
             value);
     }
 
-    private ObservableCollection<ContextSelectedViewModel>
+    private ObservableCollection<ToggleItem>
         _literaryContextSelectedItems;
 
-    public ObservableCollection<ContextSelectedViewModel>
+    public ObservableCollection<ToggleItem>
         LiteraryContextSelectedItems
     {
         get => _literaryContextSelectedItems;
@@ -135,10 +136,10 @@ public class EstonianScreenViewModel : ViewModelBase
             value);
     }
 
-    private ObservableCollection<ContextSelectedViewModel>
+    private ObservableCollection<ToggleItem>
         _originalContextSelectedItems;
 
-    public ObservableCollection<ContextSelectedViewModel>
+    public ObservableCollection<ToggleItem>
         OriginalContextSelectedItems
     {
         get => _originalContextSelectedItems;
@@ -146,6 +147,8 @@ public class EstonianScreenViewModel : ViewModelBase
             value);
     }
 
+    public Dictionary<string, ObservableCollection<ToggleItem>>
+        EntityContextCollections { get; set; }
 
     public EstonianScreenViewModel()
     {
@@ -164,28 +167,38 @@ public class EstonianScreenViewModel : ViewModelBase
         // collections
         VerbControlItems =
         [
-            new VerbControlViewModel("Value 0", false),
-            new VerbControlViewModel("Value 1", false),
-            new VerbControlViewModel("Value 2", false),
-            new VerbControlViewModel("Value 3", false),
-            new VerbControlViewModel("Value 4", false),
-            new VerbControlViewModel("Value 5", false),
-            new VerbControlViewModel("Value 6", false),
-            new VerbControlViewModel("Value 7", false),
-            new VerbControlViewModel("Value 8", false),
-            new VerbControlViewModel("Value 9", false)
+            new ToggleItem("Value 0", false),
+            new ToggleItem("Value 1", false),
+            new ToggleItem("Value 2", false),
+            new ToggleItem("Value 3", false),
+            new ToggleItem("Value 4", false),
+            new ToggleItem("Value 5", false),
+            new ToggleItem("Value 6", false),
+            new ToggleItem("Value 7", false),
+            new ToggleItem("Value 8", false),
+            new ToggleItem("Value 9", false)
         ];
         SpeechPartItems =
         [
-            new ItemViewModel("существительное", "nimisõna", false),
-            new ItemViewModel("наречие", "määrsõna", false),
-            new ItemViewModel("прилагательное", "omadussõna", false),
-            new ItemViewModel("местоимение", "asesõna", false),
-            new ItemViewModel("глагол", "tegusõna", false)
+            new SpeechPartToggleItem("существительное", "nimisõna", false),
+            new SpeechPartToggleItem("наречие", "määrsõna", false),
+            new SpeechPartToggleItem("прилагательное", "omadussõna", false),
+            new SpeechPartToggleItem("местоимение", "asesõna", false),
+            new SpeechPartToggleItem("глагол", "tegusõna", false)
         ];
+
         WordByWordContextSelectedItems = [];
         LiteraryContextSelectedItems = [];
         OriginalContextSelectedItems = [];
+
+        EntityContextCollections =
+            new Dictionary<string, ObservableCollection<ToggleItem>>();
+        EntityContextCollections.Add(
+            "WordForWordTextBox", WordByWordContextSelectedItems);
+        EntityContextCollections.Add(
+            "LiteraryTextBox", LiteraryContextSelectedItems);
+        EntityContextCollections.Add(
+            "OriginalTextBox", OriginalContextSelectedItems);
     }
 
 
@@ -323,7 +336,7 @@ public class EstonianScreenViewModel : ViewModelBase
         // SpeechPartAnkiField 
         if (sender.Tag.Equals("SpeechPartAnkiField"))
         {
-            var filtered = SpeechPartItems.First(Filter);
+            var filtered = SpeechPartItems.First(e => e.IsChecked);
 
             result = FieldTags.SpeechPartTemplate
                 .Replace("{1}", filtered.Title)
@@ -352,12 +365,5 @@ public class EstonianScreenViewModel : ViewModelBase
         }
 
         Clipboard.Get().SetTextAsync(result);
-    }
-
-
-    // ReSharper disable once MemberCanBeMadeStatic.Local
-    private bool Filter(ItemViewModel checkBoxItemView)
-    {
-        return checkBoxItemView.IsChecked.Equals(true);
     }
 }

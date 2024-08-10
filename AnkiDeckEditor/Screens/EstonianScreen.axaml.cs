@@ -1,15 +1,17 @@
+using System.Collections.ObjectModel;
+using AnkiDeckEditor.Models;
 using AnkiDeckEditor.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 
 namespace AnkiDeckEditor.Screens;
 
+// ReSharper disable once PartialTypeWithSinglePart
 public partial class EstonianScreen : UserControl
 {
     public EstonianScreen()
     {
         InitializeComponent();
-        // DeckConfigTabControl.SelectedIndex = 2;
         DataContext = new EstonianScreenViewModel();
     }
 
@@ -29,42 +31,21 @@ public partial class EstonianScreen : UserControl
     {
         if (sender is not TextBox textBox) return;
         var splitted = textBox.Text?.Trim().Split(" ");
-        if (splitted == null) return;
 
-        switch (textBox.Name)
-        {
-            case "WordForWordTextBox":
-            {
-                ((EstonianScreenViewModel)DataContext!)
-                    .WordByWordContextSelectedItems.Clear();
-                foreach (var s in splitted)
-                    ((EstonianScreenViewModel)DataContext!)
-                        .WordByWordContextSelectedItems
-                        .Add(new ContextSelectedViewModel(s, false));
-                break;
-            }
-            case "LiteraryTextBox":
-            {
-                ((EstonianScreenViewModel)DataContext!)
-                    .LiteraryContextSelectedItems
-                    .Clear();
-                foreach (var s in splitted)
-                    ((EstonianScreenViewModel)DataContext!)
-                        .LiteraryContextSelectedItems
-                        .Add(new ContextSelectedViewModel(s, false));
-                break;
-            }
-            case "OriginalTextBox":
-            {
-                ((EstonianScreenViewModel)DataContext!)
-                    .OriginalContextSelectedItems
-                    .Clear();
-                foreach (var s in splitted)
-                    ((EstonianScreenViewModel)DataContext!)
-                        .OriginalContextSelectedItems
-                        .Add(new ContextSelectedViewModel(s, false));
-                break;
-            }
-        }
+        UpdateEntityContextCollection(
+            ((EstonianScreenViewModel)DataContext!)
+            .EntityContextCollections[textBox.Name],
+            splitted);
+    }
+
+    private static void UpdateEntityContextCollection<T>(
+        T collection,
+        string[]? contextWords)
+        where T : ObservableCollection<ToggleItem>
+    {
+        if (contextWords == null) return;
+        collection.Clear();
+        foreach (var s in contextWords)
+            collection.Add(new ToggleItem(s, false));
     }
 }

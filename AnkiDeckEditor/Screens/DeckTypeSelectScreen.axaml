@@ -39,6 +39,6 @@
             Content="Выход"
             Grid.Column="0"
             Grid.Row="4"
-            Command="{Binding MyCommand}" />
+            Command="{Binding ShutdownCommand}" />
     </Grid>
 </UserControl>
