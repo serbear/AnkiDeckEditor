@@ -20,10 +20,8 @@
                     Tag="MainEntityAnkiField" />
 
                 <!-- SpeechPart Anki field -->
-                <TextBlock
-                    Text="Часть речи:" />
-                <WrapPanel
-                    Orientation="Horizontal">
+                <TextBlock Text="Часть речи:" />
+                <WrapPanel Orientation="Horizontal">
                     <ItemsRepeater
                         ItemsSource="{Binding SpeechPartItems}">
                         <ItemsRepeater.Layout>
@@ -234,17 +232,84 @@
 
             <StackPanel>
                 <TextBlock Text="Дословный:" />
-                <TextBox
-                    Name="WordForWordTextBox"
-                    Tag="WordByWordTranslationAnkiField" />
+                <TextBox Name="WordForWordTextBox"
+                         Tag="WordByWordTranslationAnkiField"
+                         TextChanged="WordForWordTextBox_OnTextChanged" />
+
+                <TextBlock Text="Выделение:" />
+
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <ItemsRepeater
+                        ItemsSource="{Binding WordByWordContextSelectedItems}">
+                        <ItemsRepeater.Layout>
+                            <StackLayout Spacing="0"
+                                         Orientation="Horizontal" />
+                        </ItemsRepeater.Layout>
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <ToggleButton
+                                        IsChecked="{Binding IsChecked}"
+                                        Content="{Binding Title}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+                </ScrollViewer>
+
                 <TextBlock Text="Литературный:" />
-                <TextBox
-                    Name="LiteraryTextBox"
-                    Tag="LiteraryTranslationAnkiField" />
+                <TextBox Name="LiteraryTextBox"
+                         Tag="LiteraryTranslationAnkiField"
+                         TextChanged="WordForWordTextBox_OnTextChanged" />
+                
+                
+                <TextBlock Text="Выделение:" />
+
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <ItemsRepeater
+                        ItemsSource="{Binding LiteraryContextSelectedItems}">
+                        <ItemsRepeater.Layout>
+                            <StackLayout Spacing="0"
+                                         Orientation="Horizontal" />
+                        </ItemsRepeater.Layout>
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <ToggleButton
+                                        IsChecked="{Binding IsChecked}"
+                                        Content="{Binding Title}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+                </ScrollViewer>
+                
                 <TextBlock Text="Оригинал:" />
-                <TextBox
-                    Name="OriginalTextBox"
-                    Tag="OriginalAnkiField" />
+                <TextBox Name="OriginalTextBox"
+                         Tag="OriginalAnkiField"
+                         TextChanged="WordForWordTextBox_OnTextChanged" />
+                
+                
+                <TextBlock Text="Выделение:" />
+
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <ItemsRepeater
+                        ItemsSource="{Binding OriginalContextSelectedItems}">
+                        <ItemsRepeater.Layout>
+                            <StackLayout Spacing="0"
+                                         Orientation="Horizontal" />
+                        </ItemsRepeater.Layout>
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <ToggleButton
+                                        IsChecked="{Binding IsChecked}"
+                                        Content="{Binding Title}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+                </ScrollViewer>
             </StackPanel>
 
         </TabItem>
@@ -317,6 +382,7 @@
                 <Button
                     Content="Словарная статья"
                     CommandParameter="{Binding  ElementName=MainEntityAnkiFieldTextBox}"
+                    Tag="MainEntityAnkiField"
                     Command="{Binding CopyFieldClipboardCommand}" />
 
                 <Button

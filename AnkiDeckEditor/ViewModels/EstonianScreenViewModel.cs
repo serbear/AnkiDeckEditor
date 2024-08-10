@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Reactive;
+using System.Text;
 using AnkiDeckEditor.Libs;
 using Avalonia;
 using Avalonia.Controls;
@@ -17,7 +17,7 @@ public struct FieldTags()
     public const string TranslationOriginalTemplate =
         "<div class=\"sentence\">{1}</div>";
 
-    public string SelectedEntityTemplate = "<span>{1}</span>";
+    public const string SelectedEntityTemplate = "<span>{1}</span>";
 
     /// <summary>
     /// 1 - russian translation; 2 - estonian translation
@@ -113,8 +113,38 @@ public class EstonianScreenViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _speechPartItems, value);
     }
 
+    private ObservableCollection<ContextSelectedViewModel>
+        _wordByWordContextSelectedItems;
 
-    private FieldTags _fieldTags = new();
+    public ObservableCollection<ContextSelectedViewModel>
+        WordByWordContextSelectedItems
+    {
+        get => _wordByWordContextSelectedItems;
+        set => this.RaiseAndSetIfChanged(ref _wordByWordContextSelectedItems,
+            value);
+    }
+
+    private ObservableCollection<ContextSelectedViewModel>
+        _literaryContextSelectedItems;
+
+    public ObservableCollection<ContextSelectedViewModel>
+        LiteraryContextSelectedItems
+    {
+        get => _literaryContextSelectedItems;
+        set => this.RaiseAndSetIfChanged(ref _literaryContextSelectedItems,
+            value);
+    }
+
+    private ObservableCollection<ContextSelectedViewModel>
+        _originalContextSelectedItems;
+
+    public ObservableCollection<ContextSelectedViewModel>
+        OriginalContextSelectedItems
+    {
+        get => _originalContextSelectedItems;
+        set => this.RaiseAndSetIfChanged(ref _originalContextSelectedItems,
+            value);
+    }
 
 
     public EstonianScreenViewModel()
@@ -129,6 +159,7 @@ public class EstonianScreenViewModel : ViewModelBase
         CopyVerbFormsDeckFieldClipboardCommand =
             ReactiveCommand.Create<object>(
                 CopyVerbFormsDeckFieldClipboardExecute);
+
 
         // collections
         VerbControlItems =
@@ -152,10 +183,13 @@ public class EstonianScreenViewModel : ViewModelBase
             new ItemViewModel("местоимение", "asesõna", false),
             new ItemViewModel("глагол", "tegusõna", false)
         ];
+        WordByWordContextSelectedItems = [];
+        LiteraryContextSelectedItems = [];
+        OriginalContextSelectedItems = [];
     }
 
 
-// ReSharper disable once MemberCanBeMadeStatic.Local
+    // ReSharper disable once MemberCanBeMadeStatic.Local
     private void CopyCommandExecute()
     {
         if (Application.Current?.ApplicationLifetime is
@@ -216,20 +250,76 @@ public class EstonianScreenViewModel : ViewModelBase
 
         // WordByWordTranslationAnkiField 
         if (sender.Tag.Equals("WordByWordTranslationAnkiField"))
-            // todo: select <span>
+        {
+            var resultBuilder = new StringBuilder();
+
+            foreach (var item in WordByWordContextSelectedItems)
+                if (item.IsChecked)
+                {
+                    var tagged = FieldTags.SelectedEntityTemplate.Replace(
+                        "{1}",
+                        item.Title);
+                    resultBuilder.Append($"{tagged} ");
+                }
+                else
+                {
+                    resultBuilder.Append($"{item.Title} ");
+                }
+
+
             result = FieldTags.TranslationOriginalTemplate.Replace(
                 "{1}",
-                ((TextBox)sender).Text);
+                resultBuilder.ToString().Trim());
+        }
+
         // LiteraryTranslationAnkiField 
         if (sender.Tag.Equals("LiteraryTranslationAnkiField"))
+        {
+            var resultBuilder = new StringBuilder();
+
+            foreach (var item in LiteraryContextSelectedItems)
+                if (item.IsChecked)
+                {
+                    var tagged = FieldTags.SelectedEntityTemplate.Replace(
+                        "{1}",
+                        item.Title);
+                    resultBuilder.Append($"{tagged} ");
+                }
+                else
+                {
+                    resultBuilder.Append($"{item.Title} ");
+                }
+
+
             result = FieldTags.TranslationOriginalTemplate.Replace(
                 "{1}",
-                ((TextBox)sender).Text);
+                resultBuilder.ToString().Trim());
+        }
+
         // OriginalAnkiField 
         if (sender.Tag.Equals("OriginalAnkiField"))
+        {
+            var resultBuilder = new StringBuilder();
+
+            foreach (var item in OriginalContextSelectedItems)
+                if (item.IsChecked)
+                {
+                    var tagged = FieldTags.SelectedEntityTemplate.Replace(
+                        "{1}",
+                        item.Title);
+                    resultBuilder.Append($"{tagged} ");
+                }
+                else
+                {
+                    resultBuilder.Append($"{item.Title} ");
+                }
+
+
             result = FieldTags.TranslationOriginalTemplate.Replace(
                 "{1}",
-                ((TextBox)sender).Text);
+                resultBuilder.ToString().Trim());
+        }
+
         // SpeechPartAnkiField 
         if (sender.Tag.Equals("SpeechPartAnkiField"))
         {
@@ -243,6 +333,7 @@ public class EstonianScreenViewModel : ViewModelBase
         // MainEntityAnkiField
         if (sender.Tag.Equals("MainEntityAnkiField"))
             result = ((TextBox)sender).Text;
+
         // VerbControlAnkiField
         if (sender.Tag.Equals("VerbControlAnkiField"))
         {
@@ -259,7 +350,6 @@ public class EstonianScreenViewModel : ViewModelBase
 
             result = FieldTags.VerbControlTemplate.Replace("{1}", result);
         }
-
 
         Clipboard.Get().SetTextAsync(result);
     }
