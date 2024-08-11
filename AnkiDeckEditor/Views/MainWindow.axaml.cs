@@ -11,11 +11,8 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-
-        _deckTypeSelectScreen =
-            this.FindControl<DeckTypeSelectScreen>("DeckTypeSelectScreen");
-        _deckTypeSelectScreen.OnScreenChangedEvent +=
-            MyUserControlOnScreenChangedEvent;
+        _deckTypeSelectScreen = this.FindControl<DeckTypeSelectScreen>("DeckTypeSelectScreen");
+        _deckTypeSelectScreen.OnScreenChangedEvent += MyUserControlOnScreenChangedEvent;
     }
 
 

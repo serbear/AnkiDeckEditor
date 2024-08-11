@@ -18,8 +18,7 @@ public class MainWindowViewModel : ViewModelBase
     [SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Local")]
     private void ShutdownApplicationExecute()
     {
-        if (Application.Current?.ApplicationLifetime is
-            IClassicDesktopStyleApplicationLifetime lifetime)
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
             lifetime.Shutdown();
     }
 }

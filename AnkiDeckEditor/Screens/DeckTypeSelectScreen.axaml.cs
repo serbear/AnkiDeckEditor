@@ -13,17 +13,13 @@ public partial class DeckTypeSelectScreen : UserControl
 
     public event EventHandler? OnScreenChangedEvent;
 
-    private void ShowEstonianScreenButton_OnClick(
-        object sender,
-        RoutedEventArgs e)
+    private void ShowEstonianScreenButton_OnClick(object sender, RoutedEventArgs e)
     {
         var screen = new ScreenEventArgs { Screen = new EstonianScreen() };
         OnScreenChangedEvent?.Invoke(this, screen);
     }
 
-    private void ShowEnglishScreenButton_OnClick(
-        object sender,
-        RoutedEventArgs e)
+    private void ShowEnglishScreenButton_OnClick(object sender, RoutedEventArgs e)
     {
         var screen = new ScreenEventArgs { Screen = new EnglishScreen() };
         OnScreenChangedEvent?.Invoke(this, screen);
