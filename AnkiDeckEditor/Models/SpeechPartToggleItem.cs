@@ -6,7 +6,7 @@ public class SpeechPartToggleItem : ToggleItem
 
     // ReSharper disable once ConvertToPrimaryConstructor
     public SpeechPartToggleItem(
-        string title, string? translation, bool isChecked)
+        string? title, string? translation, bool isChecked)
         : base(title, isChecked)
     {
         Translation = translation;

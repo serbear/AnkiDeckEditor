@@ -19,7 +19,7 @@ public class ToggleItem : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref _isChecked, value);
     }
 
-    public ToggleItem(string title, bool isChecked)
+    public ToggleItem(string? title, bool isChecked)
     {
         Title = title;
         IsChecked = isChecked;

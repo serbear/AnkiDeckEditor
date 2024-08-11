@@ -5,7 +5,8 @@
     x:CompileBindings="True"
     xmlns:local="using:AnkiDeckEditor"
     RequestedThemeVariant="Dark">
-    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" 
+    are other available options. -->
 
     <Application.DataTemplates>
         <local:ViewLocator />
@@ -14,4 +15,5 @@
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>
+
 </Application>

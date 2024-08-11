@@ -15,8 +15,7 @@ namespace AnkiDeckEditor.ViewModels;
 
 public struct FieldTags
 {
-    public const string TranslationOriginalTemplate =
-        "<div class=\"sentence\">{1}</div>";
+    public const string TranslationOriginalTemplate = "<div class=\"sentence\">{1}</div>";
 
     public const string SelectedEntityTemplate = "<span>{1}</span>";
 
@@ -28,8 +27,7 @@ public struct FieldTags
     /// <summary>
     /// 1 - items
     /// </summary>
-    public const string SimpleWordTemplate =
-        "<div class=\"word-forms-container\">{1}</div>";
+    public const string SimpleWordTemplate = "<div class=\"word-forms-container\">{1}</div>";
 
     /// <summary>
     /// 1 - ains nim<br/>
@@ -52,8 +50,7 @@ public struct FieldTags
         "<div class=\"grid-item short-into\">L.SSE.</div>\n" +
         "<div class=\"grid-item form-short-into\">{7}</div>";
 
-    public const string VerbTemplate =
-        "<div class=\"word-forms-container\">{1}</div>";
+    public const string VerbTemplate = "<div class=\"word-forms-container\">{1}</div>";
 
     /// <summary>
     /// 1 - ma<br/>
@@ -83,8 +80,7 @@ public struct FieldTags
         "<div class=\"grid-item declension\">AKSE</div>\n" +
         "<div class=\"grid-item form\">{8}</div>";
 
-    public const string VerbControlTemplate =
-        "<div class=\"verb-control-container\">{1}</div>";
+    public const string VerbControlTemplate = "<div class=\"verb-control-container\">{1}</div>";
 
     public const string VerbControlItemTemplate = "<span>{1}</span>";
 }
@@ -94,15 +90,9 @@ public class EstonianScreenViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
     public ReactiveCommand<Control, Unit> CopyFieldClipboardCommand { get; }
 
-    public ReactiveCommand<object, Unit> CopyWordFormsFieldClipboardCommand
-    {
-        get;
-    }
+    public ReactiveCommand<object, Unit> CopyWordFormsFieldClipboardCommand { get; }
 
-    public ReactiveCommand<object, Unit> CopyVerbFormsDeckFieldClipboardCommand
-    {
-        get;
-    }
+    public ReactiveCommand<object, Unit> CopyVerbFormsDeckFieldClipboardCommand { get; }
 
     public ObservableCollection<ToggleItem> VerbControlItems { get; }
 
@@ -114,55 +104,39 @@ public class EstonianScreenViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _speechPartItems, value);
     }
 
-    private ObservableCollection<ToggleItem>
-        _wordByWordContextSelectedItems;
+    private ObservableCollection<ContextToggleItem> _wordByWordContextSelectedItems;
 
-    public ObservableCollection<ToggleItem>
-        WordByWordContextSelectedItems
+    public ObservableCollection<ContextToggleItem> WordByWordContextSelectedItems
     {
         get => _wordByWordContextSelectedItems;
-        set => this.RaiseAndSetIfChanged(ref _wordByWordContextSelectedItems,
-            value);
+        set => this.RaiseAndSetIfChanged(ref _wordByWordContextSelectedItems, value);
     }
 
-    private ObservableCollection<ToggleItem>
-        _literaryContextSelectedItems;
+    private ObservableCollection<ContextToggleItem> _literaryContextSelectedItems;
 
-    public ObservableCollection<ToggleItem>
-        LiteraryContextSelectedItems
+    public ObservableCollection<ContextToggleItem> LiteraryContextSelectedItems
     {
         get => _literaryContextSelectedItems;
-        set => this.RaiseAndSetIfChanged(ref _literaryContextSelectedItems,
-            value);
+        set => this.RaiseAndSetIfChanged(ref _literaryContextSelectedItems, value);
     }
 
-    private ObservableCollection<ToggleItem>
-        _originalContextSelectedItems;
+    private ObservableCollection<ContextToggleItem> _originalContextSelectedItems;
 
-    public ObservableCollection<ToggleItem>
-        OriginalContextSelectedItems
+    public ObservableCollection<ContextToggleItem> OriginalContextSelectedItems
     {
         get => _originalContextSelectedItems;
-        set => this.RaiseAndSetIfChanged(ref _originalContextSelectedItems,
-            value);
+        set => this.RaiseAndSetIfChanged(ref _originalContextSelectedItems, value);
     }
 
-    public Dictionary<string, ObservableCollection<ToggleItem>>
-        EntityContextCollections { get; set; }
+    public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
 
     public EstonianScreenViewModel()
     {
         // commands
         CopyButtonCommand = ReactiveCommand.Create(CopyCommandExecute);
-        CopyFieldClipboardCommand = ReactiveCommand.Create<Control>(
-            CopyDeckFieldClipboardExecute);
-        CopyWordFormsFieldClipboardCommand =
-            ReactiveCommand.Create<object>(
-                CopyWordFormsDeckFieldClipboardExecute);
-        CopyVerbFormsDeckFieldClipboardCommand =
-            ReactiveCommand.Create<object>(
-                CopyVerbFormsDeckFieldClipboardExecute);
-
+        CopyFieldClipboardCommand = ReactiveCommand.Create<Control>(CopyDeckFieldClipboardExecute);
+        CopyWordFormsFieldClipboardCommand = ReactiveCommand.Create<object>(CopyWordFormsDeckFieldClipboardExecute);
+        CopyVerbFormsDeckFieldClipboardCommand = ReactiveCommand.Create<object>(CopyVerbFormsDeckFieldClipboardExecute);
 
         // collections
         VerbControlItems =
@@ -191,22 +165,19 @@ public class EstonianScreenViewModel : ViewModelBase
         LiteraryContextSelectedItems = [];
         OriginalContextSelectedItems = [];
 
-        EntityContextCollections =
-            new Dictionary<string, ObservableCollection<ToggleItem>>();
-        EntityContextCollections.Add(
-            "WordForWordTextBox", WordByWordContextSelectedItems);
-        EntityContextCollections.Add(
-            "LiteraryTextBox", LiteraryContextSelectedItems);
-        EntityContextCollections.Add(
-            "OriginalTextBox", OriginalContextSelectedItems);
+        EntityContextCollections = new Dictionary<string, ObservableCollection<ContextToggleItem>>
+        {
+            { "WordForWordTextBox", WordByWordContextSelectedItems },
+            { "LiteraryTextBox", LiteraryContextSelectedItems },
+            { "OriginalTextBox", OriginalContextSelectedItems }
+        };
     }
 
 
     // ReSharper disable once MemberCanBeMadeStatic.Local
     private void CopyCommandExecute()
     {
-        if (Application.Current?.ApplicationLifetime is
-            IClassicDesktopStyleApplicationLifetime lifetime)
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
             lifetime.Shutdown();
     }
 
@@ -216,8 +187,7 @@ public class EstonianScreenViewModel : ViewModelBase
         var fieldIndex = 0;
 
         // Get only word forms. Skip last element.
-        var formCollection =
-            ((IEnumerable<object>)values).Reverse().Skip(1).Reverse();
+        var formCollection = ((IEnumerable<object>)values).Reverse().Skip(1).Reverse();
 
         foreach (string wordForm in formCollection)
         {
@@ -238,8 +208,7 @@ public class EstonianScreenViewModel : ViewModelBase
         var fieldIndex = 0;
 
         // Get only word forms. Skip last element.
-        var formCollection =
-            ((IEnumerable<object>)values).Reverse().Skip(1).Reverse();
+        var formCollection = ((IEnumerable<object>)values).Reverse().Skip(1).Reverse();
 
         foreach (string wordForm in formCollection)
         {
@@ -256,8 +225,7 @@ public class EstonianScreenViewModel : ViewModelBase
 
     private void CopyDeckFieldClipboardExecute(Control sender)
     {
-        if (sender.Tag == null)
-            throw new Exception("The TextBox has no a tag.");
+        if (sender.Tag == null) throw new Exception("The TextBox has no a tag.");
 
         var result = "";
 
@@ -269,9 +237,7 @@ public class EstonianScreenViewModel : ViewModelBase
             foreach (var item in WordByWordContextSelectedItems)
                 if (item.IsChecked)
                 {
-                    var tagged = FieldTags.SelectedEntityTemplate.Replace(
-                        "{1}",
-                        item.Title);
+                    var tagged = FieldTags.SelectedEntityTemplate.Replace("{1}", item.Title);
                     resultBuilder.Append($"{tagged} ");
                 }
                 else
@@ -280,9 +246,7 @@ public class EstonianScreenViewModel : ViewModelBase
                 }
 
 
-            result = FieldTags.TranslationOriginalTemplate.Replace(
-                "{1}",
-                resultBuilder.ToString().Trim());
+            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", resultBuilder.ToString().Trim());
         }
 
         // LiteraryTranslationAnkiField 
@@ -293,9 +257,7 @@ public class EstonianScreenViewModel : ViewModelBase
             foreach (var item in LiteraryContextSelectedItems)
                 if (item.IsChecked)
                 {
-                    var tagged = FieldTags.SelectedEntityTemplate.Replace(
-                        "{1}",
-                        item.Title);
+                    var tagged = FieldTags.SelectedEntityTemplate.Replace("{1}", item.Title);
                     resultBuilder.Append($"{tagged} ");
                 }
                 else
@@ -304,9 +266,7 @@ public class EstonianScreenViewModel : ViewModelBase
                 }
 
 
-            result = FieldTags.TranslationOriginalTemplate.Replace(
-                "{1}",
-                resultBuilder.ToString().Trim());
+            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", resultBuilder.ToString().Trim());
         }
 
         // OriginalAnkiField 
@@ -317,9 +277,7 @@ public class EstonianScreenViewModel : ViewModelBase
             foreach (var item in OriginalContextSelectedItems)
                 if (item.IsChecked)
                 {
-                    var tagged = FieldTags.SelectedEntityTemplate.Replace(
-                        "{1}",
-                        item.Title);
+                    var tagged = FieldTags.SelectedEntityTemplate.Replace("{1}", item.Title);
                     resultBuilder.Append($"{tagged} ");
                 }
                 else
@@ -327,10 +285,7 @@ public class EstonianScreenViewModel : ViewModelBase
                     resultBuilder.Append($"{item.Title} ");
                 }
 
-
-            result = FieldTags.TranslationOriginalTemplate.Replace(
-                "{1}",
-                resultBuilder.ToString().Trim());
+            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", resultBuilder.ToString().Trim());
         }
 
         // SpeechPartAnkiField 
@@ -344,8 +299,7 @@ public class EstonianScreenViewModel : ViewModelBase
         }
 
         // MainEntityAnkiField
-        if (sender.Tag.Equals("MainEntityAnkiField"))
-            result = ((TextBox)sender).Text;
+        if (sender.Tag.Equals("MainEntityAnkiField")) result = ((TextBox)sender).Text;
 
         // VerbControlAnkiField
         if (sender.Tag.Equals("VerbControlAnkiField"))
@@ -355,9 +309,7 @@ public class EstonianScreenViewModel : ViewModelBase
             // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var verbControl in selectedVerbControls)
             {
-                var item =
-                    FieldTags.VerbControlItemTemplate
-                        .Replace("{1}", verbControl.Title);
+                var item = FieldTags.VerbControlItemTemplate.Replace("{1}", verbControl.Title);
                 result += item;
             }
 
