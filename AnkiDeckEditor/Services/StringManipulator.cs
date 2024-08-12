@@ -19,53 +19,46 @@ public partial class StringManipulator
     [GeneratedRegex(@"\s(?=\p{Pf}|\p{Pe})")]
     private partial Regex ClosePunctuationsAfterSpaceRegex();
 
-    private string _targetString;
-    public string ResultString => _targetString;
+    public string ResultString { get; private set; }
 
     // ReSharper disable once ConvertToPrimaryConstructor
     public StringManipulator(string targetString)
     {
-        _targetString = targetString;
+        ResultString = targetString;
     }
 
-    private string ReplaceByRegexp(Regex generatedPattern, string value, string replaceWith)
+    private static string ReplaceByRegexp(Regex generatedPattern, string value, string replaceWith)
     {
         return generatedPattern.Replace(value, replaceWith);
     }
 
-
     public StringManipulator AddSpaseAfterCloseHtmlTag()
     {
-        // return CloseHtmlTag().Replace(value, " ");
-        _targetString = ReplaceByRegexp(CloseHtmlTag(), _targetString, " ");
+        ResultString = ReplaceByRegexp(CloseHtmlTag(), ResultString, " ");
         return this;
     }
 
     public StringManipulator RemoveLeftSpaceFromPunctuation()
     {
-        // return OtherPunctuationAfterSpaceRegex().Replace(value, "");
-        _targetString = ReplaceByRegexp(OtherPunctuationAfterSpaceRegex(), _targetString, "");
+        ResultString = ReplaceByRegexp(OtherPunctuationAfterSpaceRegex(), ResultString, "");
         return this;
     }
 
     public StringManipulator AddSpaceAfterClosePunctuation()
     {
-        // return ClosePunctuationsRegex().Replace(value, "$1 ");
-        _targetString = ReplaceByRegexp(ClosePunctuationsRegex(), _targetString, "$1 ");
+        ResultString = ReplaceByRegexp(ClosePunctuationsRegex(), ResultString, "$1 ");
         return this;
     }
 
     public StringManipulator RemoveRightSpaceClosePunctuation()
     {
-        // return OpenPunctuationsRegex().Replace(value, "$1");
-        _targetString = ReplaceByRegexp(OpenPunctuationsRegex(), _targetString, "$1");
+        ResultString = ReplaceByRegexp(OpenPunctuationsRegex(), ResultString, "$1");
         return this;
     }
 
     public StringManipulator RemoveLeftSpaceClosePunctuation()
     {
-        // return ClosePunctuationsAfterSpaceRegex().Replace(value, "");
-        _targetString = ReplaceByRegexp(ClosePunctuationsAfterSpaceRegex(), _targetString, "");
+        ResultString = ReplaceByRegexp(ClosePunctuationsAfterSpaceRegex(), ResultString, "");
         return this;
     }
 }
