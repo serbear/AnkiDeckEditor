@@ -6,6 +6,7 @@ using System.Reactive;
 using System.Text;
 using AnkiDeckEditor.Libs;
 using AnkiDeckEditor.Models;
+using AnkiDeckEditor.Services;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -232,60 +233,85 @@ public class EstonianScreenViewModel : ViewModelBase
         // WordByWordTranslationAnkiField 
         if (sender.Tag.Equals("WordByWordTranslationAnkiField"))
         {
-            var resultBuilder = new StringBuilder();
+            var resultBuilder = new List<string>();
 
             foreach (var item in WordByWordContextSelectedItems)
+                // Marked to learn entity.
                 if (item.IsChecked)
                 {
                     var tagged = FieldTags.SelectedEntityTemplate.Replace("{1}", item.Title);
-                    resultBuilder.Append($"{tagged} ");
+                    resultBuilder.Add($"{tagged}");
                 }
+                // A common word or punctuation.
                 else
                 {
-                    resultBuilder.Append($"{item.Title} ");
+                    resultBuilder.Add($"{item.Title} ");
                 }
 
+            var sm = new StringManipulator(string.Join("", resultBuilder).Trim())
+                .AddSpaseAfterCloseHtmlTag()
+                .RemoveLeftSpaceFromPunctuation()
+                .AddSpaceAfterClosePunctuation()
+                .RemoveRightSpaceClosePunctuation()
+                .RemoveLeftSpaceClosePunctuation();
 
-            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", resultBuilder.ToString().Trim());
+            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", sm.ResultString);
         }
 
         // LiteraryTranslationAnkiField 
         if (sender.Tag.Equals("LiteraryTranslationAnkiField"))
         {
-            var resultBuilder = new StringBuilder();
+            var resultBuilder = new List<string>();
 
             foreach (var item in LiteraryContextSelectedItems)
+                // Marked to learn entity.
                 if (item.IsChecked)
                 {
                     var tagged = FieldTags.SelectedEntityTemplate.Replace("{1}", item.Title);
-                    resultBuilder.Append($"{tagged} ");
+                    resultBuilder.Add($"{tagged}");
                 }
+                // A common word or punctuation.
                 else
                 {
-                    resultBuilder.Append($"{item.Title} ");
+                    resultBuilder.Add($"{item.Title} ");
                 }
 
+            var sm = new StringManipulator(string.Join("", resultBuilder).Trim())
+                .AddSpaseAfterCloseHtmlTag()
+                .RemoveLeftSpaceFromPunctuation()
+                .AddSpaceAfterClosePunctuation()
+                .RemoveRightSpaceClosePunctuation()
+                .RemoveLeftSpaceClosePunctuation();
 
-            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", resultBuilder.ToString().Trim());
+            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", sm.ResultString);
         }
 
         // OriginalAnkiField 
         if (sender.Tag.Equals("OriginalAnkiField"))
         {
-            var resultBuilder = new StringBuilder();
+            var resultBuilder = new List<string>();
 
             foreach (var item in OriginalContextSelectedItems)
+                // Marked to learn entity.
                 if (item.IsChecked)
                 {
                     var tagged = FieldTags.SelectedEntityTemplate.Replace("{1}", item.Title);
-                    resultBuilder.Append($"{tagged} ");
+                    resultBuilder.Add($"{tagged}");
                 }
+                // A common word or punctuation.
                 else
                 {
-                    resultBuilder.Append($"{item.Title} ");
+                    resultBuilder.Add($"{item.Title} ");
                 }
 
-            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", resultBuilder.ToString().Trim());
+            var sm = new StringManipulator(string.Join("", resultBuilder).Trim())
+                .AddSpaseAfterCloseHtmlTag()
+                .RemoveLeftSpaceFromPunctuation()
+                .AddSpaceAfterClosePunctuation()
+                .RemoveRightSpaceClosePunctuation()
+                .RemoveLeftSpaceClosePunctuation();
+
+            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", sm.ResultString);
         }
 
         // SpeechPartAnkiField 
