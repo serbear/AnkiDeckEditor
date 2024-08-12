@@ -30,7 +30,8 @@
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox IsChecked="{Binding IsChecked}"
                                               Content="{Binding Title}"
-                                              IsCheckedChanged="ToggleButton_OnIsCheckedChanged" />
+                                              Tag="{Binding IsVerb}"
+                                              IsCheckedChanged="SpeechPartCheckBox_OnIsCheckedChanged" />
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsRepeater.ItemTemplate>
@@ -39,7 +40,9 @@
             </StackPanel>
         </TabItem>
         <!-- Word forms -->
-        <TabItem Header="Формы слова">
+        <TabItem Header="Формы слова"
+                 Name="WordFormsTabItem"
+                 IsVisible="{Binding IsWordFormsTabItemVisible}">
 
             <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
                   RowDefinitions="Auto,Auto,Auto,Auto,Auto">
@@ -90,7 +93,9 @@
             </Grid>
         </TabItem>
         <!-- Verb forms -->
-        <TabItem Header="Формы глагола">
+        <TabItem Header="Формы глагола"
+                 IsVisible="{Binding IsVerbFormsTabItemVisible}"
+                 Name="VerbFormsTabItem">
             <Grid ColumnDefinitions="*,*"
                   RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
                 <TextBlock Text="MA инфинитив:"

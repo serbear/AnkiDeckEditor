@@ -130,6 +130,21 @@ public class EstonianScreenViewModel : ViewModelBase
     }
 
     public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
+    private bool _isVerbFormsTabItemVisible;
+
+    public bool IsVerbFormsTabItemVisible
+    {
+        get => _isVerbFormsTabItemVisible;
+        set => this.RaiseAndSetIfChanged(ref _isVerbFormsTabItemVisible, value);
+    }
+
+    private bool _isWordFormsTabItemVisible;
+
+    public bool IsWordFormsTabItemVisible
+    {
+        get => _isWordFormsTabItemVisible;
+        set => this.RaiseAndSetIfChanged(ref _isWordFormsTabItemVisible, value);
+    }
 
     public EstonianScreenViewModel()
     {
@@ -159,7 +174,7 @@ public class EstonianScreenViewModel : ViewModelBase
             new SpeechPartToggleItem("наречие", "määrsõna", false),
             new SpeechPartToggleItem("прилагательное", "omadussõna", false),
             new SpeechPartToggleItem("местоимение", "asesõna", false),
-            new SpeechPartToggleItem("глагол", "tegusõna", false)
+            new SpeechPartToggleItem("глагол", "tegusõna", true, false)
         ];
 
         WordByWordContextSelectedItems = [];
@@ -172,6 +187,9 @@ public class EstonianScreenViewModel : ViewModelBase
             { "LiteraryTextBox", LiteraryContextSelectedItems },
             { "OriginalTextBox", OriginalContextSelectedItems }
         };
+
+        IsVerbFormsTabItemVisible = false;
+        IsWordFormsTabItemVisible = false;
     }
 
 

@@ -2,11 +2,19 @@ namespace AnkiDeckEditor.Models;
 
 public class SpeechPartToggleItem : ToggleItem
 {
-    public string? Translation { get; set; }
+    public string? Translation { get; }
+    public bool IsVerb { get; }
 
-    // ReSharper disable once ConvertToPrimaryConstructor
     public SpeechPartToggleItem(string? title, string? translation, bool isChecked) : base(title, isChecked)
     {
         Translation = translation;
+        IsVerb = false;
+    }
+
+    public SpeechPartToggleItem(string? title, string? translation, bool isVerb, bool isChecked)
+        : base(title, isChecked)
+    {
+        Translation = translation;
+        IsVerb = isVerb;
     }
 }

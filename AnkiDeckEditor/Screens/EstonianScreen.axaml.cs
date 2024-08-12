@@ -17,18 +17,38 @@ public partial class EstonianScreen : UserControl
         InitializeComponent();
         DataContext = new EstonianScreenViewModel();
     }
+
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
     }
-    private void ToggleButton_OnIsCheckedChanged(
-        object? sender,
-        RoutedEventArgs e)
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void SpeechPartCheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
-        // Uncheck all items in the "Part of Speech" list.
         var dataContext = (EstonianScreenViewModel)DataContext!;
         var speechPartItems = dataContext.SpeechPartItems;
-        foreach (var check in speechPartItems) check.IsChecked = false;
+        UncheckAllCheckBoxes(ref speechPartItems);
+        SwitchTabItems(ref dataContext, ref sender);
+    }
+
+    private static void UncheckAllCheckBoxes(ref ObservableCollection<SpeechPartToggleItem> toggleItems)
+    {
+        // Uncheck all items in the "Part of Speech" list.
+        foreach (var check in toggleItems) check.IsChecked = false;
+    }
+
+    private static void SwitchTabItems(ref EstonianScreenViewModel dataContext, ref object? sender)
+    {
+        // Switch tabs between "word forms" and "verb forms" according to a selected speech part.
+        var checkbox = (CheckBox)sender!;
+        var isSenderIsVerbCheckbox = checkbox.Tag!.Equals(true);
+        var isCheckBoxChecked = checkbox.IsChecked.Equals(true);
+        var isVerbSelected = isSenderIsVerbCheckbox && isCheckBoxChecked;
+        dataContext.IsWordFormsTabItemVisible = !isVerbSelected;
+        dataContext.IsVerbFormsTabItemVisible = isVerbSelected;
     }
 
     private void WordForWordTextBox_OnTextChanged(
