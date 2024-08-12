@@ -182,12 +182,12 @@ public class EstonianScreenViewModel : ViewModelBase
             lifetime.Shutdown();
     }
 
-    private void CopyWordFormsDeckFieldClipboardExecute(object values)
+    private static void CopyWordFormsDeckFieldClipboardExecute(object values)
     {
         var wordForms = FieldTags.SimpleWordItemsTemplate;
         var fieldIndex = 0;
 
-        // Get only word forms. Skip last element.
+        // Get only word forms. Skip the last element (a reference to a parent element of a button).
         var formCollection = ((IEnumerable<object>)values).Reverse().Skip(1).Reverse();
 
         foreach (string wordForm in formCollection)
@@ -195,6 +195,7 @@ public class EstonianScreenViewModel : ViewModelBase
             fieldIndex++;
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             // ReSharper disable once MergeConditionalExpression
+            // If a word form is absent, insert long dash instead.
             var replaceSource = wordForm == null ? "&mdash;" : wordForm;
             wordForms = wordForms.Replace($"{{{fieldIndex}}}", replaceSource);
         }
@@ -203,7 +204,7 @@ public class EstonianScreenViewModel : ViewModelBase
         Clipboard.Get().SetTextAsync(result);
     }
 
-    private void CopyVerbFormsDeckFieldClipboardExecute(object values)
+    private static void CopyVerbFormsDeckFieldClipboardExecute(object values)
     {
         var wordForms = FieldTags.VerbItemsTemplate;
         var fieldIndex = 0;
