@@ -47,15 +47,6 @@ public struct FieldTags
     /// </summary>
     public const string SimpleWordTemplate = "<div class=\"word-forms-container\">{1}</div>";
 
-    /// <summary>
-    /// 1 - ains nim<br/>
-    /// 2 - ains om<br/>
-    /// 3 - ains os<br/>
-    /// 4 - mitm nim<br/>
-    /// 5 - mitm om<br/>
-    /// 6 - mitm os<br/>
-    /// 7 - sse <br/>
-    /// </summary>
     public const string SimpleWordItemsTemplate =
         "<div class=\"grid-item amount\">AIN.</div>\n" +
         "<div class=\"grid-item form\">{1}</div>\n" +
@@ -70,16 +61,6 @@ public struct FieldTags
 
     public const string VerbTemplate = "<div class=\"word-forms-container\">{1}</div>";
 
-    /// <summary>
-    /// 1 - ma<br/>
-    /// 2 - 3p.min<br/>
-    /// 3 - da<br/>
-    /// 4 - nud<br/>
-    /// 5 - 3p<br/>
-    /// 6 - 2p.kas<br/>
-    /// 7 - tud<br/>
-    /// 8 - akse<br/>
-    /// </summary>
     public const string VerbItemsTemplate =
         "<div class=\"grid-item declension\">MA</div>\n" +
         "<div class=\"grid-item form\">{1}</div>\n" +
