@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
-using System.Text;
 using AnkiDeckEditor.Libs;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
@@ -13,78 +12,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
 
 namespace AnkiDeckEditor.ViewModels;
-
-public struct FieldTags
-{
-    public const string TranslationOriginalTemplate = "<div class=\"sentence\">{1}</div>";
-
-    public const string SelectedEntityTemplate = "<span>{1}</span>";
-
-    /// <summary>
-    /// 1 - russian translation; 2 - estonian translation
-    /// </summary>
-    public const string SpeechPartTemplate = "{1} <span>▪️</span> {2}";
-
-    /// <summary>
-    /// 1 - items
-    /// </summary>
-    public const string SimpleWordTemplate = "<div class=\"word-forms-container\">{1}</div>";
-
-    /// <summary>
-    /// 1 - ains nim<br/>
-    /// 2 - ains om<br/>
-    /// 3 - ains os<br/>
-    /// 4 - mitm nim<br/>
-    /// 5 - mitm om<br/>
-    /// 6 - mitm os<br/>
-    /// 7 - sse <br/>
-    /// </summary>
-    public const string SimpleWordItemsTemplate =
-        "<div class=\"grid-item amount\">AIN.</div>\n" +
-        "<div class=\"grid-item form\">{1}</div>\n" +
-        "<div class=\"grid-item form\">{2}</div>\n" +
-        "<div class=\"grid-item form\">{3}</div>\n" +
-        "<div class=\"grid-item amount\">MIT.</div>\n" +
-        "<div class=\"grid-item form\">{4}</div>\n" +
-        "<div class=\"grid-item form\">{5}</div>\n" +
-        "<div class=\"grid-item form\">{6}</div>\n" +
-        "<div class=\"grid-item short-into\">L.SSE.</div>\n" +
-        "<div class=\"grid-item form-short-into\">{7}</div>";
-
-    public const string VerbTemplate = "<div class=\"word-forms-container\">{1}</div>";
-
-    /// <summary>
-    /// 1 - ma<br/>
-    /// 2 - 3p.min<br/>
-    /// 3 - da<br/>
-    /// 4 - nud<br/>
-    /// 5 - 3p<br/>
-    /// 6 - 2p.kas<br/>
-    /// 7 - tud<br/>
-    /// 8 - akse<br/>
-    /// </summary>
-    public const string VerbItemsTemplate =
-        "<div class=\"grid-item declension\">MA</div>\n" +
-        "<div class=\"grid-item form\">{1}</div>\n" +
-        "<div class=\"grid-item declension\">3P.MIN</div>\n" +
-        "<div class=\"grid-item form\">{5}</div>\n" +
-        "<div class=\"grid-item declension\">DA</div>\n" +
-        "<div class=\"grid-item form\">{2}</div>\n" +
-        "<div class=\"grid-item declension\">NUD</div>\n" +
-        "<div class=\"grid-item form\">{6}</div>\n" +
-        "<div class=\"grid-item declension\">3P</div>\n" +
-        "<div class=\"grid-item form\">{3}</div>\n" +
-        "<div class=\"grid-item declension\">2P.KÄS</div>\n" +
-        "<div class=\"grid-item form\">{7}</div>\n" +
-        "<div class=\"grid-item declension\">TUD</div>\n" +
-        "<div class=\"grid-item form\">{4}</div>\n" +
-        "<div class=\"grid-item declension\">AKSE</div>\n" +
-        "<div class=\"grid-item form\">{8}</div>";
-
-    public const string VerbControlTemplate = "<div class=\"verb-control-container\">{1}</div>";
-
-    public const string VerbControlItemTemplate = "<span>{1}</span>";
-}
 
 public class EstonianScreenViewModel : ViewModelBase
 {
@@ -154,28 +81,8 @@ public class EstonianScreenViewModel : ViewModelBase
         CopyWordFormsFieldClipboardCommand = ReactiveCommand.Create<object>(CopyWordFormsDeckFieldClipboardExecute);
         CopyVerbFormsDeckFieldClipboardCommand = ReactiveCommand.Create<object>(CopyVerbFormsDeckFieldClipboardExecute);
 
-        // collections
-        VerbControlItems =
-        [
-            new ToggleItem("Value 0", false),
-            new ToggleItem("Value 1", false),
-            new ToggleItem("Value 2", false),
-            new ToggleItem("Value 3", false),
-            new ToggleItem("Value 4", false),
-            new ToggleItem("Value 5", false),
-            new ToggleItem("Value 6", false),
-            new ToggleItem("Value 7", false),
-            new ToggleItem("Value 8", false),
-            new ToggleItem("Value 9", false)
-        ];
-        SpeechPartItems =
-        [
-            new SpeechPartToggleItem("существительное", "nimisõna", false),
-            new SpeechPartToggleItem("наречие", "määrsõna", false),
-            new SpeechPartToggleItem("прилагательное", "omadussõna", false),
-            new SpeechPartToggleItem("местоимение", "asesõna", false),
-            new SpeechPartToggleItem("глагол", "tegusõna", true, false)
-        ];
+        VerbControlItems = CollectionLoader.LoadVerbControls();
+        SpeechPartItems = CollectionLoader.LoadSpeechParts();
 
         WordByWordContextSelectedItems = [];
         LiteraryContextSelectedItems = [];
@@ -188,6 +95,7 @@ public class EstonianScreenViewModel : ViewModelBase
             { "OriginalTextBox", OriginalContextSelectedItems }
         };
 
+        // Toggles
         IsVerbFormsTabItemVisible = false;
         IsWordFormsTabItemVisible = false;
     }
