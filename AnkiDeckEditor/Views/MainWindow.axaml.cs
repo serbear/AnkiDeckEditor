@@ -4,6 +4,7 @@ using Avalonia.Controls;
 
 namespace AnkiDeckEditor.Views;
 
+// ReSharper disable once PartialTypeWithSinglePart
 public partial class MainWindow : Window
 {
     private readonly DeckTypeSelectScreen? _deckTypeSelectScreen;

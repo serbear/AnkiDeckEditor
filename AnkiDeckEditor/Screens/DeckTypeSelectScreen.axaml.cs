@@ -1,16 +1,21 @@
 using System;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
 
 namespace AnkiDeckEditor.Screens;
 
+// ReSharper disable once PartialTypeWithSinglePart
 public partial class DeckTypeSelectScreen : UserControl
 {
     public DeckTypeSelectScreen()
     {
         InitializeComponent();
     }
-
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
     public event EventHandler? OnScreenChangedEvent;
 
     private void ShowEstonianScreenButton_OnClick(object sender, RoutedEventArgs e)

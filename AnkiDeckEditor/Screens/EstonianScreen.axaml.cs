@@ -5,6 +5,7 @@ using AnkiDeckEditor.Models;
 using AnkiDeckEditor.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using Avalonia.Markup.Xaml;
 
 namespace AnkiDeckEditor.Screens;
 
@@ -16,7 +17,10 @@ public partial class EstonianScreen : UserControl
         InitializeComponent();
         DataContext = new EstonianScreenViewModel();
     }
-
+    private void InitializeComponent()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
     private void ToggleButton_OnIsCheckedChanged(
         object? sender,
         RoutedEventArgs e)
