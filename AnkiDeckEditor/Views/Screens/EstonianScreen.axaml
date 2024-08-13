@@ -3,8 +3,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AnkiDeckEditor.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="1024" d:DesignHeight="768"
-             x:Class="AnkiDeckEditor.Screens.EstonianScreen"
+             xmlns:fluentContentDialog="clr-namespace:AnkiDeckEditor"
+             mc:Ignorable="d"
+             d:DesignWidth="1024"
+             d:DesignHeight="768"
+             d:DataContext="{x:Static fluentContentDialog:App.EstonianScreen}"
+             x:Class="AnkiDeckEditor.Views.Screens.EstonianScreen"
              x:DataType="vm:EstonianScreenViewModel"
              x:CompileBindings="True">
 

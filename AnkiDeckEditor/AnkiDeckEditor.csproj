@@ -35,6 +35,17 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Views\Screens\" />
+        <Compile Update="Views\Screens\DeckTypeSelectScreen.axaml.cs">
+            <DependentUpon>DeckTypeSelectScreen.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Views\Screens\EstonianScreen.axaml.cs">
+            <DependentUpon>EstonianScreen.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
+        <Compile Update="Views\Screens\EnglishScreen.axaml.cs">
+            <DependentUpon>EnglishScreen.axaml</DependentUpon>
+            <SubType>Code</SubType>
+        </Compile>
     </ItemGroup>
 </Project>

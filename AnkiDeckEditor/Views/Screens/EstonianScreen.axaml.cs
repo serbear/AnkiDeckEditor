@@ -7,7 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
-namespace AnkiDeckEditor.Screens;
+namespace AnkiDeckEditor.Views.Screens;
 
 // ReSharper disable once PartialTypeWithSinglePart
 public partial class EstonianScreen : UserControl

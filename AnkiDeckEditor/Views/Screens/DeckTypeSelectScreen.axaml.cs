@@ -3,7 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
-namespace AnkiDeckEditor.Screens;
+namespace AnkiDeckEditor.Views.Screens;
 
 // ReSharper disable once PartialTypeWithSinglePart
 public partial class DeckTypeSelectScreen : UserControl
@@ -12,10 +12,12 @@ public partial class DeckTypeSelectScreen : UserControl
     {
         InitializeComponent();
     }
+
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
     }
+
     public event EventHandler? OnScreenChangedEvent;
 
     private void ShowEstonianScreenButton_OnClick(object sender, RoutedEventArgs e)

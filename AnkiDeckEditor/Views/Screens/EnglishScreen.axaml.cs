@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace AnkiDeckEditor.Screens;
+namespace AnkiDeckEditor.Views.Screens;
 
 // ReSharper disable once PartialTypeWithSinglePart
 public partial class EnglishScreen : UserControl
@@ -10,6 +10,7 @@ public partial class EnglishScreen : UserControl
     {
         InitializeComponent();
     }
+
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);

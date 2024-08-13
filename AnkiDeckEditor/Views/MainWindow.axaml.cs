@@ -1,5 +1,5 @@
 using System;
-using AnkiDeckEditor.Screens;
+using AnkiDeckEditor.Views.Screens;
 using Avalonia.Controls;
 
 namespace AnkiDeckEditor.Views;
@@ -15,7 +15,6 @@ public partial class MainWindow : Window
         _deckTypeSelectScreen = this.FindControl<DeckTypeSelectScreen>("DeckTypeSelectScreen");
         _deckTypeSelectScreen.OnScreenChangedEvent += MyUserControlOnScreenChangedEvent;
     }
-
 
     private void MyUserControlOnScreenChangedEvent(object? sender, EventArgs e)
     {

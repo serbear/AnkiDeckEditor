@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using AnkiDeckEditor.Services;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
@@ -14,6 +18,8 @@ namespace AnkiDeckEditor;
 public partial class App : Application
 {
     public static MainWindowViewModel MainWindow => Locator.Current.GetService<MainWindowViewModel>()!;
+    public static EstonianScreenViewModel EstonianScreen => Locator.Current.GetService<EstonianScreenViewModel>()!;
+    public static EnglishScreenViewModel EnglishScreen => Locator.Current.GetService<EnglishScreenViewModel>()!;
 
     public override void Initialize()
     {
@@ -30,8 +36,10 @@ public partial class App : Application
                 dialogFactory: new DialogFactory().AddFluent()),
             x => Locator.Current.GetService(x)));
 
-        // Register DI.
+        // Register DI for view models.
         SplatRegistrations.Register<MainWindowViewModel>();
+        SplatRegistrations.Register<EstonianScreenViewModel>();
+        SplatRegistrations.Register<EnglishScreenViewModel>();
         SplatRegistrations.SetupIOC();
     }
 
@@ -45,4 +53,5 @@ public partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
     }
+
 }

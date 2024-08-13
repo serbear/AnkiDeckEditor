@@ -3,8 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:AnkiDeckEditor.ViewModels"
-        xmlns:screens="using:AnkiDeckEditor.Screens"
         xmlns:fluentContentDialog="clr-namespace:AnkiDeckEditor"
+        xmlns:screens1="clr-namespace:AnkiDeckEditor.Views.Screens"
         mc:Ignorable="d"
         d:DesignWidth="1024"
         d:DesignHeight="768"
@@ -25,8 +25,8 @@
     </Design.DataContext>
 
     <Panel>
-        <screens:DeckTypeSelectScreen x:Name="DeckTypeSelectScreen"
-                                      IsVisible="True" />
+        <screens1:DeckTypeSelectScreen x:Name="DeckTypeSelectScreen"
+                                       IsVisible="True" />
         <ContentControl x:Name="MainWindowContentArea" />
     </Panel>
 </Window>

@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using AnkiDeckEditor.ViewModels;
 using AnkiDeckEditor.Views;
+using AnkiDeckEditor.Views.Screens;
 using HanumanInstitute.MvvmDialogs.Avalonia;
 
 namespace AnkiDeckEditor;
@@ -12,6 +13,8 @@ public class ViewLocator : StrongViewLocator
     public ViewLocator()
     {
         Register<MainWindowViewModel, MainWindow>();
+        Register<EstonianScreenViewModel, EstonianScreen>();
+        Register<EnglishScreenViewModel, EnglishScreen>();
     }
 }
 // public class ViewLocator : IDataTemplate
