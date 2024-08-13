@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:AnkiDeckEditor.ViewModels"
         xmlns:fluentContentDialog="clr-namespace:AnkiDeckEditor"
-        xmlns:screens1="clr-namespace:AnkiDeckEditor.Views.Screens"
+        xmlns:screens="clr-namespace:AnkiDeckEditor.Views.Screens"
         mc:Ignorable="d"
         d:DesignWidth="1024"
         d:DesignHeight="768"
@@ -16,17 +16,9 @@
         Title="AnkiDeckEditor"
         Width="1024"
         Height="768">
-
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext 
-             property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel />
-    </Design.DataContext>
-
     <Panel>
-        <screens1:DeckTypeSelectScreen x:Name="DeckTypeSelectScreen"
-                                       IsVisible="True" />
+        <screens:DeckTypeSelectScreen x:Name="DeckTypeSelectScreen"
+                                      IsVisible="True" />
         <ContentControl x:Name="MainWindowContentArea" />
     </Panel>
 </Window>

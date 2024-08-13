@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using AnkiDeckEditor.Services;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using AnkiDeckEditor.ViewModels;
 using AnkiDeckEditor.Views;
-using HanumanInstitute.MvvmDialogs;
-using HanumanInstitute.MvvmDialogs.Avalonia;
-using Microsoft.Extensions.Logging;
 using Splat;
 
 namespace AnkiDeckEditor;
@@ -25,17 +18,6 @@ public partial class App : Application
     {
         AvaloniaXamlLoader.Load(this);
 
-        // ReSharper disable once UnusedParameter.Local
-        var loggerFactory = LoggerFactory.Create(builder => builder.AddFilter(logLevel => true).AddDebug());
-
-        var build = Locator.CurrentMutable;
-        build.RegisterLazySingleton(() => (IDialogService)new DialogService(
-            new DialogManager(
-                new ViewLocator(),
-                logger: loggerFactory.CreateLogger<DialogManager>(),
-                dialogFactory: new DialogFactory().AddFluent()),
-            x => Locator.Current.GetService(x)));
-
         // Register DI for view models.
         SplatRegistrations.Register<MainWindowViewModel>();
         SplatRegistrations.Register<EstonianScreenViewModel>();
@@ -48,10 +30,9 @@ public partial class App : Application
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel()
+                DataContext = MainWindow
             };
 
         base.OnFrameworkInitializationCompleted();
     }
-
 }
