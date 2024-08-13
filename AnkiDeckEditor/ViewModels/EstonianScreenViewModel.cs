@@ -10,6 +10,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace AnkiDeckEditor.ViewModels;
 
@@ -17,61 +18,16 @@ public class EstonianScreenViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
     public ReactiveCommand<Control, Unit> CopyFieldClipboardCommand { get; }
-
     public ReactiveCommand<object, Unit> CopyWordFormsFieldClipboardCommand { get; }
-
     public ReactiveCommand<object, Unit> CopyVerbFormsDeckFieldClipboardCommand { get; }
-
     public ObservableCollection<ToggleItem> VerbControlItems { get; }
-
-    private ObservableCollection<SpeechPartToggleItem> _speechPartItems;
-
-    public ObservableCollection<SpeechPartToggleItem> SpeechPartItems
-    {
-        get => _speechPartItems;
-        set => this.RaiseAndSetIfChanged(ref _speechPartItems, value);
-    }
-
-    private ObservableCollection<ContextToggleItem> _wordByWordContextSelectedItems;
-
-    public ObservableCollection<ContextToggleItem> WordByWordContextSelectedItems
-    {
-        get => _wordByWordContextSelectedItems;
-        set => this.RaiseAndSetIfChanged(ref _wordByWordContextSelectedItems, value);
-    }
-
-    private ObservableCollection<ContextToggleItem> _literaryContextSelectedItems;
-
-    public ObservableCollection<ContextToggleItem> LiteraryContextSelectedItems
-    {
-        get => _literaryContextSelectedItems;
-        set => this.RaiseAndSetIfChanged(ref _literaryContextSelectedItems, value);
-    }
-
-    private ObservableCollection<ContextToggleItem> _originalContextSelectedItems;
-
-    public ObservableCollection<ContextToggleItem> OriginalContextSelectedItems
-    {
-        get => _originalContextSelectedItems;
-        set => this.RaiseAndSetIfChanged(ref _originalContextSelectedItems, value);
-    }
-
     public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
-    private bool _isVerbFormsTabItemVisible;
-
-    public bool IsVerbFormsTabItemVisible
-    {
-        get => _isVerbFormsTabItemVisible;
-        set => this.RaiseAndSetIfChanged(ref _isVerbFormsTabItemVisible, value);
-    }
-
-    private bool _isWordFormsTabItemVisible;
-
-    public bool IsWordFormsTabItemVisible
-    {
-        get => _isWordFormsTabItemVisible;
-        set => this.RaiseAndSetIfChanged(ref _isWordFormsTabItemVisible, value);
-    }
+    [Reactive] public ObservableCollection<SpeechPartToggleItem> SpeechPartItems { get; set; }
+    [Reactive] public ObservableCollection<ContextToggleItem> WordByWordContextSelectedItems { get; set; }
+    [Reactive] public ObservableCollection<ContextToggleItem> LiteraryContextSelectedItems { get; set; }
+    [Reactive] public ObservableCollection<ContextToggleItem> OriginalContextSelectedItems { get; set; }
+    [Reactive] public bool IsVerbFormsTabItemVisible { get; set; }
+    [Reactive] public bool IsWordFormsTabItemVisible { get; set; }
 
     public EstonianScreenViewModel()
     {
