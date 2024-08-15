@@ -34,7 +34,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox IsChecked="{Binding IsChecked}"
                                               Content="{Binding Title}"
-                                              Tag="{Binding IsVerb}"
+                                              Tag="{Binding VerbType}"
                                               IsCheckedChanged="SpeechPartCheckBox_OnIsCheckedChanged" />
                                 </StackPanel>
                             </DataTemplate>

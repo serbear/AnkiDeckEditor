@@ -60,10 +60,6 @@ public class EstonianScreenViewModel : ViewModelBase
     // ReSharper disable once MemberCanBeMadeStatic.Local
     private void ExitButtonExecute()
     {
-        
-        
-        
-        
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
             lifetime.Shutdown();
     }
@@ -121,13 +117,22 @@ public class EstonianScreenViewModel : ViewModelBase
         if (sender.Tag.Equals("WordByWordTranslationAnkiField"))
         {
             var resultBuilder = new List<string>();
+            var totalMarkedEntities = WordByWordContextSelectedItems.Count(e => e.IsChecked);
 
             foreach (var item in WordByWordContextSelectedItems)
-                // Marked to learn entity.
+                // Marked to learn entity. 
                 if (item.IsChecked)
                 {
                     var tagged = FieldTags.SelectedEntityTemplate.Replace("{1}", item.Title);
-                    resultBuilder.Add($"{tagged}");
+                    var isCompoundVerbSelected = SpeechPartItems.Any(
+                        e => e is { VerbType: VerbTypes.Compound, IsChecked: true });
+                    var resultString =
+                        totalMarkedEntities == 1 && isCompoundVerbSelected
+                            ? $"{tagged}{FieldTags.CompoundVerbMarker}"
+                            : $"{tagged}";
+
+                    resultBuilder.Add(resultString);
+                    totalMarkedEntities--;
                 }
                 // A common word or punctuation.
                 else

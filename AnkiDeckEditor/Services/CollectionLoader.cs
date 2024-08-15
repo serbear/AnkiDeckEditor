@@ -25,7 +25,9 @@ public static class CollectionLoader
             new SpeechPartToggleItem("наречие", "määrsõna", false),
             new SpeechPartToggleItem("прилагательное", "omadussõna", false),
             new SpeechPartToggleItem("местоимение", "asesõna", false),
-            new SpeechPartToggleItem("глагол", "tegusõna", true, false)
+            // new SpeechPartToggleItem("глагол", "tegusõna", true, false)
+            new SpeechPartToggleItem("глагол", "tegusõna", VerbTypes.Simple, false),
+            new SpeechPartToggleItem("глагол составной", "ühendtegusõna", VerbTypes.Compound, false)
         ];
         return output;
     }
@@ -33,6 +35,7 @@ public static class CollectionLoader
 
 public struct FieldTags
 {
+    public const string CompoundVerbMarker = "<sup>üv</sup>";
     public const string TranslationOriginalTemplate = "<div class=\"sentence\">{1}</div>";
 
     public const string SelectedEntityTemplate = "<span>{1}</span>";

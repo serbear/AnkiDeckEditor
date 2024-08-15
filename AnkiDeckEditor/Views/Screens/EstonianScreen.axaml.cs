@@ -44,9 +44,10 @@ public partial class EstonianScreen : UserControl
     {
         // Switch tabs between "word forms" and "verb forms" according to a selected speech part.
         var checkbox = (CheckBox)sender!;
-        var isSenderIsVerbCheckbox = checkbox.Tag!.Equals(true);
         var isCheckBoxChecked = checkbox.IsChecked.Equals(true);
-        var isVerbSelected = isSenderIsVerbCheckbox && isCheckBoxChecked;
+        var isVerbSelected = checkbox.Tag != null;
+
+        isVerbSelected = isVerbSelected && isCheckBoxChecked;
         dataContext.IsWordFormsTabItemVisible = !isVerbSelected;
         dataContext.IsVerbFormsTabItemVisible = isVerbSelected;
     }
