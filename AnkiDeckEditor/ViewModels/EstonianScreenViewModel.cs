@@ -66,7 +66,7 @@ public class EstonianScreenViewModel : ViewModelBase
 
     private static void CopyWordFormsDeckFieldClipboardExecute(object values)
     {
-        var wordForms = FieldTags.SimpleWordItemsTemplate;
+        var wordForms = FieldTags.SimpleWordItemsWithSseFormTemplate;
         var fieldIndex = 0;
 
         // Get only word forms. Skip the last element (a reference to a parent element of a button).
@@ -75,14 +75,16 @@ public class EstonianScreenViewModel : ViewModelBase
         foreach (string wordForm in formCollection)
         {
             fieldIndex++;
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-            // ReSharper disable once MergeConditionalExpression
-            // If a word form is absent, insert long dash instead.
-            var replaceSource = wordForm == null ? "&mdash;" : wordForm;
-            wordForms = wordForms.Replace($"{{{fieldIndex}}}", replaceSource);
+            var replacement = string.IsNullOrWhiteSpace(wordForm)
+                ? FieldTags.LongDashHtmlCode
+                : wordForm.Trim();
+            wordForms = wordForms.Replace(FieldTags.GetPlaceMarker(fieldIndex), replacement);
         }
 
-        var result = FieldTags.SimpleWordTemplate.Replace("{1}", wordForms);
+        var result = FieldTags.SimpleWordTemplate
+            .Replace(FieldTags.GetPlaceMarker(1), wordForms)
+            .Replace("\n", "");
+
         Clipboard.Get().SetTextAsync(result);
     }
 
@@ -100,10 +102,10 @@ public class EstonianScreenViewModel : ViewModelBase
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             // ReSharper disable once MergeConditionalExpression
             var replaceSource = wordForm == null ? "&mdash;" : wordForm;
-            wordForms = wordForms.Replace($"{{{fieldIndex}}}", replaceSource);
+            wordForms = wordForms.Replace(FieldTags.GetPlaceMarker(fieldIndex), replaceSource);
         }
 
-        var result = FieldTags.VerbTemplate.Replace("{1}", wordForms);
+        var result = FieldTags.VerbTemplate.Replace(FieldTags.GetPlaceMarker(1), wordForms);
         Clipboard.Get().SetTextAsync(result);
     }
 
@@ -123,7 +125,7 @@ public class EstonianScreenViewModel : ViewModelBase
                 // Marked to learn entity. 
                 if (item.IsChecked)
                 {
-                    var tagged = FieldTags.SelectedEntityTemplate.Replace("{1}", item.Title);
+                    var tagged = FieldTags.SelectedEntityTemplate.Replace(FieldTags.GetPlaceMarker(1), item.Title);
                     var isCompoundVerbSelected = SpeechPartItems.Any(
                         e => e is { VerbType: VerbTypes.Compound, IsChecked: true });
                     var resultString =
@@ -147,7 +149,7 @@ public class EstonianScreenViewModel : ViewModelBase
                 .RemoveRightSpaceClosePunctuation()
                 .RemoveLeftSpaceClosePunctuation();
 
-            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", sm.ResultString);
+            result = FieldTags.TranslationOriginalTemplate.Replace(FieldTags.GetPlaceMarker(1), sm.ResultString);
         }
 
         // LiteraryTranslationAnkiField 
@@ -159,7 +161,7 @@ public class EstonianScreenViewModel : ViewModelBase
                 // Marked to learn entity.
                 if (item.IsChecked)
                 {
-                    var tagged = FieldTags.SelectedEntityTemplate.Replace("{1}", item.Title);
+                    var tagged = FieldTags.SelectedEntityTemplate.Replace(FieldTags.GetPlaceMarker(1), item.Title);
                     resultBuilder.Add($"{tagged}");
                 }
                 // A common word or punctuation.
@@ -175,7 +177,7 @@ public class EstonianScreenViewModel : ViewModelBase
                 .RemoveRightSpaceClosePunctuation()
                 .RemoveLeftSpaceClosePunctuation();
 
-            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", sm.ResultString);
+            result = FieldTags.TranslationOriginalTemplate.Replace(FieldTags.GetPlaceMarker(1), sm.ResultString);
         }
 
         // OriginalAnkiField 
@@ -187,7 +189,7 @@ public class EstonianScreenViewModel : ViewModelBase
                 // Marked to learn entity.
                 if (item.IsChecked)
                 {
-                    var tagged = FieldTags.SelectedEntityTemplate.Replace("{1}", item.Title);
+                    var tagged = FieldTags.SelectedEntityTemplate.Replace(FieldTags.GetPlaceMarker(1), item.Title);
                     resultBuilder.Add($"{tagged}");
                 }
                 // A common word or punctuation.
@@ -203,7 +205,7 @@ public class EstonianScreenViewModel : ViewModelBase
                 .RemoveRightSpaceClosePunctuation()
                 .RemoveLeftSpaceClosePunctuation();
 
-            result = FieldTags.TranslationOriginalTemplate.Replace("{1}", sm.ResultString);
+            result = FieldTags.TranslationOriginalTemplate.Replace(FieldTags.GetPlaceMarker(1), sm.ResultString);
         }
 
         // SpeechPartAnkiField 
@@ -212,8 +214,8 @@ public class EstonianScreenViewModel : ViewModelBase
             var filtered = SpeechPartItems.First(e => e.IsChecked);
 
             result = FieldTags.SpeechPartTemplate
-                .Replace("{1}", filtered.Title)
-                .Replace("{2}", filtered.Translation);
+                .Replace(FieldTags.GetPlaceMarker(1), filtered.Title)
+                .Replace(FieldTags.GetPlaceMarker(2), filtered.Translation);
         }
 
         // MainEntityAnkiField
@@ -227,11 +229,11 @@ public class EstonianScreenViewModel : ViewModelBase
             // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var verbControl in selectedVerbControls)
             {
-                var item = FieldTags.VerbControlItemTemplate.Replace("{1}", verbControl.Title);
+                var item = FieldTags.VerbControlItemTemplate.Replace(FieldTags.GetPlaceMarker(1), verbControl.Title);
                 result += item;
             }
 
-            result = FieldTags.VerbControlTemplate.Replace("{1}", result);
+            result = FieldTags.VerbControlTemplate.Replace(FieldTags.GetPlaceMarker(1), result);
         }
 
         Clipboard.Get().SetTextAsync(result);

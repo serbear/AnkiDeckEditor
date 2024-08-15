@@ -35,6 +35,7 @@ public static class CollectionLoader
 
 public struct FieldTags
 {
+    public const string LongDashHtmlCode = "&mdash;";
     public const string CompoundVerbMarker = "<sup>üv</sup>";
     public const string TranslationOriginalTemplate = "<div class=\"sentence\">{1}</div>";
 
@@ -50,17 +51,19 @@ public struct FieldTags
     /// </summary>
     public const string SimpleWordTemplate = "<div class=\"word-forms-container\">{1}</div>";
 
-    public const string SimpleWordItemsTemplate =
-        "<div class=\"grid-item amount\">AIN.</div>\n" +
-        "<div class=\"grid-item form\">{1}</div>\n" +
-        "<div class=\"grid-item form\">{2}</div>\n" +
-        "<div class=\"grid-item form\">{3}</div>\n" +
-        "<div class=\"grid-item amount\">MIT.</div>\n" +
-        "<div class=\"grid-item form\">{4}</div>\n" +
-        "<div class=\"grid-item form\">{5}</div>\n" +
-        "<div class=\"grid-item form\">{6}</div>\n" +
-        "<div class=\"grid-item short-into\">L.SSE.</div>\n" +
-        "<div class=\"grid-item form-short-into\">{7}</div>";
+    public const string SimpleWordItemsWithSseFormTemplate =
+        """
+        <div class="grid-item amount">AIN.</div>
+        <div class="grid-item form">{1}</div>
+        <div class="grid-item form">{2}</div>
+        <div class="grid-item form">{3}</div>
+        <div class="grid-item amount">MIT.</div>
+        <div class="grid-item form">{4}</div>
+        <div class="grid-item form">{5}</div>
+        <div class="grid-item form">{6}</div>
+        <div class="grid-item short-into">L.SSE.</div>
+        <div class="grid-item form-short-into">{7}</div>
+        """;
 
     public const string VerbTemplate = "<div class=\"word-forms-container\">{1}</div>";
 
@@ -85,4 +88,14 @@ public struct FieldTags
     public const string VerbControlTemplate = "<div class=\"verb-control-container\">{1}</div>";
 
     public const string VerbControlItemTemplate = "<span>{1}</span>";
+
+    /// <summary>
+    /// Returns the string representation of the replacement marker value in the templates with the location number.
+    /// </summary>
+    /// <param name="number">The place number.</param>
+    public static string GetPlaceMarker(int number)
+    {
+        var output = $"{{{number}}}";
+        return output;
+    }
 }
