@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reactive;
+using AnkiDeckEditor.Views.Dialogs;
 using Avalonia;
-using ReactiveUI;
 using Avalonia.Controls.ApplicationLifetimes;
+using DialogHostAvalonia;
+using ReactiveUI;
 
 namespace AnkiDeckEditor.ViewModels;
 
@@ -16,9 +18,21 @@ public class MainWindowViewModel : ViewModelBase
     }
 
     [SuppressMessage("ReSharper", "MemberCanBeMadeStatic.Local")]
-    private void ShutdownApplicationExecute()
+    private async void ShutdownApplicationExecute()
     {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
-            lifetime.Shutdown();
+        // Ask user for exit confirmation.
+        var dialogResult = (bool)(await DialogHost.Show(new ExitDialog(), PublicConsts.MainDialogHost))!;
+
+        // Other values - Exit is not confirmed.
+        bool[] checks =
+        [
+            dialogResult,
+            Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime
+        ];
+
+        // Check the user's answer.
+        // True, True - User has confirmed exit.
+        if (checks is not [true, true]) return;
+        ((ClassicDesktopStyleApplicationLifetime)Application.Current?.ApplicationLifetime!).Shutdown();
     }
 }

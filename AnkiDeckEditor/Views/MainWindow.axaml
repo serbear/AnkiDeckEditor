@@ -5,6 +5,7 @@
         xmlns:vm="using:AnkiDeckEditor.ViewModels"
         xmlns:fluentContentDialog="clr-namespace:AnkiDeckEditor"
         xmlns:screens="clr-namespace:AnkiDeckEditor.Views.Screens"
+        xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
         mc:Ignorable="d"
         d:DesignWidth="1024"
         d:DesignHeight="768"
@@ -16,9 +17,17 @@
         Title="AnkiDeckEditor"
         Width="1024"
         Height="768">
-    <Panel>
-        <screens:DeckTypeSelectScreen x:Name="DeckTypeSelectScreen"
-                                      IsVisible="True" />
-        <ContentControl x:Name="MainWindowContentArea" />
-    </Panel>
+
+    <dialogHostAvalonia:DialogHost Identifier="MainDialogHost"
+                                   DialogMargin="0"
+                                   dialogHostAvalonia:DialogHostStyle.CornerRadius="0"
+                                   OverlayBackground="Black"
+                                   Background="Chocolate">
+        <Panel>
+            <screens:DeckTypeSelectScreen x:Name="DeckTypeSelectScreen"
+                                          IsVisible="True" />
+            <ContentControl x:Name="MainWindowContentArea" />
+        </Panel>
+    </dialogHostAvalonia:DialogHost>
+
 </Window>

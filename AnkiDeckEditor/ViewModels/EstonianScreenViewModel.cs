@@ -32,7 +32,7 @@ public class EstonianScreenViewModel : ViewModelBase
     public EstonianScreenViewModel()
     {
         // commands
-        CopyButtonCommand = ReactiveCommand.Create(CopyCommandExecute);
+        CopyButtonCommand = ReactiveCommand.Create(ExitButtonExecute);
         CopyFieldClipboardCommand = ReactiveCommand.Create<Control>(CopyDeckFieldClipboardExecute);
         CopyWordFormsFieldClipboardCommand = ReactiveCommand.Create<object>(CopyWordFormsDeckFieldClipboardExecute);
         CopyVerbFormsDeckFieldClipboardCommand = ReactiveCommand.Create<object>(CopyVerbFormsDeckFieldClipboardExecute);
@@ -58,8 +58,12 @@ public class EstonianScreenViewModel : ViewModelBase
 
 
     // ReSharper disable once MemberCanBeMadeStatic.Local
-    private void CopyCommandExecute()
+    private void ExitButtonExecute()
     {
+        
+        
+        
+        
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
             lifetime.Shutdown();
     }

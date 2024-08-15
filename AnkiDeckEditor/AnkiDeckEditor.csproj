@@ -13,15 +13,14 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.1.2"/>
-        <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.1.2"/>
-        <PackageReference Include="Avalonia.Desktop" Version="11.1.2"/>
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.2"/>
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.2"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.1.2"/>
-        <PackageReference Include="Avalonia.ReactiveUI" Version="11.1.2"/>
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2"/>
+        <PackageReference Include="Avalonia" Version="11.1.3"/>
+        <PackageReference Include="Avalonia.Controls.ItemsRepeater" Version="11.1.3"/>
+        <PackageReference Include="Avalonia.Desktop" Version="11.1.3"/>
+        <PackageReference Include="Avalonia.Diagnostics" Version="11.1.3"/>
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.3"/>
+        <PackageReference Include="Avalonia.ReactiveUI" Version="11.1.3"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.3"/>
         <PackageReference Include="ReactiveUI.Fody" Version="19.5.41"/>
         <PackageReference Include="Splat" Version="15.1.1"/>
         <PackageReference Include="Splat.DependencyInjection.SourceGenerator" Version="1.2.3">
@@ -43,5 +42,20 @@
             <DependentUpon>EnglishScreen.axaml</DependentUpon>
             <SubType>Code</SubType>
         </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+        <UpToDateCheckInput Remove="Views\Dialogs\ExitDialog.axaml"/>
+        <UpToDateCheckInput Remove="Views\Dialogs\Overlay.axaml"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="packages\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="DialogHost.Avalonia">
+            <HintPath>packages\DialogHost.Avalonia.dll</HintPath>
+        </Reference>
     </ItemGroup>
 </Project>
