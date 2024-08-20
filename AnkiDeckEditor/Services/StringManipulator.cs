@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace AnkiDeckEditor.Services;
@@ -19,12 +21,14 @@ public partial class StringManipulator
     [GeneratedRegex(@"\s(?=\p{Pf}|\p{Pe})")]
     private partial Regex ClosePunctuationsAfterSpaceRegex();
 
-    public string ResultString { get; private set; }
+    public string ResultString { get=>_resultString.TrimEnd(); private set=>_resultString = value; }
 
+    private string _resultString;
+    
     // ReSharper disable once ConvertToPrimaryConstructor
     public StringManipulator(string targetString)
     {
-        ResultString = targetString;
+        _resultString = targetString;
     }
 
     private static string ReplaceByRegexp(Regex generatedPattern, string value, string replaceWith)
@@ -34,31 +38,54 @@ public partial class StringManipulator
 
     public StringManipulator AddSpaseAfterCloseHtmlTag()
     {
-        ResultString = ReplaceByRegexp(CloseHtmlTag(), ResultString, " ");
+        _resultString = ReplaceByRegexp(CloseHtmlTag(), _resultString, " ");
         return this;
     }
 
     public StringManipulator RemoveLeftSpaceFromPunctuation()
     {
-        ResultString = ReplaceByRegexp(OtherPunctuationAfterSpaceRegex(), ResultString, "");
+        _resultString = ReplaceByRegexp(OtherPunctuationAfterSpaceRegex(), _resultString, "");
         return this;
     }
 
     public StringManipulator AddSpaceAfterClosePunctuation()
     {
-        ResultString = ReplaceByRegexp(ClosePunctuationsRegex(), ResultString, "$1 ");
+        _resultString = ReplaceByRegexp(ClosePunctuationsRegex(), _resultString, "$1 ");
         return this;
     }
 
     public StringManipulator RemoveRightSpaceClosePunctuation()
     {
-        ResultString = ReplaceByRegexp(OpenPunctuationsRegex(), ResultString, "$1");
+        _resultString = ReplaceByRegexp(OpenPunctuationsRegex(), _resultString, "$1");
         return this;
     }
 
     public StringManipulator RemoveLeftSpaceClosePunctuation()
     {
-        ResultString = ReplaceByRegexp(ClosePunctuationsAfterSpaceRegex(), ResultString, "");
+        _resultString = ReplaceByRegexp(ClosePunctuationsAfterSpaceRegex(), _resultString, "");
+        return this;
+    }
+
+    public StringManipulator FixDotPunctuation()
+    {
+        // todo: move to other method.
+        var closePunctuationChars = new List<char>();
+
+        for (var i = 0; i <= char.MaxValue; i++)
+        {
+            var c = (char)i;
+            if (char.GetUnicodeCategory(c) == UnicodeCategory.ClosePunctuation) closePunctuationChars.Add(c);
+        }
+        // --
+
+        foreach (var c in closePunctuationChars)
+        {
+            var charSequence = $".{c}";
+            if (!_resultString.Contains(charSequence)) continue;
+            var swappedChars = $"{c}.";
+            _resultString = _resultString.Replace(charSequence, swappedChars);
+        }
+
         return this;
     }
 }

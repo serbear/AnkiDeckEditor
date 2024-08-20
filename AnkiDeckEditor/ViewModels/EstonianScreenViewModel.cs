@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Reactive;
 using AnkiDeckEditor.Libs;
@@ -147,7 +148,8 @@ public class EstonianScreenViewModel : ViewModelBase
                 .RemoveLeftSpaceFromPunctuation()
                 .AddSpaceAfterClosePunctuation()
                 .RemoveRightSpaceClosePunctuation()
-                .RemoveLeftSpaceClosePunctuation();
+                .RemoveLeftSpaceClosePunctuation()
+                .FixDotPunctuation();
 
             result = FieldTags.TranslationOriginalTemplate.Replace(FieldTags.GetPlaceMarker(1), sm.ResultString);
         }
