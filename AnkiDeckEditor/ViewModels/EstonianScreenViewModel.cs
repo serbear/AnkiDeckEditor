@@ -28,6 +28,7 @@ public class EstonianScreenViewModel : ViewModelBase
     [Reactive] public ObservableCollection<ContextToggleItem> OriginalContextSelectedItems { get; set; }
     [Reactive] public bool IsVerbFormsTabItemVisible { get; set; }
     [Reactive] public bool IsWordFormsTabItemVisible { get; set; }
+    public ReactiveCommand<Control, Unit> PasteFromClipboardCommand { get; }
 
     public EstonianScreenViewModel()
     {
@@ -36,6 +37,7 @@ public class EstonianScreenViewModel : ViewModelBase
         CopyFieldClipboardCommand = ReactiveCommand.Create<Control>(CopyDeckFieldClipboardExecute);
         CopyWordFormsFieldClipboardCommand = ReactiveCommand.Create<object>(CopyWordFormsDeckFieldClipboardExecute);
         CopyVerbFormsDeckFieldClipboardCommand = ReactiveCommand.Create<object>(CopyVerbFormsDeckFieldClipboardExecute);
+        PasteFromClipboardCommand = ReactiveCommand.Create<Control>(PasteFromClipboardExecute);
 
         VerbControlItems = CollectionLoader.LoadVerbControls();
         SpeechPartItems = CollectionLoader.LoadSpeechParts();
@@ -54,6 +56,12 @@ public class EstonianScreenViewModel : ViewModelBase
         // Toggles
         IsVerbFormsTabItemVisible = false;
         IsWordFormsTabItemVisible = false;
+    }
+
+    private static async void PasteFromClipboardExecute(Control value)
+    {
+        var text = await Clipboard.Get();
+        ((TextBox)value).Text = text;
     }
 
 
@@ -85,7 +93,7 @@ public class EstonianScreenViewModel : ViewModelBase
             .Replace(FieldTags.GetPlaceMarker(1), wordForms)
             .Replace("\n", "");
 
-        Clipboard.Get().SetTextAsync(result);
+        Clipboard.Set(result);
     }
 
     private static void CopyVerbFormsDeckFieldClipboardExecute(object values)
@@ -106,7 +114,7 @@ public class EstonianScreenViewModel : ViewModelBase
         }
 
         var result = FieldTags.VerbTemplate.Replace(FieldTags.GetPlaceMarker(1), wordForms);
-        Clipboard.Get().SetTextAsync(result);
+        Clipboard.Set(result);
     }
 
     private void CopyDeckFieldClipboardExecute(Control sender)
@@ -237,6 +245,6 @@ public class EstonianScreenViewModel : ViewModelBase
             result = FieldTags.VerbControlTemplate.Replace(FieldTags.GetPlaceMarker(1), result);
         }
 
-        Clipboard.Get().SetTextAsync(result);
+        Clipboard.Set(result);
     }
 }

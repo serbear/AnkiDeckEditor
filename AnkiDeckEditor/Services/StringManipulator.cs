@@ -80,7 +80,7 @@ public partial class StringManipulator
         return this;
     }
 
-    private List<char> GetPunctuationChars(UnicodeCategory category)
+    private static List<char> GetPunctuationChars(UnicodeCategory category)
     {
         var output = new List<char>();
 
