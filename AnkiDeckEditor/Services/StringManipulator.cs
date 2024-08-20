@@ -21,10 +21,10 @@ public partial class StringManipulator
     [GeneratedRegex(@"\s(?=\p{Pf}|\p{Pe})")]
     private partial Regex ClosePunctuationsAfterSpaceRegex();
 
-    public string ResultString { get=>_resultString.TrimEnd(); private set=>_resultString = value; }
+    public string ResultString => _resultString.TrimEnd();
 
     private string _resultString;
-    
+
     // ReSharper disable once ConvertToPrimaryConstructor
     public StringManipulator(string targetString)
     {
@@ -68,16 +68,7 @@ public partial class StringManipulator
 
     public StringManipulator FixDotPunctuation()
     {
-        // todo: move to other method.
-        var closePunctuationChars = new List<char>();
-
-        for (var i = 0; i <= char.MaxValue; i++)
-        {
-            var c = (char)i;
-            if (char.GetUnicodeCategory(c) == UnicodeCategory.ClosePunctuation) closePunctuationChars.Add(c);
-        }
-        // --
-
+        var closePunctuationChars = GetPunctuationChars(UnicodeCategory.ClosePunctuation);
         foreach (var c in closePunctuationChars)
         {
             var charSequence = $".{c}";
@@ -87,5 +78,18 @@ public partial class StringManipulator
         }
 
         return this;
+    }
+
+    private List<char> GetPunctuationChars(UnicodeCategory category)
+    {
+        var output = new List<char>();
+
+        for (var i = 0; i <= char.MaxValue; i++)
+        {
+            var c = (char)i;
+            if (char.GetUnicodeCategory(c) == category) output.Add(c);
+        }
+
+        return output;
     }
 }
