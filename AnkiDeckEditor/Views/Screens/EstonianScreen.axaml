@@ -469,6 +469,9 @@
             </StackPanel>
 
         </TabItem>
+        <!-- 
+        Actions
+        -->
         <TabItem Header="Действия">
 
             <StackPanel HorizontalAlignment="Center">
@@ -484,14 +487,14 @@
                         CommandParameter="{Binding ElementName=OriginalTextBox}"
                         Command="{Binding CopyFieldClipboardCommand}" />
 
-                <!-- f  -->
                 <Button Content="Часть речи"
                         Tag="SpeechPartAnkiField"
                         CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                         Command="{Binding CopyFieldClipboardCommand}" />
                 <Button Content="Формы слова"
                         Tag="WordFormsAnkiField"
-                        Command="{Binding CopyWordFormsFieldClipboardCommand}">
+                        Command="{Binding CopyWordFormsFieldClipboardCommand}"
+                        IsVisible="{Binding IsWordFormsTabItemVisible}">
 
                     <Button.CommandParameter>
                         <MultiBinding>
@@ -506,8 +509,10 @@
                         </MultiBinding>
                     </Button.CommandParameter>
                 </Button>
+
                 <Button Content="Формы глагола"
-                        Command="{Binding CopyVerbFormsDeckFieldClipboardCommand}">
+                        Command="{Binding CopyVerbFormsDeckFieldClipboardCommand}"
+                        IsVisible="{Binding IsVerbFormsTabItemVisible}">
                     <Button.CommandParameter>
                         <MultiBinding>
                             <Binding Path="#MaInfTextBox.Text" />
@@ -522,6 +527,7 @@
                         </MultiBinding>
                     </Button.CommandParameter>
                 </Button>
+
                 <Button Content="Управление глагола"
                         CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                         Tag="VerbControlAnkiField"
