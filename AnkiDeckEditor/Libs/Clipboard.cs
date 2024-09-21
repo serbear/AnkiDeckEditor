@@ -6,8 +6,15 @@ using Avalonia.Controls.ApplicationLifetimes;
 
 namespace AnkiDeckEditor.Libs;
 
+/// <summary>
+/// Contains functionality for working with the clipboard.
+/// </summary>
 public static class Clipboard
 {
+    /// <summary>
+    /// Sets a text to the clipboard.
+    /// </summary>
+    /// <param name="text">The text to be placed into the clipboard.</param>
     public static void Set(string? text)
     {
         if (string.IsNullOrWhiteSpace(text)) return;
@@ -29,6 +36,9 @@ public static class Clipboard
         return output;
     }
 
+    /// <summary>
+    /// Gets a text from the clipboard.
+    /// </summary>
     public static async Task<string?> Get()
     {
         var window = GetWindow();

@@ -2,17 +2,26 @@ using ReactiveUI;
 
 namespace AnkiDeckEditor.Models;
 
+/// <summary>
+/// Represents a checkbox control.
+/// </summary>
 public class ToggleItem : ReactiveObject
 {
     private string? _title;
     private bool _isChecked;
 
+    /// <summary>
+    /// The text label of the checkbox control.
+    /// </summary>
     public string? Title
     {
         get => _title;
         set => this.RaiseAndSetIfChanged(ref _title, value);
     }
 
+    /// <summary>
+    /// The state indicator of the checkbox control.
+    /// </summary>
     public bool IsChecked
     {
         get => _isChecked;

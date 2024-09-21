@@ -4,6 +4,9 @@ using System.Text.RegularExpressions;
 
 namespace AnkiDeckEditor.Services;
 
+/// <summary>
+/// Contains functionality for manipaliting with text strings.
+/// </summary>
 public partial class StringManipulator
 {
     [GeneratedRegex(@"\s(?=\p{Po})")]
