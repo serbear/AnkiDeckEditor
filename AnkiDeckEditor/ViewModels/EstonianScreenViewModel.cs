@@ -6,6 +6,7 @@ using System.Reactive;
 using AnkiDeckEditor.Libs;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
+using AnkiDeckEditor.Services.FieldsCopy;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -101,7 +102,7 @@ public class EstonianScreenViewModel : ViewModelBase
         var wordForms = FieldTags.VerbItemsTemplate;
         var fieldIndex = 0;
 
-        // Get only word forms. Skip last element.
+        // Get only word forms. Skip the last element.
         var formCollection = ((IEnumerable<object>)values).Reverse().Skip(1).Reverse();
 
         foreach (string wordForm in formCollection)
@@ -121,130 +122,45 @@ public class EstonianScreenViewModel : ViewModelBase
     {
         if (sender.Tag == null) throw new Exception("The TextBox has no a tag.");
 
-        var result = "";
+        var copyContext = new Context();
+
 
         // WordByWordTranslationAnkiField 
         if (sender.Tag.Equals("WordByWordTranslationAnkiField"))
         {
-            var resultBuilder = new List<string>();
-            var totalMarkedEntities = WordByWordContextSelectedItems.Count(e => e.IsChecked);
-
-            foreach (var item in WordByWordContextSelectedItems)
-                // Marked to learn entity. 
-                if (item.IsChecked)
-                {
-                    var tagged = FieldTags.SelectedEntityTemplate.Replace(FieldTags.GetPlaceMarker(1), item.Title);
-                    var isCompoundVerbSelected = SpeechPartItems.Any(
-                        e => e is { VerbType: VerbTypes.Compound, IsChecked: true });
-                    var resultString =
-                        totalMarkedEntities == 1 && isCompoundVerbSelected
-                            ? $"{tagged}{FieldTags.CompoundVerbMarker}"
-                            : $"{tagged}";
-
-                    resultBuilder.Add(resultString);
-                    totalMarkedEntities--;
-                }
-                // A common word or punctuation.
-                else
-                {
-                    resultBuilder.Add($"{item.Title} ");
-                }
-
-            var sm = new StringManipulator(string.Join("", resultBuilder).Trim())
-                .AddSpaseAfterCloseHtmlTag()
-                .RemoveLeftSpaceFromPunctuation()
-                .AddSpaceAfterClosePunctuation()
-                .RemoveRightSpaceClosePunctuation()
-                .RemoveLeftSpaceClosePunctuation()
-                .FixDotPunctuation();
-
-            result = FieldTags.TranslationOriginalTemplate.Replace(FieldTags.GetPlaceMarker(1), sm.ResultString);
+            copyContext.SetStrategy(new LiteralTranslationCopyStrategy());
+            copyContext.DoCopyLogic(WordByWordContextSelectedItems);
         }
 
         // LiteraryTranslationAnkiField 
         if (sender.Tag.Equals("LiteraryTranslationAnkiField"))
         {
-            var resultBuilder = new List<string>();
-
-            foreach (var item in LiteraryContextSelectedItems)
-                // Marked to learn entity.
-                if (item.IsChecked)
-                {
-                    var tagged = FieldTags.SelectedEntityTemplate.Replace(FieldTags.GetPlaceMarker(1), item.Title);
-                    resultBuilder.Add($"{tagged}");
-                }
-                // A common word or punctuation.
-                else
-                {
-                    resultBuilder.Add($"{item.Title} ");
-                }
-
-            var sm = new StringManipulator(string.Join("", resultBuilder).Trim())
-                .AddSpaseAfterCloseHtmlTag()
-                .RemoveLeftSpaceFromPunctuation()
-                .AddSpaceAfterClosePunctuation()
-                .RemoveRightSpaceClosePunctuation()
-                .RemoveLeftSpaceClosePunctuation();
-
-            result = FieldTags.TranslationOriginalTemplate.Replace(FieldTags.GetPlaceMarker(1), sm.ResultString);
+            copyContext.SetStrategy(new LiteraryTranslationCopyStrategy());
+            copyContext.DoCopyLogic(LiteraryContextSelectedItems);
         }
 
         // OriginalAnkiField 
         if (sender.Tag.Equals("OriginalAnkiField"))
         {
-            var resultBuilder = new List<string>();
-
-            foreach (var item in OriginalContextSelectedItems)
-                // Marked to learn entity.
-                if (item.IsChecked)
-                {
-                    var tagged = FieldTags.SelectedEntityTemplate.Replace(FieldTags.GetPlaceMarker(1), item.Title);
-                    resultBuilder.Add($"{tagged}");
-                }
-                // A common word or punctuation.
-                else
-                {
-                    resultBuilder.Add($"{item.Title} ");
-                }
-
-            var sm = new StringManipulator(string.Join("", resultBuilder).Trim())
-                .AddSpaseAfterCloseHtmlTag()
-                .RemoveLeftSpaceFromPunctuation()
-                .AddSpaceAfterClosePunctuation()
-                .RemoveRightSpaceClosePunctuation()
-                .RemoveLeftSpaceClosePunctuation();
-
-            result = FieldTags.TranslationOriginalTemplate.Replace(FieldTags.GetPlaceMarker(1), sm.ResultString);
+            copyContext.SetStrategy(new OriginalPhraseCopyStrategy());
+            copyContext.DoCopyLogic(OriginalContextSelectedItems);
         }
 
         // SpeechPartAnkiField 
         if (sender.Tag.Equals("SpeechPartAnkiField"))
         {
-            var filtered = SpeechPartItems.First(e => e.IsChecked);
-
-            result = FieldTags.SpeechPartTemplate
-                .Replace(FieldTags.GetPlaceMarker(1), filtered.Title)
-                .Replace(FieldTags.GetPlaceMarker(2), filtered.Translation);
+            copyContext.SetStrategy(new SpeechPartCopyStrategy());
+            copyContext.DoCopyLogic(SpeechPartItems);
         }
 
         // MainEntityAnkiField
-        if (sender.Tag.Equals("MainEntityAnkiField")) result = ((TextBox)sender).Text;
+        if (sender.Tag.Equals("MainEntityAnkiField")) copyContext.DoCopyLogic(((TextBox)sender).Text?.Trim());
 
         // VerbControlAnkiField
         if (sender.Tag.Equals("VerbControlAnkiField"))
         {
-            var selectedVerbControls = VerbControlItems.Where(e => e.IsChecked);
-
-            // ReSharper disable once LoopCanBeConvertedToQuery
-            foreach (var verbControl in selectedVerbControls)
-            {
-                var item = FieldTags.VerbControlItemTemplate.Replace(FieldTags.GetPlaceMarker(1), verbControl.Title);
-                result += item;
-            }
-
-            result = FieldTags.VerbControlTemplate.Replace(FieldTags.GetPlaceMarker(1), result);
+            copyContext.SetStrategy(new VerbGovernmentCopyStrategy());
+            copyContext.DoCopyLogic(VerbControlItems);
         }
-
-        Clipboard.Set(result);
     }
 }
