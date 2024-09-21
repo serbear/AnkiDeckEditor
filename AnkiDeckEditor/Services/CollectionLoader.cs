@@ -8,9 +8,9 @@ public static class CollectionLoader
 {
     public static ObservableCollection<ToggleItem> LoadVerbControls()
     {
-        const string collection =
+        const string COLLECTION =
             "et\nkas\nkeda\nkeda + millest\nkeda + mis\nkelle eest\nkelle juurde\nkelle juures\nkelle järele\nkelle käest\nkelle käest + mida\nkelle otsa\nkelle peale\nkelle pärast\nkelle tõttu\nkelle vastu\nkellega\nkellega + milles\nkelleks\nkellel + mida teha\nkellele\nkellele + mida\nkellelt\nkellelt käest\nkellesse\nkellest\nkelleta\nkuhu\nkuhu + millega\nkui palju\nkuidas\nkus\nkust\nkust + kuhu\nmida\nmida tegema\nmida tegemas\nmida tegemast\nmida tegevat\nmida teha\nmidagi tegemata\nmille all\nmille alla\nmille eest\nmille järele\nmille järgi\nmille kohta\nmille käes\nmille otsa\nmille peale\nmille poolest\nmille pärast\nmille tõttu\nmille vastu\nmille üle\nmillega\nmilleks\nmillele\nmilles\nmillesse\nmillest\nmilleta\nmilline\nmilliseks\nmillisena\nmis keelde\nmis keelest\nmissuguseks";
-        var collectionArray = collection.Split("\n");
+        var collectionArray = COLLECTION.Split("\n");
         var output = new ObservableCollection<ToggleItem>(
             collectionArray.Select(
                 vc => new ToggleItem(vc, false)).ToList());
