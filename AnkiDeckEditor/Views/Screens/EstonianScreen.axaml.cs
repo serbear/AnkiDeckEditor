@@ -30,6 +30,7 @@ public partial class EstonianScreen : UserControl
     {
         var dataContext = (EstonianScreenViewModel)DataContext!;
         var speechPartItems = dataContext.SpeechPartItems;
+
         UncheckAllCheckBoxes(ref speechPartItems);
         SwitchTabItems(ref dataContext, ref sender);
     }
@@ -52,9 +53,7 @@ public partial class EstonianScreen : UserControl
         dataContext.IsVerbFormsTabItemVisible = isVerbSelected;
     }
 
-    private void WordForWordTextBox_OnTextChanged(
-        object? sender,
-        TextChangedEventArgs e)
+    private void WordForWordTextBox_OnTextChanged(object? sender, TextChangedEventArgs e)
     {
         if (sender is not TextBox textBox) return;
         var splitted = textBox.Text?.Trim().Split(" ").ToList();

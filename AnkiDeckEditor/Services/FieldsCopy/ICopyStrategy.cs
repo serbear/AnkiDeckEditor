@@ -11,5 +11,13 @@ namespace AnkiDeckEditor.Services.FieldsCopy;
 /// </para>
 public interface ICopyStrategy
 {
-    string DoCopy<T>(ObservableCollection<T> data);
+    string DoCopyCollection<T>(ObservableCollection<T> data)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    string DoCopyString(string data)
+    {
+        throw new System.NotImplementedException();
+    }
 }

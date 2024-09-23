@@ -47,7 +47,9 @@
         </StackPanel>
         <!-- Tabs -->
         <TabControl Name="DeckConfigTabControl" DockPanel.Dock="Top">
+
             <!-- MainEntity Anki field -->
+
             <TabItem Header="Словарная статья">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Изучаемое слово или выражение:" />
@@ -566,7 +568,7 @@
                             Tag="VerbControlAnkiField"
                             Command="{Binding CopyFieldClipboardCommand}" />
                     <Button Content="Словарная статья"
-                            CommandParameter="{Binding  ElementName=MainEntityAnkiFieldTextBox}"
+                            CommandParameter="{Binding ElementName=MainEntityAnkiFieldTextBox}"
                             Tag="MainEntityAnkiField"
                             Command="{Binding CopyFieldClipboardCommand}" />
                     <Button Name="ExitButton"

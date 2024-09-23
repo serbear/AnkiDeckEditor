@@ -31,13 +31,17 @@ public class EstonianScreenViewModel : ViewModelBase
     [Reactive] public bool IsWordFormsTabItemVisible { get; set; }
     public ReactiveCommand<Control, Unit> PasteFromClipboardCommand { get; }
 
+    private readonly Dictionary<string, (string, object)> _copyStrategyDict;
+
     public EstonianScreenViewModel()
     {
         // commands
         CopyButtonCommand = ReactiveCommand.Create(ExitButtonExecute);
         CopyFieldClipboardCommand = ReactiveCommand.Create<Control>(CopyDeckFieldClipboardExecute);
+
         CopyWordFormsFieldClipboardCommand = ReactiveCommand.Create<object>(CopyWordFormsDeckFieldClipboardExecute);
         CopyVerbFormsDeckFieldClipboardCommand = ReactiveCommand.Create<object>(CopyVerbFormsDeckFieldClipboardExecute);
+
         PasteFromClipboardCommand = ReactiveCommand.Create<Control>(PasteFromClipboardExecute);
 
         VerbControlItems = CollectionLoader.LoadVerbControls();
@@ -57,6 +61,23 @@ public class EstonianScreenViewModel : ViewModelBase
         // Toggles
         IsVerbFormsTabItemVisible = false;
         IsWordFormsTabItemVisible = false;
+
+        //
+        _copyStrategyDict = new Dictionary<string, (string, object)>
+        {
+            {
+                "WordByWordTranslationAnkiField",
+                (typeof(LiteralTranslationCopyStrategy).FullName, WordByWordContextSelectedItems)!
+            },
+            {
+                "LiteraryTranslationAnkiField",
+                (typeof(LiteraryTranslationCopyStrategy).FullName, LiteraryContextSelectedItems)!
+            },
+            { "OriginalAnkiField", (typeof(OriginalPhraseCopyStrategy).FullName, OriginalContextSelectedItems)! },
+            { "SpeechPartAnkiField", (typeof(SpeechPartCopyStrategy).FullName, SpeechPartItems)! },
+            { "MainEntityAnkiField", (typeof(MainEntityCopyStrategy).FullName, null)! },
+            { "VerbControlAnkiField", (typeof(VerbGovernmentCopyStrategy).FullName, VerbControlItems)! }
+        };
     }
 
     private static async void PasteFromClipboardExecute(Control value)
@@ -85,7 +106,7 @@ public class EstonianScreenViewModel : ViewModelBase
         {
             fieldIndex++;
             var replacement = string.IsNullOrWhiteSpace(wordForm)
-                ? FieldTags.LongDashHtmlCode
+                ? PublicConsts.LongDashHtmlCode
                 : wordForm.Trim();
             wordForms = wordForms.Replace(FieldTags.GetPlaceMarker(fieldIndex), replacement);
         }
@@ -110,7 +131,7 @@ public class EstonianScreenViewModel : ViewModelBase
             fieldIndex++;
             // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
             // ReSharper disable once MergeConditionalExpression
-            var replaceSource = wordForm == null ? "&mdash;" : wordForm;
+            var replaceSource = wordForm == null ? PublicConsts.LongDashHtmlCode : wordForm;
             wordForms = wordForms.Replace(FieldTags.GetPlaceMarker(fieldIndex), replaceSource);
         }
 
@@ -124,43 +145,15 @@ public class EstonianScreenViewModel : ViewModelBase
 
         var copyContext = new Context();
 
+        var strategy = Activator.CreateInstance(Type.GetType(_copyStrategyDict[(string)sender.Tag].Item1)!);
+        copyContext.SetStrategy((strategy as ICopyStrategy)!);
 
-        // WordByWordTranslationAnkiField 
-        if (sender.Tag.Equals("WordByWordTranslationAnkiField"))
-        {
-            copyContext.SetStrategy(new LiteralTranslationCopyStrategy());
-            copyContext.DoCopyLogic(WordByWordContextSelectedItems);
-        }
-
-        // LiteraryTranslationAnkiField 
-        if (sender.Tag.Equals("LiteraryTranslationAnkiField"))
-        {
-            copyContext.SetStrategy(new LiteraryTranslationCopyStrategy());
-            copyContext.DoCopyLogic(LiteraryContextSelectedItems);
-        }
-
-        // OriginalAnkiField 
-        if (sender.Tag.Equals("OriginalAnkiField"))
-        {
-            copyContext.SetStrategy(new OriginalPhraseCopyStrategy());
-            copyContext.DoCopyLogic(OriginalContextSelectedItems);
-        }
-
-        // SpeechPartAnkiField 
-        if (sender.Tag.Equals("SpeechPartAnkiField"))
-        {
-            copyContext.SetStrategy(new SpeechPartCopyStrategy());
-            copyContext.DoCopyLogic(SpeechPartItems);
-        }
-
-        // MainEntityAnkiField
-        if (sender.Tag.Equals("MainEntityAnkiField")) copyContext.DoCopyLogic(((TextBox)sender).Text?.Trim());
-
-        // VerbControlAnkiField
-        if (sender.Tag.Equals("VerbControlAnkiField"))
-        {
-            copyContext.SetStrategy(new VerbGovernmentCopyStrategy());
-            copyContext.DoCopyLogic(VerbControlItems);
-        }
+        object itemCollection;
+        // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
+        if (sender.Tag.Equals("MainEntityAnkiField"))
+            itemCollection = ((TextBox)sender).Text!;
+        else
+            itemCollection = _copyStrategyDict[(string)sender.Tag].Item2;
+        copyContext.DoCopyLogic(itemCollection);
     }
 }

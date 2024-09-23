@@ -6,7 +6,7 @@ namespace AnkiDeckEditor.Services.FieldsCopy;
 
 public class SpeechPartCopyStrategy : ICopyStrategy
 {
-    public string DoCopy<T>(ObservableCollection<T> data)
+    public string DoCopyCollection<T>(ObservableCollection<T> data)
     {
         var filtered = data.First(e => (e as ToggleItem)!.IsChecked) as SpeechPartToggleItem;
         var result = FieldTags.SpeechPartTemplate

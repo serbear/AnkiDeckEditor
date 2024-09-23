@@ -6,7 +6,7 @@ namespace AnkiDeckEditor.Services.FieldsCopy;
 
 public class VerbGovernmentCopyStrategy : ICopyStrategy
 {
-    public string DoCopy<T>(ObservableCollection<T> data)
+    public string DoCopyCollection<T>(ObservableCollection<T> data)
     {
         var selectedVerbControls = data.Where(e => (e as ToggleItem)!.IsChecked);
         var result = selectedVerbControls

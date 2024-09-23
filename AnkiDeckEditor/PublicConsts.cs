@@ -7,6 +7,11 @@ public struct PublicConsts
     /// The identifier of the top-level dialog screen.
     /// </summary>
     public const string MainDialogHost = "MainDialogHost";
+
+    /// <summary>
+    /// The marker identified the absence of a word form.
+    /// </summary>
+    public const string LongDashHtmlCode = "&mdash;";
 }
 
 /// <summary>

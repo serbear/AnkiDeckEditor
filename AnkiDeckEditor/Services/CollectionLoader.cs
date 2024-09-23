@@ -35,7 +35,6 @@ public static class CollectionLoader
 
 public struct FieldTags
 {
-    public const string LongDashHtmlCode = "&mdash;";
     public const string CompoundVerbMarker = "<sup>üv</sup>";
     public const string TranslationOriginalTemplate = "<div class=\"sentence\">{1}</div>";
 

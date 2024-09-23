@@ -1,5 +1,7 @@
+using System;
 using System.Collections.ObjectModel;
 using AnkiDeckEditor.Libs;
+using AnkiDeckEditor.Models;
 
 namespace AnkiDeckEditor.Services.FieldsCopy;
 
@@ -31,14 +33,25 @@ public class Context
 
     // Вместо того чтобы самостоятельно реализовывать множественные версии
     // алгоритма, Контекст делегирует некоторую работу объекту Стратегии.
-    public void DoCopyLogic<T>(ObservableCollection<T> translationData)
+    public void DoCopyLogic<T>(T data)
     {
-        var textToCopy = _strategy.DoCopy(translationData);
+        var textToCopy = data switch
+        {
+            string => data.ToString()!,
+            _ when IsObservableCollection(data!) => DoCopyCollectionGeneric((dynamic)data!),
+            _ => throw new NotSupportedException($"There is no copy logic for type {data?.GetType().Name}")
+        };
         Clipboard.Set(textToCopy);
     }
 
-    public void DoCopyLogic(string? data)
+    private static bool IsObservableCollection(object obj)
     {
-        Clipboard.Set(data);
+        return obj.GetType().IsGenericType &&
+               obj.GetType().GetGenericTypeDefinition() == typeof(ObservableCollection<>);
+    }
+
+    private string DoCopyCollectionGeneric<T>(ObservableCollection<T> items)
+    {
+        return _strategy.DoCopyCollection(items);
     }
 }

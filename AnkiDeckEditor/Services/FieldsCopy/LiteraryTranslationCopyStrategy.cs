@@ -7,7 +7,7 @@ namespace AnkiDeckEditor.Services.FieldsCopy;
 /// </summary>
 public class LiteraryTranslationCopyStrategy : ICopyStrategy
 {
-    public string DoCopy<T>(ObservableCollection<T> data)
+    public string DoCopyCollection<T>(ObservableCollection<T> data)
     {
         var result = Common.ProcessCollection(data);
         return result;
