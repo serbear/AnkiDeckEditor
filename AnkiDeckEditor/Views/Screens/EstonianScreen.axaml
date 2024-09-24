@@ -11,7 +11,6 @@
              x:Class="AnkiDeckEditor.Views.Screens.EstonianScreen"
              x:DataType="vm:EstonianScreenViewModel"
              x:CompileBindings="True">
-
     <DockPanel>
         <!-- Toolbar -->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
@@ -526,13 +525,16 @@
                             Tag="SpeechPartAnkiField"
                             CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                             Command="{Binding CopyFieldClipboardCommand}" />
-                    <Button Content="Формы слова"
+
+                    <Button x:Name="NonVerbWordFormsButton"
+                            Content="Формы слова"
                             Tag="WordFormsAnkiField"
                             Command="{Binding CopyWordFormsFieldClipboardCommand}"
                             IsVisible="{Binding IsWordFormsTabItemVisible}">
 
                         <Button.CommandParameter>
                             <MultiBinding>
+                                <Binding Path="#NonVerbWordFormsButton.Tag" />
                                 <Binding Path="#NimetavAinsusTextBox.Text" />
                                 <Binding Path="#OmastavAinsusTextBox.Text" />
                                 <Binding Path="#OsastavAinsusTextBox.Text" />
@@ -540,16 +542,18 @@
                                 <Binding Path="#OmastavMitmusTextBox.Text" />
                                 <Binding Path="#OsastavMitmusTextBox.Text" />
                                 <Binding Path="#SmallSisseTextBox.Text" />
-                                <Binding Path="$parent" />
                             </MultiBinding>
                         </Button.CommandParameter>
                     </Button>
 
-                    <Button Content="Формы глагола"
-                            Command="{Binding CopyVerbFormsDeckFieldClipboardCommand}"
+                    <Button x:Name="VerbWordFormsButton"
+                            Content="Формы глагола"
+                            Command="{Binding CopyWordFormsFieldClipboardCommand}"
+                            Tag="VerbWordFormsAnkiField"
                             IsVisible="{Binding IsVerbFormsTabItemVisible}">
                         <Button.CommandParameter>
                             <MultiBinding>
+                                <Binding Path="#VerbWordFormsButton.Tag" />
                                 <Binding Path="#MaInfTextBox.Text" />
                                 <Binding Path="#DaInfTextBox.Text" />
                                 <Binding Path="#ThirdPersonTextBox.Text" />
@@ -558,7 +562,6 @@
                                 <Binding Path="#FullPastTextBox.Text" />
                                 <Binding Path="#OrderTextBox.Text" />
                                 <Binding Path="#UndefPersonTextBox.Text" />
-                                <Binding Path="$parent" />
                             </MultiBinding>
                         </Button.CommandParameter>
                     </Button>

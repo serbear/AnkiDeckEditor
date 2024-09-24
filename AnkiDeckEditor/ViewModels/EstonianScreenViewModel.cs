@@ -19,8 +19,7 @@ public class EstonianScreenViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
     public ReactiveCommand<Control, Unit> CopyFieldClipboardCommand { get; }
-    public ReactiveCommand<object, Unit> CopyWordFormsFieldClipboardCommand { get; }
-    public ReactiveCommand<object, Unit> CopyVerbFormsDeckFieldClipboardCommand { get; }
+    public ReactiveCommand<ReadOnlyCollection<object>, Unit> CopyWordFormsFieldClipboardCommand { get; }
     public ObservableCollection<ToggleItem> VerbControlItems { get; }
     public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
     [Reactive] public ObservableCollection<SpeechPartToggleItem> SpeechPartItems { get; set; }
@@ -39,8 +38,8 @@ public class EstonianScreenViewModel : ViewModelBase
         CopyButtonCommand = ReactiveCommand.Create(ExitButtonExecute);
         CopyFieldClipboardCommand = ReactiveCommand.Create<Control>(CopyDeckFieldClipboardExecute);
 
-        CopyWordFormsFieldClipboardCommand = ReactiveCommand.Create<object>(CopyWordFormsDeckFieldClipboardExecute);
-        CopyVerbFormsDeckFieldClipboardCommand = ReactiveCommand.Create<object>(CopyVerbFormsDeckFieldClipboardExecute);
+        CopyWordFormsFieldClipboardCommand =
+            ReactiveCommand.Create<ReadOnlyCollection<object>>(CopyWordFormsDeckFieldClipboardExecute);
 
         PasteFromClipboardCommand = ReactiveCommand.Create<Control>(PasteFromClipboardExecute);
 
@@ -62,7 +61,8 @@ public class EstonianScreenViewModel : ViewModelBase
         IsVerbFormsTabItemVisible = false;
         IsWordFormsTabItemVisible = false;
 
-        //
+        // Key - avalonia control tag.
+        // Value - tuple (the copy strategy class full name, data to copy, FieldTags string)
         _copyStrategyDict = new Dictionary<string, (string, object)>
         {
             {
@@ -76,7 +76,8 @@ public class EstonianScreenViewModel : ViewModelBase
             { "OriginalAnkiField", (typeof(OriginalPhraseCopyStrategy).FullName, OriginalContextSelectedItems)! },
             { "SpeechPartAnkiField", (typeof(SpeechPartCopyStrategy).FullName, SpeechPartItems)! },
             { "MainEntityAnkiField", (typeof(MainEntityCopyStrategy).FullName, null)! },
-            { "VerbControlAnkiField", (typeof(VerbGovernmentCopyStrategy).FullName, VerbControlItems)! }
+            { "VerbControlAnkiField", (typeof(VerbGovernmentCopyStrategy).FullName, VerbControlItems)! },
+            { "WordFormsAnkiField", (typeof(WordFormsCopyStrategy).FullName, null)! }
         };
     }
 
@@ -86,7 +87,6 @@ public class EstonianScreenViewModel : ViewModelBase
         ((TextBox)value).Text = text;
     }
 
-
     // ReSharper disable once MemberCanBeMadeStatic.Local
     private void ExitButtonExecute()
     {
@@ -94,54 +94,17 @@ public class EstonianScreenViewModel : ViewModelBase
             lifetime.Shutdown();
     }
 
-    private static void CopyWordFormsDeckFieldClipboardExecute(object values)
+    private static void CopyWordFormsDeckFieldClipboardExecute(ReadOnlyCollection<object> values)
     {
-        var wordForms = FieldTags.SimpleWordItemsWithSseFormTemplate;
-        var fieldIndex = 0;
-
-        // Get only word forms. Skip the last element (a reference to a parent element of a button).
-        var formCollection = ((IEnumerable<object>)values).Reverse().Skip(1).Reverse();
-
-        foreach (string wordForm in formCollection)
-        {
-            fieldIndex++;
-            var replacement = string.IsNullOrWhiteSpace(wordForm)
-                ? PublicConsts.LongDashHtmlCode
-                : wordForm.Trim();
-            wordForms = wordForms.Replace(FieldTags.GetPlaceMarker(fieldIndex), replacement);
-        }
-
-        var result = FieldTags.SimpleWordTemplate
-            .Replace(FieldTags.GetPlaceMarker(1), wordForms)
-            .Replace("\n", "");
-
-        Clipboard.Set(result);
+        var copyContext = new Context();
+        copyContext.SetStrategy(new WordFormsCopyStrategy());
+        copyContext.DoCopyLogic(values.ToList());
     }
 
-    private static void CopyVerbFormsDeckFieldClipboardExecute(object values)
-    {
-        var wordForms = FieldTags.VerbItemsTemplate;
-        var fieldIndex = 0;
-
-        // Get only word forms. Skip the last element.
-        var formCollection = ((IEnumerable<object>)values).Reverse().Skip(1).Reverse();
-
-        foreach (string wordForm in formCollection)
-        {
-            fieldIndex++;
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-            // ReSharper disable once MergeConditionalExpression
-            var replaceSource = wordForm == null ? PublicConsts.LongDashHtmlCode : wordForm;
-            wordForms = wordForms.Replace(FieldTags.GetPlaceMarker(fieldIndex), replaceSource);
-        }
-
-        var result = FieldTags.VerbTemplate.Replace(FieldTags.GetPlaceMarker(1), wordForms);
-        Clipboard.Set(result);
-    }
 
     private void CopyDeckFieldClipboardExecute(Control sender)
     {
-        if (sender.Tag == null) throw new Exception("The TextBox has no a tag.");
+        if (sender.Tag == null) throw new Exception("The Control has no a tag.");
 
         var copyContext = new Context();
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace AnkiDeckEditor.Services.FieldsCopy;
@@ -17,6 +18,11 @@ public interface ICopyStrategy
     }
 
     string DoCopyString(string data)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    string DoCopyList(List<object> data)
     {
         throw new System.NotImplementedException();
     }

@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using AnkiDeckEditor.Libs;
-using AnkiDeckEditor.Models;
 
 namespace AnkiDeckEditor.Services.FieldsCopy;
 
@@ -39,6 +39,7 @@ public class Context
         {
             string => data.ToString()!,
             _ when IsObservableCollection(data!) => DoCopyCollectionGeneric((dynamic)data!),
+            List<object> => _strategy.DoCopyList((dynamic)data),
             _ => throw new NotSupportedException($"There is no copy logic for type {data?.GetType().Name}")
         };
         Clipboard.Set(textToCopy);
