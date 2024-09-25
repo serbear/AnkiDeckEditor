@@ -12,10 +12,9 @@ public class WordFormsCopyStrategy : ICopyStrategy
 
     public string DoCopyList(List<object> data)
     {
-        // Первый элемент - идентификатор коллекции форм слова: глагол или не глагол.
-        // Значением идентификатора является тег кнопки, которая вызывает команду копирования данных в буфер обмена.
+        // The first element is the identifier of the collection of word forms: verb or non-verb.
+        // The identifier value is the tag of the button that invokes the command to copy data to the clipboard.
         var wordForms = _tagTemplates[(string)data[0]];
-
 
         var fieldIndex = 0;
 
