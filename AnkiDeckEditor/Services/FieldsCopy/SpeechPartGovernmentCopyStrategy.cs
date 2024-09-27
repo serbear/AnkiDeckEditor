@@ -4,7 +4,7 @@ using AnkiDeckEditor.Models;
 
 namespace AnkiDeckEditor.Services.FieldsCopy;
 
-public class VerbGovernmentCopyStrategy : ICopyStrategy
+public class SpeechPartGovernmentCopyStrategy : ICopyStrategy
 {
     public string DoCopyCollection<T>(ObservableCollection<T> data)
     {

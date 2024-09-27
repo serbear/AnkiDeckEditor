@@ -87,13 +87,10 @@ public partial class EstonianScreenViewModel : ViewModelBase
             { "OriginalTextValue", typeof(OriginalPhraseCopyStrategy).FullName! },
             { "SpeechPartStrategy", typeof(SpeechPartCopyStrategy).FullName! },
             { "VocabularyEntryStrategy", typeof(VocabularyEntryCopyStrategy).FullName! },
-            { "SpeechPartGovernmentStrategy", typeof(VerbGovernmentCopyStrategy).FullName! },
-            { "WordFormsStrategy", typeof(WordFormsCopyStrategy).FullName! }
+            { "SpeechPartGovernmentStrategy", typeof(SpeechPartGovernmentCopyStrategy).FullName! },
+            { "NonVerbWordFormsStrategy", typeof(WordFormsCopyStrategy).FullName! },
+            { "VerbWordFormsStrategy", typeof(WordFormsCopyStrategy).FullName! }
         };
-
-
-        // VerbWordFormsStrategy
-        // NonVerbWordFormsStrategy
 
         CopyStrategyDataDict = new Dictionary<string, object>
         {
@@ -102,8 +99,39 @@ public partial class EstonianScreenViewModel : ViewModelBase
             { "OriginalTextStrategy", OriginalContextSelectedItems },
             { "SpeechPartStrategy", SpeechPartItems },
             { "SpeechPartGovernmentStrategy", VerbControlItems },
-            { "WordFormsStrategy", null }
+            { "NonVerbWordFormsStrategy", GetNonVerbWordForms() },
+            { "VerbWordFormsStrategy", GetVerbWordForms() }
         };
+    }
+
+    private NonVerbWordFormCollection GetNonVerbWordForms()
+    {
+        return new NonVerbWordFormCollection(
+            [
+                NominativeCaseSingularWordForm,
+                GenitiveCaseSingularWordForm,
+                PartitiveCaseSingularWordForm,
+                NominativeCasePluralWordForm,
+                GenitiveCasePluralWordForm,
+                PartitiveCasePluralWordForm,
+                ShortIllativeCaseWordForm
+            ]
+        );
+    }
+
+    private VerbWordFormCollection GetVerbWordForms()
+    {
+        return new VerbWordFormCollection(
+        [
+            MaInfinitiveWordForm,
+            DaInfinitiveWordForm,
+            IndicativeMoodWordForm,
+            PassiveParticiplePastTenseWordForm,
+            ThirdPersonPastTenseWordForm,
+            ActiveParticipleWordForm,
+            ImperativeMoodSingularWordForm,
+            PassiveVoicePresentTenseWordForm
+        ]);
     }
 
 

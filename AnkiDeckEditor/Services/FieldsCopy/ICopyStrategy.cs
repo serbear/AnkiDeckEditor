@@ -22,8 +22,18 @@ public interface ICopyStrategy
         throw new System.NotImplementedException();
     }
 
-    string DoCopyList(List<object> data)
+    string DoCopyList(List<string> data)
     {
         throw new System.NotImplementedException();
     }
+
+    string DoCopyWordForms(WordFormsCollectionBase data)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    // string DoCopyList(List<object> data)
+    // {
+    //     throw new System.NotImplementedException();
+    // }
 }

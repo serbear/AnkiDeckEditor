@@ -39,7 +39,8 @@ public class Context
         {
             string => data.ToString()!,
             _ when IsObservableCollection(data!) => DoCopyCollectionGeneric((dynamic)data!),
-            List<object> => _strategy.DoCopyList((dynamic)data),
+            List<string> => _strategy.DoCopyList((dynamic)data),
+            WordFormsCollectionBase => _strategy.DoCopyWordForms((dynamic)data),
             _ => throw new NotSupportedException($"There is no copy logic for type {data?.GetType().Name}")
         };
         Clipboard.Set(textToCopy);

@@ -4,21 +4,18 @@ namespace AnkiDeckEditor.Services.FieldsCopy;
 
 public class WordFormsCopyStrategy : ICopyStrategy
 {
-    private readonly Dictionary<string, string> _tagTemplates = new()
+    private readonly Dictionary<object, string> _tagTemplates = new()
     {
-        { "NonVerbWordFormsStrategy", FieldTags.SimpleWordItemsWithSseFormTemplate },
-        { "VerbWordFormsStrategy", FieldTags.VerbItemsTemplate }
+        { typeof(NonVerbWordFormCollection), FieldTags.SimpleWordItemsWithSseFormTemplate },
+        { typeof(VerbWordFormCollection), FieldTags.VerbItemsTemplate }
     };
 
-    public string DoCopyList(List<object> data)
+    public string DoCopyWordForms(WordFormsCollectionBase data)
     {
-        // The first element is the identifier of the collection of word forms: verb or non-verb.
-        // The identifier value is the tag of the button that invokes the command to copy data to the clipboard.
-        var wordForms = _tagTemplates[(string)data[0]];
-
+        var wordForms = _tagTemplates[data.GetType()];
         var fieldIndex = 0;
 
-        foreach (string wordForm in data)
+        foreach (var wordForm in data.WordFormsCollection)
         {
             fieldIndex++;
             var replacement = string.IsNullOrWhiteSpace(wordForm)
