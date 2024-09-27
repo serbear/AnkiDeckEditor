@@ -37,7 +37,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> ClearFormCommand { get; }
     public ReactiveCommand<Unit, Unit> ExportFileCommand { get; }
     public ReactiveCommand<Unit, Unit> ExitCommand { get; }
-    public ReactiveCommand<string, Unit> DummyCommand { get; }
 
     private Dictionary<string, string> CopyStrategyDict { get; set; }
     private Dictionary<string, object> CopyStrategyDataDict { get; set; }
@@ -57,7 +56,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         ClearFormCommand = ReactiveCommand.Create(ClearFormExecute);
         ExportFileCommand = ReactiveCommand.Create(ExportFileExecute);
         ExitCommand = ReactiveCommand.Create(ExitExecute);
-        DummyCommand = ReactiveCommand.Create<string>(DummyExecute);
 
         // Collections
         VerbControlItems = CollectionLoader.LoadVerbControls();
@@ -134,21 +132,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         ]);
     }
 
-
-    private void DummyExecute(string value)
-    {
-        var strategy = Activator.CreateInstance(Type.GetType(CopyStrategyDict[value])!);
-        var copyContext = new Context();
-        copyContext.SetStrategy((strategy as ICopyStrategy)!);
-
-        // Try to get data collection for the strategy.
-        // If there is no data collection, take a string value of the field with name 'value'.
-        var isDataCollectionExist = CopyStrategyDataDict.TryGetValue(value, out var fieldValue);
-        if (!isDataCollectionExist) fieldValue = GetFieldValue(value);
-
-        copyContext.DoCopyLogic(fieldValue);
-    }
-
     private string GetFieldValue(string fieldName)
     {
         // Get this class type.
@@ -217,35 +200,15 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void CopyDeckFieldClipboardExecute(string value)
     {
-        // var valueTuple = CopyStrategyDict[value];
-        // var copyContext = new Context();
-        // var strategy = Activator.CreateInstance(Type.GetType(valueTuple.Item1)!);
-        //
-        // copyContext.SetStrategy((strategy as ICopyStrategy)!);
-        //
-        // valueTuple.Item2 = VocabularyEntryText;
-        //
-        //
-        // var itemCollection = valueTuple.Item2;
-        // copyContext.DoCopyLogic(itemCollection);
+        var strategy = Activator.CreateInstance(Type.GetType(CopyStrategyDict[value])!);
+        var copyContext = new Context();
+        copyContext.SetStrategy((strategy as ICopyStrategy)!);
+
+        // Try to get data collection for the strategy.
+        // If there is no data collection, take a string value of the field with name 'value'.
+        var isDataCollectionExist = CopyStrategyDataDict.TryGetValue(value, out var fieldValue);
+        if (!isDataCollectionExist) fieldValue = GetFieldValue(value);
+
+        copyContext.DoCopyLogic(fieldValue);
     }
-
-    // public readonly Dictionary<string, Control> EstonianTemplateControls = new();
-
-    // public void PrintUserControlTags(Control parent)
-    // {
-    //     foreach (var child in parent.GetLogicalChildren())
-    //     {
-    //         if (child is not Control control) continue;
-    //
-    //         // Выполняем необходимые действия с элементом управления
-    //
-    //         var tag = control.Tag?.ToString();
-    //
-    //         if (tag != null && tag.Contains("AnkiField")) EstonianTemplateControls.TryAdd(tag, control);
-    //
-    //         // Рекурсивно обходим дочерние элементы
-    //         PrintUserControlTags(control);
-    //     }
-    // }
 }

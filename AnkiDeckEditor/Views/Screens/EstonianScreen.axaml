@@ -494,7 +494,11 @@
 
             </TabItem>
 
-        </TabControl>
+            <!-- Vocabulary card list -->
 
+            <TabItem Header="Список карточек">
+                <TextBox>card list</TextBox>
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </UserControl>

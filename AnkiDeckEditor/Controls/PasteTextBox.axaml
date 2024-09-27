@@ -1,0 +1,26 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:AnkiDeckEditor.Converters"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AnkiDeckEditor.Controls.PasteTextBox"
+             x:Name="PasteTextBoxUserControl"
+             x:CompileBindings="True">
+    <UserControl.Resources>
+        <converters:SubtractButtonWidthConverter x:Key="SubtractButtonWidthConverter" />
+    </UserControl.Resources>
+    <RelativePanel>
+        <TextBox x:Name="MainTextBox">
+            <TextBox.Width>
+                <MultiBinding Converter="{StaticResource SubtractButtonWidthConverter}">
+                    <Binding ElementName="PasteTextBoxUserControl" Path="Bounds.Width" />
+                    <Binding ElementName="PasteButton" Path="Bounds.Width" />
+                </MultiBinding>
+            </TextBox.Width>
+        </TextBox>
+        <Button x:Name="PasteButton"
+                RelativePanel.RightOf="MainTextBox"
+                Content="Paste" />
+    </RelativePanel>
+</UserControl>
