@@ -18,40 +18,12 @@ public partial class EstonianScreen : UserControl
         DataContext = new EstonianScreenViewModel();
     }
 
+
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    private void SpeechPartCheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
-    {
-        var dataContext = (EstonianScreenViewModel)DataContext!;
-        var speechPartItems = dataContext.SpeechPartItems;
-
-        UncheckAllCheckBoxes(ref speechPartItems);
-        SwitchTabItems(ref dataContext, ref sender);
-    }
-
-    private static void UncheckAllCheckBoxes(ref ObservableCollection<SpeechPartToggleItem> toggleItems)
-    {
-        // Uncheck all items in the "Part of Speech" list.
-        foreach (var check in toggleItems) check.IsChecked = false;
-    }
-
-    private static void SwitchTabItems(ref EstonianScreenViewModel dataContext, ref object? sender)
-    {
-        // Switch tabs between "word forms" and "verb forms" according to a selected speech part.
-        var checkbox = (CheckBox)sender!;
-        var isCheckBoxChecked = checkbox.IsChecked.Equals(true);
-        var isVerbSelected = checkbox.Tag != null;
-
-        isVerbSelected = isVerbSelected && isCheckBoxChecked;
-        dataContext.IsWordFormsTabItemVisible = !isVerbSelected;
-        dataContext.IsVerbFormsTabItemVisible = isVerbSelected;
-    }
 
     private void WordForWordTextBox_OnTextChanged(object? sender, TextChangedEventArgs e)
     {
@@ -102,8 +74,7 @@ public partial class EstonianScreen : UserControl
         // -----
 
         UpdateEntityContextCollection(
-            ((EstonianScreenViewModel)DataContext!)
-            .EntityContextCollections[textBox.Name],
+            ((EstonianScreenViewModel)DataContext!).EntityContextCollections[textBox.Name],
             output);
     }
 
@@ -112,7 +83,7 @@ public partial class EstonianScreen : UserControl
         // Base case. There is no an input word.
         if (string.IsNullOrEmpty(splittedWord)) return [];
 
-        // Base case. There is no any punctuations marks in a word.
+        // Base case. There are no any punctuation marks in a word.
         if (char.IsPunctuation(splittedWord.First()) == false &&
             char.IsPunctuation(splittedWord.Last()) == false)
             return [splittedWord];

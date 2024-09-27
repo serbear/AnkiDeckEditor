@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AnkiDeckEditor.ViewModels"
              xmlns:fluentContentDialog="clr-namespace:AnkiDeckEditor"
+             xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
+             xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.Controls.Tabs.EstonianScreen"
              mc:Ignorable="d"
              d:DesignWidth="1024"
              d:DesignHeight="768"
@@ -11,83 +13,21 @@
              x:Class="AnkiDeckEditor.Views.Screens.EstonianScreen"
              x:DataType="vm:EstonianScreenViewModel"
              x:CompileBindings="True">
-    <DockPanel>
-        <!-- Toolbar -->
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-            <Button Name="SelectDeckToolButton" Content="Deck" />
-            <!-- Separator -->
-            <Border Background="Red" Width="2" Margin="2 0 2 0">
-                <Border.Styles>
-                    <Style Selector="Border">
-                        <Setter Property="RenderTransform" Value="rotate(0deg)" />
-                    </Style>
-                </Border.Styles>
-            </Border>
-            <Button Name="NewDictionaryEntityToolButton" Content="New Entity" />
-            <Button Name="ClearFormToolButton" Content="Clear" />
-            <!-- Separator -->
-            <Border Background="Red" Width="2" Margin="2 0 2 0">
-                <Border.Styles>
-                    <Style Selector="Border">
-                        <Setter Property="RenderTransform" Value="rotate(0deg)" />
-                    </Style>
-                </Border.Styles>
-            </Border>
-            <Button Name="ActionToolButton" Content="Actions" />
-            <!-- Separator -->
-            <Border Background="Red" Width="2" Margin="2 0 2 0">
-                <Border.Styles>
-                    <Style Selector="Border">
-                        <Setter Property="RenderTransform" Value="rotate(0deg)" />
-                    </Style>
-                </Border.Styles>
-            </Border>
-            <Button Name="ExitToolButton" Content="Exit" />
-        </StackPanel>
+    <DockPanel x:Name="MyDockPanel">
+        <controls:AdeToolbar DockPanel.Dock="Top" />
+
         <!-- Tabs -->
+
         <TabControl Name="DeckConfigTabControl" DockPanel.Dock="Top">
 
             <!-- MainEntity Anki field -->
 
             <TabItem Header="Словарная статья">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Text="Изучаемое слово или выражение:" />
-                    <Grid RowDefinitions="Auto" ColumnDefinitions="*,*">
-                        <TextBox Name="MainEntityAnkiFieldTextBox"
-                                 Tag="MainEntityAnkiField"
-                                 Grid.Column="0"
-                                 Grid.Row="0" />
-                        <Button Content="Paste"
-                                Command="{Binding PasteFromClipboardCommand}"
-                                CommandParameter="{Binding ElementName=MainEntityAnkiFieldTextBox}"
-                                Grid.Column="1"
-                                Grid.Row="0" />
-                    </Grid>
-
-                    <!-- SpeechPart Anki field -->
-                    <TextBlock Text="Часть речи:" />
-                    <WrapPanel Orientation="Horizontal">
-                        <ItemsRepeater ItemsSource="{Binding SpeechPartItems}">
-                            <ItemsRepeater.Layout>
-                                <StackLayout Spacing="0"
-                                             Orientation="Horizontal" />
-                            </ItemsRepeater.Layout>
-                            <ItemsRepeater.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <CheckBox IsChecked="{Binding IsChecked}"
-                                                  Content="{Binding Title}"
-                                                  Tag="{Binding VerbType}"
-                                                  IsCheckedChanged="SpeechPartCheckBox_OnIsCheckedChanged" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsRepeater.ItemTemplate>
-                        </ItemsRepeater>
-                    </WrapPanel>
-                </StackPanel>
+                <estonianScreen:VocabularyEntry />
             </TabItem>
 
-            <!-- Word forms -->
+            <!-- Non-verb word forms -->
+
             <TabItem Header="Формы слова"
                      Name="WordFormsTabItem"
                      IsVisible="{Binding IsWordFormsTabItemVisible}">
@@ -102,144 +42,159 @@
                                Text="Множественное число:" />
                     <TextBlock Grid.Column="0"
                                Grid.Row="1"
-                               Text="Nimetav:" />
+                               Text="Именительный падеж:" />
                     <TextBlock Grid.Column="0"
                                Grid.Row="2"
-                               Text="Omastav:" />
+                               Text="Родительный падеж:" />
                     <TextBlock Grid.Column="0"
                                Grid.Row="3"
-                               Text="Osastav:" />
+                               Text="Партитив:" />
                     <TextBlock Grid.Column="0"
                                Grid.Row="4"
                                Grid.ColumnSpan="4"
                                HorizontalAlignment="Right"
                                VerticalAlignment="Center"
-                               Text="Короткий sisseütlev:" />
+                               Text="Короткая форма иллатива:" />
 
                     <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
                           Grid.Column="2"
                           Grid.Row="1">
-                        <TextBox Name="NimetavAinsusTextBox"
+                        <TextBox Name="NominativeCaseSingularWordForm"
+                                 Text="{Binding NominativeCaseSingularWordForm}"
                                  MinWidth="341"
                                  Grid.Column="0"
                                  Grid.Row="0" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
-                                CommandParameter="{Binding ElementName=NimetavAinsusTextBox}"
+                                CommandParameter="{Binding ElementName=NominativeCaseSingularWordForm}"
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
                     <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
                           Grid.Column="4"
                           Grid.Row="1">
-                        <TextBox Name="NimetavMitmusTextBox"
+                        <TextBox Name="NominativeCasePluralWordForm"
+                                 Text="{Binding NominativeCasePluralWordForm}"
                                  MinWidth="341"
                                  Grid.Column="0"
                                  Grid.Row="0" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
-                                CommandParameter="{Binding ElementName=NimetavMitmusTextBox}"
+                                CommandParameter="{Binding ElementName=NominativeCasePluralWordForm}"
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
                     <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
                           Grid.Column="2"
                           Grid.Row="2">
-                        <TextBox Name="OmastavAinsusTextBox"
+                        <TextBox Name="GenitiveCaseSingularWordForm"
+                                 Text="{Binding GenitiveCaseSingularWordForm}"
                                  MinWidth="341"
                                  Grid.Column="0"
                                  Grid.Row="0" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
-                                CommandParameter="{Binding ElementName=OmastavAinsusTextBox}"
+                                CommandParameter="{Binding ElementName=GenitiveCaseSingularWordForm}"
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
                     <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
                           Grid.Column="4"
                           Grid.Row="2">
-                        <TextBox Name="OmastavMitmusTextBox"
+                        <TextBox Name="GenitiveCasePluralWordForm"
+                                 Text="{Binding GenitiveCasePluralWordForm}"
                                  MinWidth="341"
                                  Grid.Column="0"
                                  Grid.Row="0" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
-                                CommandParameter="{Binding ElementName=OmastavMitmusTextBox}"
+                                CommandParameter="{Binding ElementName=GenitiveCasePluralWordForm}"
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
                     <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
                           Grid.Column="2"
                           Grid.Row="3">
-                        <TextBox Name="OsastavAinsusTextBox"
+                        <TextBox Name="PartitiveCaseSingularWordForm"
+                                 Text="{Binding PartitiveCaseSingularWordForm}"
                                  MinWidth="341"
                                  Grid.Column="0"
                                  Grid.Row="0" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
-                                CommandParameter="{Binding ElementName=OsastavAinsusTextBox}"
+                                CommandParameter="{Binding ElementName=PartitiveCaseSingularWordForm}"
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
                     <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
                           Grid.Column="4"
                           Grid.Row="3">
-                        <TextBox Name="OsastavMitmusTextBox"
+                        <TextBox Name="PartitiveCasePluralWordForm"
+                                 Text="{Binding PartitiveCasePluralWordForm}"
                                  MinWidth="341"
                                  Grid.Column="0"
                                  Grid.Row="0" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
-                                CommandParameter="{Binding ElementName=OsastavMitmusTextBox}"
+                                CommandParameter="{Binding ElementName=PartitiveCasePluralWordForm}"
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
                     <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
                           Grid.Column="4"
                           Grid.Row="4">
-                        <TextBox Name="SmallSisseTextBox"
+                        <TextBox Name="ShortIllativeCaseWordForm"
+                                 Text="{Binding ShortIllativeCaseWordForm}"
                                  MinWidth="341"
                                  Grid.Column="0"
                                  Grid.Row="0" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
-                                CommandParameter="{Binding ElementName=SmallSisseTextBox}"
+                                CommandParameter="{Binding ElementName=ShortIllativeCaseWordForm}"
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
 
                 </Grid>
             </TabItem>
+
             <!-- Verb forms -->
+
             <TabItem Header="Формы глагола"
                      IsVisible="{Binding IsVerbFormsTabItemVisible}"
                      Name="VerbFormsTabItem">
                 <Grid ColumnDefinitions="*,*"
                       RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
-                    <TextBlock Text="MA инфинитив:"
+
+                    <TextBlock Text="MA-инфинитив:"
                                Grid.Column="0"
                                Grid.Row="0" />
-                    <TextBlock Text="DA инфинитив:"
+                    <TextBlock Text="DA-инфинитив:"
                                Grid.Column="0"
                                Grid.Row="2" />
-                    <TextBlock Text="Настоящее (3 лицо):"
+                    <TextBlock Text="Изъявительное наклонение (3 лицо):"
                                Grid.Column="0"
                                Grid.Row="4" />
-                    <TextBlock Text="Причастие (TUD/DUD):"
+                    <!-- todo: tooltip: страдательное причастие прошедшего времени -->
+                    <TextBlock Text="Причастие (страд., прош.):"
                                Grid.Column="0"
                                Grid.Row="6" />
-                    <TextBlock Text="Прошедшее (3 лицо):"
+
+                    <TextBlock Text="Изъявительное наклонение (3 лицо, прош.):"
                                Grid.Column="1"
                                Grid.Row="0" />
-                    <TextBlock Text="Прошедшее (NUD):"
+                    <!-- todo: tooltip: действительное причастие прошедшего времени -->
+                    <TextBlock Text="Причастие (действ.б прош.):"
                                Grid.Column="1"
                                Grid.Row="2" />
-                    <TextBlock Text="Повелительное (SA):"
+                    <TextBlock Text="Повелительное наклонение (ед.ч.):"
                                Grid.Column="1"
                                Grid.Row="4" />
-                    <TextBlock Text="Безличная форма наст. времени:"
+                    <TextBlock Text="Страдательный залог (наст.):"
                                Grid.Column="1"
                                Grid.Row="6" />
+
+
                     <TextBlock Text="Управление глагола:"
                                HorizontalAlignment="Center"
                                Grid.Column="0"
@@ -400,7 +355,7 @@
 
                 <StackPanel>
                     <TextBlock Text="Дословный:" />
-                    <TextBox Name="WordForWordTextBox"
+                    <TextBox x:Name="WordForWordTextBox"
                              Tag="WordByWordTranslationAnkiField"
                              TextChanged="WordForWordTextBox_OnTextChanged" />
 
@@ -511,41 +466,6 @@
                 <StackPanel HorizontalAlignment="Center">
                     <TextBlock Text="Копирование полей отдельно:" />
 
-                    <Button Content="Дословный перевод"
-                            Command="{Binding CopyFieldClipboardCommand}"
-                            CommandParameter="{Binding ElementName=WordForWordTextBox}" />
-                    <Button Content="Литературный перевод"
-                            CommandParameter="{Binding ElementName=LiteraryTextBox}"
-                            Command="{Binding CopyFieldClipboardCommand}" />
-                    <Button Content="Оригинал"
-                            CommandParameter="{Binding ElementName=OriginalTextBox}"
-                            Command="{Binding CopyFieldClipboardCommand}" />
-
-                    <Button Content="Часть речи"
-                            Tag="SpeechPartAnkiField"
-                            CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                            Command="{Binding CopyFieldClipboardCommand}" />
-
-                    <Button x:Name="NonVerbWordFormsButton"
-                            Content="Формы слова"
-                            Tag="WordFormsAnkiField"
-                            Command="{Binding CopyWordFormsFieldClipboardCommand}"
-                            IsVisible="{Binding IsWordFormsTabItemVisible}">
-
-                        <Button.CommandParameter>
-                            <MultiBinding>
-                                <Binding Path="#NonVerbWordFormsButton.Tag" />
-                                <Binding Path="#NimetavAinsusTextBox.Text" />
-                                <Binding Path="#OmastavAinsusTextBox.Text" />
-                                <Binding Path="#OsastavAinsusTextBox.Text" />
-                                <Binding Path="#NimetavMitmusTextBox.Text" />
-                                <Binding Path="#OmastavMitmusTextBox.Text" />
-                                <Binding Path="#OsastavMitmusTextBox.Text" />
-                                <Binding Path="#SmallSisseTextBox.Text" />
-                            </MultiBinding>
-                        </Button.CommandParameter>
-                    </Button>
-
                     <Button x:Name="VerbWordFormsButton"
                             Content="Формы глагола"
                             Command="{Binding CopyWordFormsFieldClipboardCommand}"
@@ -570,10 +490,10 @@
                             CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                             Tag="VerbControlAnkiField"
                             Command="{Binding CopyFieldClipboardCommand}" />
-                    <Button Content="Словарная статья"
-                            CommandParameter="{Binding ElementName=MainEntityAnkiFieldTextBox}"
-                            Tag="MainEntityAnkiField"
-                            Command="{Binding CopyFieldClipboardCommand}" />
+                    <!-- <Button Content="Словарная статья" -->
+                    <!--         CommandParameter="{Binding ElementName=MainEntityAnkiFieldTextBox}" -->
+                    <!--         Tag="MainEntityAnkiField" -->
+                    <!--         Command="{Binding CopyFieldClipboardCommand}" /> -->
                     <Button Name="ExitButton"
                             Content="Exit"
                             Command="{Binding CopyButtonCommand}" />

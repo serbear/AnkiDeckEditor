@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
+using System.Reflection;
 using AnkiDeckEditor.Libs;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
@@ -15,10 +16,10 @@ using ReactiveUI.Fody.Helpers;
 
 namespace AnkiDeckEditor.ViewModels;
 
-public class EstonianScreenViewModel : ViewModelBase
+public partial class EstonianScreenViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
-    public ReactiveCommand<Control, Unit> CopyFieldClipboardCommand { get; }
+    public ReactiveCommand<string, Unit> CopyFieldClipboardCommand { get; }
     public ReactiveCommand<ReadOnlyCollection<object>, Unit> CopyWordFormsFieldClipboardCommand { get; }
     public ObservableCollection<ToggleItem> VerbControlItems { get; }
     public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
@@ -26,23 +27,39 @@ public class EstonianScreenViewModel : ViewModelBase
     [Reactive] public ObservableCollection<ContextToggleItem> WordByWordContextSelectedItems { get; set; }
     [Reactive] public ObservableCollection<ContextToggleItem> LiteraryContextSelectedItems { get; set; }
     [Reactive] public ObservableCollection<ContextToggleItem> OriginalContextSelectedItems { get; set; }
+
     [Reactive] public bool IsVerbFormsTabItemVisible { get; set; }
     [Reactive] public bool IsWordFormsTabItemVisible { get; set; }
     public ReactiveCommand<Control, Unit> PasteFromClipboardCommand { get; }
+    public ReactiveCommand<Unit, Unit> SelectDeckCommand { get; }
+    public ReactiveCommand<Unit, Unit> NewEntityCommand { get; }
+    public ReactiveCommand<Unit, Unit> AddListCommand { get; }
+    public ReactiveCommand<Unit, Unit> ClearFormCommand { get; }
+    public ReactiveCommand<Unit, Unit> ExportFileCommand { get; }
+    public ReactiveCommand<Unit, Unit> ExitCommand { get; }
+    public ReactiveCommand<string, Unit> DummyCommand { get; }
 
-    private readonly Dictionary<string, (string, object)> _copyStrategyDict;
+    private Dictionary<string, string> CopyStrategyDict { get; set; }
+    private Dictionary<string, object> CopyStrategyDataDict { get; set; }
+
 
     public EstonianScreenViewModel()
     {
         // commands
         CopyButtonCommand = ReactiveCommand.Create(ExitButtonExecute);
-        CopyFieldClipboardCommand = ReactiveCommand.Create<Control>(CopyDeckFieldClipboardExecute);
-
+        CopyFieldClipboardCommand = ReactiveCommand.Create<string>(CopyDeckFieldClipboardExecute);
         CopyWordFormsFieldClipboardCommand =
             ReactiveCommand.Create<ReadOnlyCollection<object>>(CopyWordFormsDeckFieldClipboardExecute);
-
         PasteFromClipboardCommand = ReactiveCommand.Create<Control>(PasteFromClipboardExecute);
+        SelectDeckCommand = ReactiveCommand.Create(SelectDeckExecute);
+        NewEntityCommand = ReactiveCommand.Create(NewEntityExecute);
+        AddListCommand = ReactiveCommand.Create(AddListExecute);
+        ClearFormCommand = ReactiveCommand.Create(ClearFormExecute);
+        ExportFileCommand = ReactiveCommand.Create(ExportFileExecute);
+        ExitCommand = ReactiveCommand.Create(ExitExecute);
+        DummyCommand = ReactiveCommand.Create<string>(DummyExecute);
 
+        // Collections
         VerbControlItems = CollectionLoader.LoadVerbControls();
         SpeechPartItems = CollectionLoader.LoadSpeechParts();
 
@@ -63,22 +80,90 @@ public class EstonianScreenViewModel : ViewModelBase
 
         // Key - avalonia control tag.
         // Value - tuple (the copy strategy class full name, data to copy, FieldTags string)
-        _copyStrategyDict = new Dictionary<string, (string, object)>
+        CopyStrategyDict = new Dictionary<string, string>
         {
-            {
-                "WordByWordTranslationAnkiField",
-                (typeof(LiteralTranslationCopyStrategy).FullName, WordByWordContextSelectedItems)!
-            },
-            {
-                "LiteraryTranslationAnkiField",
-                (typeof(LiteraryTranslationCopyStrategy).FullName, LiteraryContextSelectedItems)!
-            },
-            { "OriginalAnkiField", (typeof(OriginalPhraseCopyStrategy).FullName, OriginalContextSelectedItems)! },
-            { "SpeechPartAnkiField", (typeof(SpeechPartCopyStrategy).FullName, SpeechPartItems)! },
-            { "MainEntityAnkiField", (typeof(MainEntityCopyStrategy).FullName, null)! },
-            { "VerbControlAnkiField", (typeof(VerbGovernmentCopyStrategy).FullName, VerbControlItems)! },
-            { "WordFormsAnkiField", (typeof(WordFormsCopyStrategy).FullName, null)! }
+            { "LiteralTranslationValue", typeof(LiteralTranslationCopyStrategy).FullName! },
+            { "LiteraryTranslationAnkiField", typeof(LiteraryTranslationCopyStrategy).FullName! },
+            { "OriginalTextValue", typeof(OriginalPhraseCopyStrategy).FullName! },
+            { "SpeechPartStrategy", typeof(SpeechPartCopyStrategy).FullName! },
+            { "VocabularyEntryStrategy", typeof(VocabularyEntryCopyStrategy).FullName! },
+            { "SpeechPartGovernmentStrategy", typeof(VerbGovernmentCopyStrategy).FullName! },
+            { "WordFormsStrategy", typeof(WordFormsCopyStrategy).FullName! }
         };
+
+
+        // VerbWordFormsStrategy
+        // NonVerbWordFormsStrategy
+
+        CopyStrategyDataDict = new Dictionary<string, object>
+        {
+            { "LiteralTranslationStrategy", WordByWordContextSelectedItems },
+            { "LiteraryTranslationStrategy", LiteraryContextSelectedItems },
+            { "OriginalTextStrategy", OriginalContextSelectedItems },
+            { "SpeechPartStrategy", SpeechPartItems },
+            { "SpeechPartGovernmentStrategy", VerbControlItems },
+            { "WordFormsStrategy", null }
+        };
+    }
+
+
+    private void DummyExecute(string value)
+    {
+        var strategy = Activator.CreateInstance(Type.GetType(CopyStrategyDict[value])!);
+        var copyContext = new Context();
+        copyContext.SetStrategy((strategy as ICopyStrategy)!);
+
+        // Try to get data collection for the strategy.
+        // If there is no data collection, take a string value of the field with name 'value'.
+        var isDataCollectionExist = CopyStrategyDataDict.TryGetValue(value, out var fieldValue);
+        if (!isDataCollectionExist) fieldValue = GetFieldValue(value);
+
+        copyContext.DoCopyLogic(fieldValue);
+    }
+
+    private string GetFieldValue(string fieldName)
+    {
+        // Get this class type.
+        var type = GetType();
+
+        // ReSharper disable once GrammarMistakeInComment
+        // Expression 'f.Name[1..]' means: skip the "$" symbol in the name of the class field.
+        var field = type.GetRuntimeFields().First(f => f.Name[1..].Equals(fieldName));
+
+        if (field == null) throw new ArgumentException($"Field with the name '{fieldName}' is not found.");
+
+        // If the field is public and exists, return its value.
+        return (string)field.GetValue(this)!;
+    }
+
+    private void ExitExecute()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void ExportFileExecute()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void ClearFormExecute()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void AddListExecute()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void NewEntityExecute()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void SelectDeckExecute()
+    {
+        Console.WriteLine("Select deck");
     }
 
     private static async void PasteFromClipboardExecute(Control value)
@@ -102,21 +187,37 @@ public class EstonianScreenViewModel : ViewModelBase
     }
 
 
-    private void CopyDeckFieldClipboardExecute(Control sender)
+    private void CopyDeckFieldClipboardExecute(string value)
     {
-        if (sender.Tag == null) throw new Exception("The Control has no a tag.");
-
-        var copyContext = new Context();
-
-        var strategy = Activator.CreateInstance(Type.GetType(_copyStrategyDict[(string)sender.Tag].Item1)!);
-        copyContext.SetStrategy((strategy as ICopyStrategy)!);
-
-        object itemCollection;
-        // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-        if (sender.Tag.Equals("MainEntityAnkiField"))
-            itemCollection = ((TextBox)sender).Text!;
-        else
-            itemCollection = _copyStrategyDict[(string)sender.Tag].Item2;
-        copyContext.DoCopyLogic(itemCollection);
+        // var valueTuple = CopyStrategyDict[value];
+        // var copyContext = new Context();
+        // var strategy = Activator.CreateInstance(Type.GetType(valueTuple.Item1)!);
+        //
+        // copyContext.SetStrategy((strategy as ICopyStrategy)!);
+        //
+        // valueTuple.Item2 = VocabularyEntryText;
+        //
+        //
+        // var itemCollection = valueTuple.Item2;
+        // copyContext.DoCopyLogic(itemCollection);
     }
+
+    // public readonly Dictionary<string, Control> EstonianTemplateControls = new();
+
+    // public void PrintUserControlTags(Control parent)
+    // {
+    //     foreach (var child in parent.GetLogicalChildren())
+    //     {
+    //         if (child is not Control control) continue;
+    //
+    //         // Выполняем необходимые действия с элементом управления
+    //
+    //         var tag = control.Tag?.ToString();
+    //
+    //         if (tag != null && tag.Contains("AnkiField")) EstonianTemplateControls.TryAdd(tag, control);
+    //
+    //         // Рекурсивно обходим дочерние элементы
+    //         PrintUserControlTags(control);
+    //     }
+    // }
 }

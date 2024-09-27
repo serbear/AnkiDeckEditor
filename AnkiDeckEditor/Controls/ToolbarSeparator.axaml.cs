@@ -1,11 +1,12 @@
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace AnkiDeckEditor.Views.Dialogs;
+namespace AnkiDeckEditor.Controls;
 
-public partial class ExitDialog : UserControl
+public partial class ToolbarSeparator : UserControl
 {
-    public ExitDialog()
+    public ToolbarSeparator()
     {
         InitializeComponent();
     }

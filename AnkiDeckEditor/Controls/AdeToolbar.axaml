@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AnkiDeckEditor.ViewModels"
+             xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
+             x:DataType="vm:EstonianScreenViewModel"
+             x:Class="AnkiDeckEditor.Controls.AdeToolbar">
+    <StackPanel Orientation="Horizontal">
+        <Button Name="SelectDeckToolButton"
+                Content="Deck"
+                Command="{Binding SelectDeckCommand}"
+                IsVisible="False" />
+        <controls:ToolbarSeparator IsVisible="False" />
+        <Button Name="NewDictionaryEntityToolButton"
+                Content="New"
+                Command="{Binding NewEntityCommand}" />
+        <Button Name="AddEntityListButton"
+                Content="Add List"
+                Command="{Binding AddListCommand}" />
+        <Button Name="ClearFormToolButton"
+                Content="Clear"
+                Command="{Binding ClearFormCommand}" />
+        <controls:ToolbarSeparator />
+        <Button Name="ActionsButton"
+                Content="Copy">
+            <Button.Flyout>
+                <MenuFlyout Placement="BottomEdgeAlignedLeft">
+                    <!-- todo: Меню, как коллекция.  -->
+                    <MenuItem Header="Словарная статья"
+                              Command="{Binding DummyCommand}"
+                              CommandParameter="VocabularyEntryStrategy" />
+                    <MenuItem Header="Дословный перевод"
+                              Command="{Binding DummyCommand}"
+                              CommandParameter="LiteralTranslationStrategy" />
+                    <MenuItem Header="Литературный перевод"
+                              Command="{Binding DummyCommand}"
+                              CommandParameter="LiteraryTranslationStrategy" />
+                    <MenuItem Header="Оригинал"
+                              Command="{Binding DummyCommand}"
+                              CommandParameter="OriginalTextStrategy" />
+                    <MenuItem Header="Часть речи"
+                              Command="{Binding DummyCommand}"
+                              CommandParameter="SpeechPartStrategy" />
+                    <MenuItem Header="Формы слова"
+                              IsVisible="{Binding IsWordFormsTabItemVisible}"
+                              Command="{Binding DummyCommand}"
+                              CommandParameter="NonVerbWordFormsStrategy" />
+                    <MenuItem Header="Формы глагола"
+                              IsVisible="{Binding IsVerbFormsTabItemVisible}"
+                              Command="{Binding DummyCommand}"
+                              CommandParameter="VerbWordFormsStrategy" />
+                    <MenuItem Header="Управление частью речи"
+                              Command="{Binding DummyCommand}"
+                              CommandParameter="SpeechPartGovernmentStrategy" />
+                </MenuFlyout>
+            </Button.Flyout>
+        </Button>
+
+        <Button Name="ExportFileButton"
+                Content="Export"
+                Command="{Binding ExportFileCommand}" />
+        <controls:ToolbarSeparator />
+        <Button Name="ExitButton"
+                Content="Exit"
+                Command="{Binding ExitCommand}" />
+    </StackPanel>
+</UserControl>

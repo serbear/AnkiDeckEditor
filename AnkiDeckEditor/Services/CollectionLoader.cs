@@ -25,7 +25,6 @@ public static class CollectionLoader
             new SpeechPartToggleItem("наречие", "määrsõna", false),
             new SpeechPartToggleItem("прилагательное", "omadussõna", false),
             new SpeechPartToggleItem("местоимение", "asesõna", false),
-            // new SpeechPartToggleItem("глагол", "tegusõna", true, false)
             new SpeechPartToggleItem("глагол", "tegusõna", VerbTypes.Simple, false),
             new SpeechPartToggleItem("глагол составной", "ühendtegusõna", VerbTypes.Compound, false)
         ];

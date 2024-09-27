@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
+             x:DataType="viewModels:EstonianScreenViewModel"
+             x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.VocabularyEntry">
+    <StackPanel Orientation="Vertical">
+
+        <!-- The vocabulary entry title -->
+
+        <TextBlock Text="Изучаемое слово или выражение:" />
+        <Grid RowDefinitions="Auto" ColumnDefinitions="*,*">
+            <TextBox Name="MainEntityAnkiFieldTextBox"
+                     Text="{Binding VocabularyEntryText}"
+                     Grid.Column="0"
+                     Grid.Row="0" />
+            <Button Content="Paste"
+                    Command="{Binding PasteFromClipboardCommand}"
+                    CommandParameter="{Binding ElementName=MainEntityAnkiFieldTextBox}"
+                    Grid.Column="1"
+                    Grid.Row="0" />
+        </Grid>
+
+        <!-- Parts' of speech checkboxes -->
+
+        <TextBlock Text="Часть речи:" />
+        <WrapPanel Orientation="Horizontal">
+            <ItemsRepeater ItemsSource="{Binding SpeechPartItems}">
+                <ItemsRepeater.Layout>
+                    <StackLayout Spacing="0"
+                                 Orientation="Horizontal" />
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox IsChecked="{Binding IsChecked}"
+                                      Content="{Binding Title}"
+                                      Tag="{Binding VerbType}"
+                                      IsCheckedChanged="SpeechPartCheckBox_OnIsCheckedChanged" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </WrapPanel>
+    </StackPanel>
+</UserControl>

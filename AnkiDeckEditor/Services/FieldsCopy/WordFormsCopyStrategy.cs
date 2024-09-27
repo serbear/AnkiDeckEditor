@@ -6,8 +6,8 @@ public class WordFormsCopyStrategy : ICopyStrategy
 {
     private readonly Dictionary<string, string> _tagTemplates = new()
     {
-        { "WordFormsAnkiField", FieldTags.SimpleWordItemsWithSseFormTemplate },
-        { "VerbWordFormsAnkiField", FieldTags.VerbItemsTemplate }
+        { "NonVerbWordFormsStrategy", FieldTags.SimpleWordItemsWithSseFormTemplate },
+        { "VerbWordFormsStrategy", FieldTags.VerbItemsTemplate }
     };
 
     public string DoCopyList(List<object> data)
