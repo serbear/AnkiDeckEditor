@@ -32,130 +32,156 @@
                      Name="WordFormsTabItem"
                      IsVisible="{Binding IsWordFormsTabItemVisible}">
 
-                <Grid ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
-                      RowDefinitions="Auto,Auto,Auto,Auto,Auto">
-                    <TextBlock Grid.Column="2"
+                <Grid ColumnDefinitions="*,*"
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+
+                    <!-- Заголовки количества лиц. -->
+
+                    <TextBlock Grid.Column="0"
                                Grid.Row="0"
-                               Text="Единственное число:" />
-                    <TextBlock Grid.Column="4"
+                               TextAlignment="Center"
+                               Text="Единственное число:"
+                               Name="SingularTitleTextBlock" />
+                    <TextBlock Grid.Column="1"
                                Grid.Row="0"
+                               TextAlignment="Center"
                                Text="Множественное число:" />
+
+
                     <TextBlock Grid.Column="0"
                                Grid.Row="1"
+                               Grid.ColumnSpan="2"
+                               TextAlignment="Center"
                                Text="Именительный падеж:" />
-                    <TextBlock Grid.Column="0"
-                               Grid.Row="2"
-                               Text="Родительный падеж:" />
-                    <TextBlock Grid.Column="0"
-                               Grid.Row="3"
-                               Text="Партитив:" />
-                    <TextBlock Grid.Column="0"
-                               Grid.Row="4"
-                               Grid.ColumnSpan="4"
-                               HorizontalAlignment="Right"
-                               VerticalAlignment="Center"
-                               Text="Короткая форма иллатива:" />
-
-                    <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
-                          Grid.Column="2"
-                          Grid.Row="1">
+                    <Grid ColumnDefinitions="*,Auto"
+                          RowDefinitions="Auto,Auto"
+                          Grid.Column="0"
+                          Grid.Row="2">
                         <TextBox Name="NominativeCaseSingularWordForm"
                                  Text="{Binding NominativeCaseSingularWordForm}"
-                                 MinWidth="341"
                                  Grid.Column="0"
-                                 Grid.Row="0" />
+                                 Grid.Row="1" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
                                 CommandParameter="{Binding ElementName=NominativeCaseSingularWordForm}"
                                 Grid.Column="1"
-                                Grid.Row="0" />
+                                Grid.Row="1" />
                     </Grid>
-                    <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
-                          Grid.Column="4"
-                          Grid.Row="1">
+                    <Grid ColumnDefinitions="*,Auto"
+                          RowDefinitions="Auto,Auto"
+                          Grid.Column="1"
+                          Grid.Row="2">
                         <TextBox Name="NominativeCasePluralWordForm"
                                  Text="{Binding NominativeCasePluralWordForm}"
-                                 MinWidth="341"
                                  Grid.Column="0"
-                                 Grid.Row="0" />
+                                 Grid.Row="1" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
                                 CommandParameter="{Binding ElementName=NominativeCasePluralWordForm}"
                                 Grid.Column="1"
-                                Grid.Row="0" />
+                                Grid.Row="1" />
                     </Grid>
-                    <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
-                          Grid.Column="2"
-                          Grid.Row="2">
+
+
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="3"
+                               Grid.ColumnSpan="2"
+                               TextAlignment="Center"
+                               Text="Родительный падеж:" />
+                    <Grid RowDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto"
+                          Grid.Column="0"
+                          Grid.Row="4">
                         <TextBox Name="GenitiveCaseSingularWordForm"
                                  Text="{Binding GenitiveCaseSingularWordForm}"
-                                 MinWidth="341"
                                  Grid.Column="0"
-                                 Grid.Row="0" />
+                                 Grid.Row="1" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
                                 CommandParameter="{Binding ElementName=GenitiveCaseSingularWordForm}"
                                 Grid.Column="1"
-                                Grid.Row="0" />
+                                Grid.Row="1" />
                     </Grid>
-                    <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
-                          Grid.Column="4"
-                          Grid.Row="2">
+                    <Grid RowDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto"
+                          Grid.Column="1"
+                          Grid.Row="4">
                         <TextBox Name="GenitiveCasePluralWordForm"
                                  Text="{Binding GenitiveCasePluralWordForm}"
-                                 MinWidth="341"
                                  Grid.Column="0"
-                                 Grid.Row="0" />
+                                 Grid.Row="1" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
                                 CommandParameter="{Binding ElementName=GenitiveCasePluralWordForm}"
                                 Grid.Column="1"
-                                Grid.Row="0" />
+                                Grid.Row="1" />
                     </Grid>
-                    <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
-                          Grid.Column="2"
-                          Grid.Row="3">
+
+
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="5"
+                               Grid.ColumnSpan="2"
+                               TextAlignment="Center"
+                               Text="Партитив:" />
+                    <Grid RowDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto"
+                          Grid.Column="0"
+                          Grid.Row="6">
                         <TextBox Name="PartitiveCaseSingularWordForm"
                                  Text="{Binding PartitiveCaseSingularWordForm}"
                                  MinWidth="341"
                                  Grid.Column="0"
-                                 Grid.Row="0" />
+                                 Grid.Row="1" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
                                 CommandParameter="{Binding ElementName=PartitiveCaseSingularWordForm}"
                                 Grid.Column="1"
-                                Grid.Row="0" />
+                                Grid.Row="1" />
                     </Grid>
-                    <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
-                          Grid.Column="4"
-                          Grid.Row="3">
+                    <Grid RowDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto"
+                          Grid.Column="1"
+                          Grid.Row="6">
                         <TextBox Name="PartitiveCasePluralWordForm"
                                  Text="{Binding PartitiveCasePluralWordForm}"
                                  MinWidth="341"
                                  Grid.Column="0"
-                                 Grid.Row="0" />
+                                 Grid.Row="1" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
                                 CommandParameter="{Binding ElementName=PartitiveCasePluralWordForm}"
                                 Grid.Column="1"
-                                Grid.Row="0" />
+                                Grid.Row="1" />
                     </Grid>
-                    <Grid RowDefinitions="Auto" ColumnDefinitions="Auto,Auto"
-                          Grid.Column="4"
-                          Grid.Row="4">
+
+
+                    <TextBlock Grid.Column="0"
+                               Grid.Row="7"
+                               Grid.ColumnSpan="2"
+                               TextAlignment="Center"
+                               Text="Короткая форма иллатива:" />
+                    <Grid RowDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2"
+                          Grid.Row="8"
+                          Width="{Binding #SingularTitleTextBlock.Bounds.Width }">
+
                         <TextBox Name="ShortIllativeCaseWordForm"
                                  Text="{Binding ShortIllativeCaseWordForm}"
                                  MinWidth="341"
                                  Grid.Column="0"
-                                 Grid.Row="0" />
+                                 Grid.Row="1" />
                         <Button Content="Paste"
                                 Command="{Binding PasteFromClipboardCommand}"
                                 CommandParameter="{Binding ElementName=ShortIllativeCaseWordForm}"
                                 Grid.Column="1"
-                                Grid.Row="0" />
+                                Grid.Row="1" />
                     </Grid>
 
+
                 </Grid>
+
             </TabItem>
 
             <!-- Verb forms -->
@@ -467,28 +493,7 @@
                 </StackPanel>
 
             </TabItem>
-            <!-- 
-        Actions
-        -->
-            <TabItem Header="Действия">
 
-                <StackPanel HorizontalAlignment="Center">
-                    <TextBlock Text="Копирование полей отдельно:" />
-
-
-                    <Button Content="Управление глагола"
-                            CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                            Tag="VerbControlAnkiField"
-                            Command="{Binding CopyFieldClipboardCommand}" />
-                    <!-- <Button Content="Словарная статья" -->
-                    <!--         CommandParameter="{Binding ElementName=MainEntityAnkiFieldTextBox}" -->
-                    <!--         Tag="MainEntityAnkiField" -->
-                    <!--         Command="{Binding CopyFieldClipboardCommand}" /> -->
-                    <Button Name="ExitButton"
-                            Content="Exit"
-                            Command="{Binding CopyButtonCommand}" />
-                </StackPanel>
-            </TabItem>
         </TabControl>
 
     </DockPanel>
