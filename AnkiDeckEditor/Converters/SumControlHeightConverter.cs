@@ -1,22 +1,30 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using Avalonia;
 using Avalonia.Data.Converters;
 
 namespace AnkiDeckEditor.Converters;
 
 public class SumControlHeightConverter : IMultiValueConverter
 {
-    public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
+    public object? Convert(IList<object?>? values, Type targetType, object? parameter, CultureInfo culture)
     {
-        Console.WriteLine("dd");
+        if (values == null || values.Count == 0)
+            return AvaloniaProperty.UnsetValue;
 
-        var height = 0.0;
+        try
+        {
+            var totalHeight = values
+                .OfType<double>()
+                .Sum();
 
-        foreach (var h in values)
-            if (h is double d)
-                height += d;
-
-        return height;
+            return totalHeight;
+        }
+        catch
+        {
+            return AvaloniaProperty.UnsetValue;
+        }
     }
 }

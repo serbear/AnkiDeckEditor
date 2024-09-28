@@ -7,9 +7,9 @@ using Avalonia.Markup.Xaml;
 
 namespace AnkiDeckEditor.Controls.Tabs.EstonianScreen;
 
-public partial class VocabularyEntry : UserControl
+public partial class VocabularyEntryTab : UserControl
 {
-    public VocabularyEntry()
+    public VocabularyEntryTab()
     {
         InitializeComponent();
     }

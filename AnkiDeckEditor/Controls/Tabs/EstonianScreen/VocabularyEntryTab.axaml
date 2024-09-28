@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
              x:DataType="viewModels:EstonianScreenViewModel"
-             x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.VocabularyEntry">
+             x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.VocabularyEntryTab">
     <StackPanel Orientation="Vertical">
 
         <!-- The vocabulary entry title -->

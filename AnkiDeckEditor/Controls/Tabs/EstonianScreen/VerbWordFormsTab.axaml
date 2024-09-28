@@ -1,0 +1,142 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
+             xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
+             xmlns:converters="clr-namespace:AnkiDeckEditor.Converters"
+             x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.VerbWordFormsTab"
+             x:DataType="viewModels:EstonianScreenViewModel">
+
+    <Grid ColumnDefinitions="*,*"
+          RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+
+        <TextBlock Text="MA-инфинитив:"
+                   Name="MaInfinitiveWordFormTitle"
+                   Grid.Column="0"
+                   Grid.Row="0" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="1"
+                               Name="MaInfinitiveWordForm"
+                               Text="{Binding MaInfinitiveWordForm, Mode=TwoWay}" />
+        <TextBlock Text="DA-инфинитив:"
+                   Name="DaInfinitiveWordFormTitle"
+                   Grid.Column="0"
+                   Grid.Row="2" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="3"
+                               Name="DaInfinitiveWordForm"
+                               Text="{Binding DaInfinitiveWordForm, Mode=TwoWay}" />
+        <TextBlock Text="Изъявительное наклонение (3 лицо):"
+                   Name="IndicativeMoodWordFormTitle"
+                   Grid.Column="0"
+                   Grid.Row="4" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="5"
+                               Name="IndicativeMoodWordForm"
+                               Text="{Binding IndicativeMoodWordForm, Mode=TwoWay}" />
+        <!-- todo: tooltip: страдательное причастие прошедшего времени -->
+        <TextBlock Text="Причастие (страд., прош.):"
+                   Name="PassiveParticiplePastTenseWordFormTitle"
+                   Grid.Column="0"
+                   Grid.Row="6" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="7"
+                               Name="PassiveParticiplePastTenseWordForm"
+                               Text="{Binding PassiveParticiplePastTenseWordForm, Mode=TwoWay}" />
+        <TextBlock Text="Изъявительное наклонение (3 лицо, прош.):"
+                   Name="ThirdPersonPastTenseWordFormTitle"
+                   Grid.Column="0"
+                   Grid.Row="8" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="9"
+                               Name="ThirdPersonPastTenseWordForm"
+                               Text="{Binding ThirdPersonPastTenseWordForm, Mode=TwoWay}" />
+        <!-- todo: tooltip: действительное причастие прошедшего времени -->
+        <TextBlock Text="Причастие (действ. прош.):"
+                   Name="ActiveParticipleWordFormTitle"
+                   Grid.Column="0"
+                   Grid.Row="10" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="11"
+                               Name="ActiveParticipleWordForm"
+                               Text="{Binding ActiveParticipleWordForm, Mode=TwoWay}" />
+        <TextBlock Text="Повелительное наклонение (ед.ч.):"
+                   Name="ImperativeMoodSingularWordFormTitle"
+                   Grid.Column="0"
+                   Grid.Row="12" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="13"
+                               Name="ImperativeMoodSingularWordForm"
+                               Text="{Binding ImperativeMoodSingularWordForm, Mode=TwoWay}" />
+        <TextBlock Text="Страдательный залог (наст.):"
+                   Name="PassiveVoicePresentTenseWordFormTitle"
+                   Grid.Column="0"
+                   Grid.Row="14" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="15"
+                               Name="PassiveVoicePresentTenseWordForm"
+                               Text="{Binding PassiveVoicePresentTenseWordForm, Mode=TwoWay}" />
+
+
+        <!-- Part of speech government -->
+
+        <TextBlock Text="Управление частью речи:"
+                   HorizontalAlignment="Center"
+                   Grid.Column="1"
+                   Grid.Row="0" />
+
+        <Panel Name="SpeechPartGovernmentContainer"
+               Grid.Column="1"
+               Grid.Row="1"
+               Grid.RowSpan="15">
+            <Border BorderThickness="1"
+                    BorderBrush="red">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto"
+                              Background="Chocolate">
+                    <ScrollViewer.Resources>
+                        <converters:SumControlHeightConverter x:Key="SumControlHeightConverter" />
+                    </ScrollViewer.Resources>
+                    <ScrollViewer.Height>
+                        <MultiBinding Converter="{StaticResource SumControlHeightConverter }">
+                            <Binding ElementName="MaInfinitiveWordFormTitle" Path="Bounds.Height" />
+                            <Binding ElementName="MaInfinitiveWordForm" Path="Bounds.Height" />
+                            <Binding ElementName="DaInfinitiveWordFormTitle" Path="Bounds.Height" />
+                            <Binding ElementName="DaInfinitiveWordForm" Path="Bounds.Height" />
+                            <Binding ElementName="IndicativeMoodWordFormTitle" Path="Bounds.Height" />
+                            <Binding ElementName="IndicativeMoodWordForm" Path="Bounds.Height" />
+                            <Binding ElementName="PassiveParticiplePastTenseWordFormTitle"
+                                     Path="Bounds.Height" />
+                            <Binding ElementName="PassiveParticiplePastTenseWordForm"
+                                     Path="Bounds.Height" />
+                            <Binding ElementName="ThirdPersonPastTenseWordFormTitle" Path="Bounds.Height" />
+                            <Binding ElementName="ThirdPersonPastTenseWordForm" Path="Bounds.Height" />
+                            <Binding ElementName="ActiveParticipleWordFormTitle" Path="Bounds.Height" />
+                            <Binding ElementName="ActiveParticipleWordForm" Path="Bounds.Height" />
+                            <Binding ElementName="ImperativeMoodSingularWordFormTitle"
+                                     Path="Bounds.Height" />
+                            <Binding ElementName="ImperativeMoodSingularWordForm" Path="Bounds.Height" />
+                            <Binding ElementName="PassiveVoicePresentTenseWordFormTitle"
+                                     Path="Bounds.Height" />
+                            <!-- <Binding ElementName="PassiveVoicePresentTenseWordForm" Path="Bounds.Height" /> -->
+                        </MultiBinding>
+                    </ScrollViewer.Height>
+                    <ItemsRepeater Margin="10,0,0,0"
+                                   ItemsSource="{Binding VerbControlItems}">
+                        <ItemsRepeater.Layout>
+                            <StackLayout Spacing="0"
+                                         Orientation="Vertical" />
+                        </ItemsRepeater.Layout>
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <CheckBox IsChecked="{Binding IsChecked}"
+                                              Content="{Binding Title}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+                </ScrollViewer>
+            </Border>
+        </Panel>
+    </Grid>
+</UserControl>

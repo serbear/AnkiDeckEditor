@@ -1,16 +1,14 @@
-using AnkiDeckEditor.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace AnkiDeckEditor.Views.Screens;
+namespace AnkiDeckEditor.Controls.Tabs.EstonianScreen;
 
 // ReSharper disable once PartialTypeWithSinglePart
-public partial class EstonianScreen : UserControl
+public partial class CardListTab : UserControl
 {
-    public EstonianScreen()
+    public CardListTab()
     {
         InitializeComponent();
-        DataContext = new EstonianScreenViewModel();
     }
 
     private void InitializeComponent()

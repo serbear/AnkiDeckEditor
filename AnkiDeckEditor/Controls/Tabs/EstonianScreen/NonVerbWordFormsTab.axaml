@@ -1,0 +1,78 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
+             xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
+             x:DataType="viewModels:EstonianScreenViewModel"
+             x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.NonVerbWordFormsTab">
+    <Grid ColumnDefinitions="*,*"
+          RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+
+        <!-- Заголовки количества лиц. -->
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="0"
+                   TextAlignment="Center"
+                   Text="Единственное число:"
+                   Name="SingularTitleTextBlock" />
+        <TextBlock Grid.Column="1"
+                   Grid.Row="0"
+                   TextAlignment="Center"
+                   Text="Множественное число:" />
+
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="1"
+                   Grid.ColumnSpan="2"
+                   TextAlignment="Center"
+                   Text="Именительный падеж:" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="2"
+                               Name="NominativeCaseSingularWordForm"
+                               Text="{Binding NominativeCaseSingularWordForm, Mode=TwoWay}" />
+        <controls:PasteTextBox Grid.Column="1"
+                               Grid.Row="2"
+                               Name="NominativeCasePluralWordForm"
+                               Text="{Binding NominativeCasePluralWordForm, Mode=TwoWay}" />
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="3"
+                   Grid.ColumnSpan="2"
+                   TextAlignment="Center"
+                   Text="Родительный падеж:" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="4"
+                               Name="GenitiveCaseSingularWordForm"
+                               Text="{Binding GenitiveCaseSingularWordForm, Mode=TwoWay}" />
+        <controls:PasteTextBox Grid.Column="1"
+                               Grid.Row="4"
+                               Name="GenitiveCasePluralWordForm"
+                               Text="{Binding GenitiveCasePluralWordForm, Mode=TwoWay}" />
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="5"
+                   Grid.ColumnSpan="2"
+                   TextAlignment="Center"
+                   Text="Партитив:" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="6"
+                               Name="PartitiveCaseSingularWordForm"
+                               Text="{Binding PartitiveCaseSingularWordForm, Mode=TwoWay}" />
+        <controls:PasteTextBox Grid.Column="1"
+                               Grid.Row="6"
+                               Name="PartitiveCasePluralWordForm"
+                               Text="{Binding PartitiveCasePluralWordForm, Mode=TwoWay}" />
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="7"
+                   Grid.ColumnSpan="2"
+                   TextAlignment="Center"
+                   Text="Короткая форма иллатива:" />
+        <controls:PasteTextBox Grid.Column="0"
+                               Grid.Row="8"
+                               Grid.ColumnSpan="2"
+                               Name="ShortIllativeCaseWordForm"
+                               Width="{Binding #SingularTitleTextBlock.Bounds.Width }"
+                               Text="{Binding ShortIllativeCaseWordForm, Mode=TwoWay}" />
+
+    </Grid>
+</UserControl>

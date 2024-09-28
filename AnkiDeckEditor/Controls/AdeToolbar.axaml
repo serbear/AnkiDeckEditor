@@ -26,30 +26,30 @@
                 <MenuFlyout Placement="BottomEdgeAlignedLeft">
                     <!-- todo: Меню, как коллекция.  -->
                     <MenuItem Header="Словарная статья"
-                              Command="{Binding CopyDeckFieldClipboardExecute}"
+                              Command="{Binding CopyFieldClipboardCommand}"
                               CommandParameter="VocabularyEntryStrategy" />
                     <MenuItem Header="Дословный перевод"
-                              Command="{Binding CopyDeckFieldClipboardExecute}"
+                              Command="{Binding CopyFieldClipboardCommand}"
                               CommandParameter="LiteralTranslationStrategy" />
                     <MenuItem Header="Литературный перевод"
-                              Command="{Binding CopyDeckFieldClipboardExecute}"
+                              Command="{Binding CopyFieldClipboardCommand}"
                               CommandParameter="LiteraryTranslationStrategy" />
                     <MenuItem Header="Оригинал"
-                              Command="{Binding CopyDeckFieldClipboardExecute}"
+                              Command="{Binding CopyFieldClipboardCommand}"
                               CommandParameter="OriginalTextStrategy" />
                     <MenuItem Header="Часть речи"
-                              Command="{Binding CopyDeckFieldClipboardExecute}"
+                              Command="{Binding CopyFieldClipboardCommand}"
                               CommandParameter="SpeechPartStrategy" />
                     <MenuItem Header="Формы слова"
                               IsVisible="{Binding IsWordFormsTabItemVisible}"
-                              Command="{Binding CopyDeckFieldClipboardExecute}"
+                              Command="{Binding CopyFieldClipboardCommand}"
                               CommandParameter="NonVerbWordFormsStrategy" />
                     <MenuItem Header="Формы глагола"
                               IsVisible="{Binding IsVerbFormsTabItemVisible}"
-                              Command="{Binding CopyDeckFieldClipboardExecute}"
+                              Command="{Binding CopyFieldClipboardCommand}"
                               CommandParameter="VerbWordFormsStrategy" />
                     <MenuItem Header="Управление частью речи"
-                              Command="{Binding CopyDeckFieldClipboardExecute}"
+                              Command="{Binding CopyFieldClipboardCommand}"
                               CommandParameter="SpeechPartGovernmentStrategy" />
                 </MenuFlyout>
             </Button.Flyout>

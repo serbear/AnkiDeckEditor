@@ -20,7 +20,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
     public ReactiveCommand<string, Unit> CopyFieldClipboardCommand { get; }
-    public ReactiveCommand<ReadOnlyCollection<object>, Unit> CopyWordFormsFieldClipboardCommand { get; }
+    public ReactiveCommand<string, Unit> CopyWordFormsFieldClipboardCommand { get; }
     public ObservableCollection<ToggleItem> VerbControlItems { get; }
     public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
     [Reactive] public ObservableCollection<SpeechPartToggleItem> SpeechPartItems { get; set; }
@@ -47,8 +47,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // commands
         CopyButtonCommand = ReactiveCommand.Create(ExitButtonExecute);
         CopyFieldClipboardCommand = ReactiveCommand.Create<string>(CopyDeckFieldClipboardExecute);
-        CopyWordFormsFieldClipboardCommand =
-            ReactiveCommand.Create<ReadOnlyCollection<object>>(CopyWordFormsDeckFieldClipboardExecute);
+        // CopyWordFormsFieldClipboardCommand =
+        //     ReactiveCommand.Create<string>(CopyWordFormsDeckFieldClipboardExecute);
         PasteFromClipboardCommand = ReactiveCommand.Create<Control>(PasteFromClipboardExecute);
         SelectDeckCommand = ReactiveCommand.Create(SelectDeckExecute);
         NewEntityCommand = ReactiveCommand.Create(NewEntityExecute);
@@ -97,8 +97,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
             { "OriginalTextStrategy", OriginalContextSelectedItems },
             { "SpeechPartStrategy", SpeechPartItems },
             { "SpeechPartGovernmentStrategy", VerbControlItems },
-            { "NonVerbWordFormsStrategy", GetNonVerbWordForms() },
-            { "VerbWordFormsStrategy", GetVerbWordForms() }
+            { "NonVerbWordFormsStrategy", (Func<NonVerbWordFormCollection>)GetNonVerbWordForms },
+            { "VerbWordFormsStrategy", (Func<VerbWordFormCollection>)GetVerbWordForms }
         };
     }
 
@@ -190,14 +190,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
             lifetime.Shutdown();
     }
 
-    private static void CopyWordFormsDeckFieldClipboardExecute(ReadOnlyCollection<object> values)
-    {
-        var copyContext = new Context();
-        copyContext.SetStrategy(new WordFormsCopyStrategy());
-        copyContext.DoCopyLogic(values.ToList());
-    }
-
-
     private void CopyDeckFieldClipboardExecute(string value)
     {
         var strategy = Activator.CreateInstance(Type.GetType(CopyStrategyDict[value])!);
@@ -207,8 +199,19 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // Try to get data collection for the strategy.
         // If there is no data collection, take a string value of the field with name 'value'.
         var isDataCollectionExist = CopyStrategyDataDict.TryGetValue(value, out var fieldValue);
-        if (!isDataCollectionExist) fieldValue = GetFieldValue(value);
 
-        copyContext.DoCopyLogic(fieldValue);
+        object result = null!;
+
+        if (!isDataCollectionExist)
+        {
+            result = GetFieldValue(value);
+        }
+        else
+        {
+            if (fieldValue is Func<NonVerbWordFormCollection> func)
+                result = func();
+        }
+
+        copyContext.DoCopyLogic(result);
     }
 }

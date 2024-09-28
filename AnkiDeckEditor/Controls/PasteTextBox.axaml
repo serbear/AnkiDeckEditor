@@ -7,20 +7,66 @@
              x:Class="AnkiDeckEditor.Controls.PasteTextBox"
              x:Name="PasteTextBoxUserControl"
              x:CompileBindings="True">
-    <UserControl.Resources>
-        <converters:SubtractButtonWidthConverter x:Key="SubtractButtonWidthConverter" />
-    </UserControl.Resources>
-    <RelativePanel>
-        <TextBox x:Name="MainTextBox">
-            <TextBox.Width>
-                <MultiBinding Converter="{StaticResource SubtractButtonWidthConverter}">
+    <Grid ColumnDefinitions="*"
+          RowDefinitions="Auto,Auto">
+
+        <!-- Title Label -->
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="0"
+                   Text="{Binding Title, Mode=OneWay, ElementName=PasteTextBoxUserControl}"
+                   Name="PasteTextBoxTitleLabel">
+
+            <TextBlock.Resources>
+                <converters:TextToVisibleConverter x:Key="TextToVisibleConverter" />
+            </TextBlock.Resources>
+
+            <TextBlock.IsVisible>
+                <Binding ElementName="PasteTextBoxTitleLabel" Path="Text"
+                         Converter="{StaticResource TextToVisibleConverter}" />
+            </TextBlock.IsVisible>
+
+            <!-- <TextBlock.Styles> -->
+            <!-- <Style Selector="TextBlock#PasteTextBoxTitleLabel"> -->
+            <!-- <Styles TargetType="TextBlock"> -->
+            <!-- </Style.Resources> -->
+            <!-- <Setter Property="IsVisible" Value="{StaticResource TextToVisibleConverter}"> -->
+            <!-- <Binding ElementName="PasteTextBoxUserControl" Path="Bounds.Width" /> -->
+            <!-- </Setter> -->
+            <!-- <Style.Triggers> -->
+            <!-- <DataTrigger Binding="{Binding SomeTextProperty}" Value=""> -->
+            <!-- <Setter Property="Visibility" Value="Visible" /> -->
+            <!-- </DataTrigger> -->
+            <!-- </Style.Triggers> -->
+            <!-- </Style> -->
+            <!-- </TextBlock.Styles> -->
+        </TextBlock>
+
+        <!-- TextBox with Paste button -->
+
+        <RelativePanel Grid.Column="0"
+                       Grid.Row="1">
+            <TextBox x:Name="MainTextBox"
+                     VerticalContentAlignment="Center"
+                     Text="{Binding Text, Mode=OneWayToSource, ElementName=PasteTextBoxUserControl}">
+                <TextBox.Resources>
+                    <converters:WidthToPaddingConverter x:Key="WidthToPaddingConverter" />
+                </TextBox.Resources>
+                <TextBox.Width>
                     <Binding ElementName="PasteTextBoxUserControl" Path="Bounds.Width" />
-                    <Binding ElementName="PasteButton" Path="Bounds.Width" />
-                </MultiBinding>
-            </TextBox.Width>
-        </TextBox>
-        <Button x:Name="PasteButton"
-                RelativePanel.RightOf="MainTextBox"
-                Content="Paste" />
-    </RelativePanel>
+                </TextBox.Width>
+                <TextBox.Padding>
+                    <MultiBinding Converter="{StaticResource WidthToPaddingConverter}">
+                        <Binding Path="Bounds.Width" ElementName="PasteButton" />
+                    </MultiBinding>
+                </TextBox.Padding>
+            </TextBox>
+            <Button x:Name="PasteButton"
+                    RelativePanel.AlignRightWith="MainTextBox"
+                    RelativePanel.AlignVerticalCenterWith="MainTextBox"
+                    Content="PASTE" />
+        </RelativePanel>
+    </Grid>
 </UserControl>
+<!-- Command="{Binding PasteFromClipboardCommand}" -->
+<!-- CommandParameter="{Binding ElementName=GenitiveCaseSingularWordForm}" -->
