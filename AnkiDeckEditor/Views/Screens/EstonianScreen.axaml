@@ -6,6 +6,7 @@
              xmlns:fluentContentDialog="clr-namespace:AnkiDeckEditor"
              xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.Controls.Tabs.EstonianScreen"
+             xmlns:converters="clr-namespace:AnkiDeckEditor.Converters"
              mc:Ignorable="d"
              d:DesignWidth="1024"
              d:DesignHeight="768"
@@ -189,52 +190,19 @@
             <TabItem Header="Формы глагола"
                      IsVisible="{Binding IsVerbFormsTabItemVisible}"
                      Name="VerbFormsTabItem">
+
                 <Grid ColumnDefinitions="*,*"
-                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+                      RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto">
 
                     <TextBlock Text="MA-инфинитив:"
+                               Name="MaInfinitiveWordFormTitle"
                                Grid.Column="0"
                                Grid.Row="0" />
-                    <TextBlock Text="DA-инфинитив:"
-                               Grid.Column="0"
-                               Grid.Row="2" />
-                    <TextBlock Text="Изъявительное наклонение (3 лицо):"
-                               Grid.Column="0"
-                               Grid.Row="4" />
-                    <!-- todo: tooltip: страдательное причастие прошедшего времени -->
-                    <TextBlock Text="Причастие (страд., прош.):"
-                               Grid.Column="0"
-                               Grid.Row="6" />
-
-                    <TextBlock Text="Изъявительное наклонение (3 лицо, прош.):"
-                               Grid.Column="1"
-                               Grid.Row="0" />
-                    <!-- todo: tooltip: действительное причастие прошедшего времени -->
-                    <TextBlock Text="Причастие (действ.б прош.):"
-                               Grid.Column="1"
-                               Grid.Row="2" />
-                    <TextBlock Text="Повелительное наклонение (ед.ч.):"
-                               Grid.Column="1"
-                               Grid.Row="4" />
-                    <TextBlock Text="Страдательный залог (наст.):"
-                               Grid.Column="1"
-                               Grid.Row="6" />
-
-
-                    <TextBlock Text="Управление глагола:"
-                               HorizontalAlignment="Center"
-                               Grid.Column="0"
-                               Grid.Row="8"
-                               Grid.ColumnSpan="2" />
-
-                    <!-- Text Boxes -->
-
                     <Grid RowDefinitions="Auto"
-                          ColumnDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto"
                           Grid.Column="0"
                           Grid.Row="1">
                         <TextBox Name="MaInfinitiveWordForm"
-                                 MinWidth="341"
                                  Text="{Binding MaInfinitiveWordForm}"
                                  Grid.Column="0"
                                  Grid.Row="0" />
@@ -245,12 +213,15 @@
                                 Grid.Row="0" />
                     </Grid>
 
+                    <TextBlock Text="DA-инфинитив:"
+                               Name="DaInfinitiveWordFormTitle"
+                               Grid.Column="0"
+                               Grid.Row="2" />
                     <Grid RowDefinitions="Auto"
-                          ColumnDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto"
                           Grid.Column="0"
                           Grid.Row="3">
                         <TextBox Name="DaInfinitiveWordForm"
-                                 MinWidth="341"
                                  Text="{Binding DaInfinitiveWordForm}"
                                  Grid.Column="0"
                                  Grid.Row="0" />
@@ -260,12 +231,16 @@
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
+
+                    <TextBlock Text="Изъявительное наклонение (3 лицо):"
+                               Name="IndicativeMoodWordFormTitle"
+                               Grid.Column="0"
+                               Grid.Row="4" />
                     <Grid RowDefinitions="Auto"
-                          ColumnDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto"
                           Grid.Column="0"
                           Grid.Row="5">
                         <TextBox Name="IndicativeMoodWordForm"
-                                 MinWidth="341"
                                  Text="{Binding IndicativeMoodWordForm}"
                                  Grid.Column="0"
                                  Grid.Row="0" />
@@ -275,12 +250,17 @@
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
+
+                    <!-- todo: tooltip: страдательное причастие прошедшего времени -->
+                    <TextBlock Text="Причастие (страд., прош.):"
+                               Name="PassiveParticiplePastTenseWordFormTitle"
+                               Grid.Column="0"
+                               Grid.Row="6" />
                     <Grid RowDefinitions="Auto"
-                          ColumnDefinitions="Auto,Auto"
+                          ColumnDefinitions="*,Auto"
                           Grid.Column="0"
                           Grid.Row="7">
                         <TextBox Name="PassiveParticiplePastTenseWordForm"
-                                 MinWidth="341"
                                  Text="{Binding PassiveParticiplePastTenseWordForm}"
                                  Grid.Column="0"
                                  Grid.Row="0" />
@@ -290,12 +270,16 @@
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
+
+                    <TextBlock Text="Изъявительное наклонение (3 лицо, прош.):"
+                               Name="ThirdPersonPastTenseWordFormTitle"
+                               Grid.Column="0"
+                               Grid.Row="8" />
                     <Grid RowDefinitions="Auto"
-                          ColumnDefinitions="Auto,Auto"
-                          Grid.Column="1"
-                          Grid.Row="1">
+                          ColumnDefinitions="*,Auto"
+                          Grid.Column="0"
+                          Grid.Row="9">
                         <TextBox Name="ThirdPersonPastTenseWordForm"
-                                 MinWidth="341"
                                  Text="{Binding ThirdPersonPastTenseWordForm}"
                                  Grid.Column="0"
                                  Grid.Row="0" />
@@ -305,12 +289,17 @@
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
+
+                    <!-- todo: tooltip: действительное причастие прошедшего времени -->
+                    <TextBlock Text="Причастие (действ. прош.):"
+                               Name="ActiveParticipleWordFormTitle"
+                               Grid.Column="0"
+                               Grid.Row="10" />
                     <Grid RowDefinitions="Auto"
-                          ColumnDefinitions="Auto,Auto"
-                          Grid.Column="1"
-                          Grid.Row="3">
+                          ColumnDefinitions="*,Auto"
+                          Grid.Column="0"
+                          Grid.Row="11">
                         <TextBox Name="ActiveParticipleWordForm"
-                                 MinWidth="341"
                                  Text="{Binding ActiveParticipleWordForm}"
                                  Grid.Column="0"
                                  Grid.Row="0" />
@@ -320,12 +309,16 @@
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
+
+                    <TextBlock Text="Повелительное наклонение (ед.ч.):"
+                               Name="ImperativeMoodSingularWordFormTitle"
+                               Grid.Column="0"
+                               Grid.Row="12" />
                     <Grid RowDefinitions="Auto"
-                          ColumnDefinitions="Auto,Auto"
-                          Grid.Column="1"
-                          Grid.Row="5">
+                          ColumnDefinitions="*,Auto"
+                          Grid.Column="0"
+                          Grid.Row="13">
                         <TextBox Name="ImperativeMoodSingularWordForm"
-                                 MinWidth="341"
                                  Text="{Binding ImperativeMoodSingularWordForm}"
                                  Grid.Column="0"
                                  Grid.Row="0" />
@@ -335,12 +328,16 @@
                                 Grid.Column="1"
                                 Grid.Row="0" />
                     </Grid>
+
+                    <TextBlock Text="Страдательный залог (наст.):"
+                               Name="PassiveVoicePresentTenseWordFormTitle"
+                               Grid.Column="0"
+                               Grid.Row="14" />
                     <Grid RowDefinitions="Auto"
-                          ColumnDefinitions="Auto,Auto"
-                          Grid.Column="1"
-                          Grid.Row="7">
+                          ColumnDefinitions="*,Auto"
+                          Grid.Column="0"
+                          Grid.Row="15">
                         <TextBox Name="PassiveVoicePresentTenseWordForm"
-                                 MinWidth="341"
                                  Text="{Binding PassiveVoicePresentTenseWordForm}"
                                  Grid.Column="0"
                                  Grid.Row="0" />
@@ -351,18 +348,48 @@
                                 Grid.Row="0" />
                     </Grid>
 
-                    <!-- Управление глагола -->
+                    <!-- Part of speech government -->
+
+                    <TextBlock Text="Управление глагола:"
+                               HorizontalAlignment="Center"
+                               Grid.Column="1"
+                               Grid.Row="0" />
+
                     <Panel Name="VerbControl"
-                           Grid.ColumnSpan="2"
-                           Grid.Column="0"
-                           Grid.Row="9">
-                        <Border HorizontalAlignment="Center"
-                                Width="341"
-                                Height="170"
-                                BorderThickness="1"
-                                BorderBrush="Azure">
+                           Grid.Column="1"
+                           Grid.Row="1"
+                           Grid.RowSpan="15">
+                        <Border BorderThickness="1"
+                                BorderBrush="red">
                             <ScrollViewer VerticalScrollBarVisibility="Auto"
                                           HorizontalScrollBarVisibility="Auto">
+                                <ScrollViewer.Resources>
+                                    <converters:SumControlHeightConverter x:Key="SumControlHeightConverter" />
+                                </ScrollViewer.Resources>
+                                <ScrollViewer.Height>
+                                    <MultiBinding Converter="{StaticResource SumControlHeightConverter }">
+                                        <Binding ElementName="MaInfinitiveWordFormTitle" Path="Bounds.Height" />
+                                        <Binding ElementName="MaInfinitiveWordForm" Path="Bounds.Height" />
+                                        <Binding ElementName="DaInfinitiveWordFormTitle" Path="Bounds.Height" />
+                                        <Binding ElementName="DaInfinitiveWordForm" Path="Bounds.Height" />
+                                        <Binding ElementName="IndicativeMoodWordFormTitle" Path="Bounds.Height" />
+                                        <Binding ElementName="IndicativeMoodWordForm" Path="Bounds.Height" />
+                                        <Binding ElementName="PassiveParticiplePastTenseWordFormTitle"
+                                                 Path="Bounds.Height" />
+                                        <Binding ElementName="PassiveParticiplePastTenseWordForm"
+                                                 Path="Bounds.Height" />
+                                        <Binding ElementName="ThirdPersonPastTenseWordFormTitle" Path="Bounds.Height" />
+                                        <Binding ElementName="ThirdPersonPastTenseWordForm" Path="Bounds.Height" />
+                                        <Binding ElementName="ActiveParticipleWordFormTitle" Path="Bounds.Height" />
+                                        <Binding ElementName="ActiveParticipleWordForm" Path="Bounds.Height" />
+                                        <Binding ElementName="ImperativeMoodSingularWordFormTitle"
+                                                 Path="Bounds.Height" />
+                                        <Binding ElementName="ImperativeMoodSingularWordForm" Path="Bounds.Height" />
+                                        <Binding ElementName="PassiveVoicePresentTenseWordFormTitle"
+                                                 Path="Bounds.Height" />
+                                        <Binding ElementName="PassiveVoicePresentTenseWordForm" Path="Bounds.Height" />
+                                    </MultiBinding>
+                                </ScrollViewer.Height>
                                 <ItemsRepeater Margin="10,0,0,0"
                                                ItemsSource="{Binding VerbControlItems}">
                                     <ItemsRepeater.Layout>
