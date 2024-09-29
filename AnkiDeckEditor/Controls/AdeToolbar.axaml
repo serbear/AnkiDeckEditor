@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:AnkiDeckEditor.ViewModels"
              xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
+             xmlns:enums="clr-namespace:AnkiDeckEditor.Enums"
              x:DataType="vm:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.AdeToolbar">
     <StackPanel Orientation="Horizontal">
@@ -24,33 +25,33 @@
                 Content="Copy">
             <Button.Flyout>
                 <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                    <!-- todo: Меню, как коллекция.  -->
+                    <!-- todo: refact: Меню, как коллекция.  -->
                     <MenuItem Header="Словарная статья"
                               Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="VocabularyEntryStrategy" />
+                              CommandParameter="{x:Static enums:StrategyNames.VocabularyEntry}" />
                     <MenuItem Header="Дословный перевод"
                               Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="LiteralTranslationStrategy" />
+                              CommandParameter="{x:Static enums:StrategyNames.LiteralTranslation}" />
                     <MenuItem Header="Литературный перевод"
                               Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="LiteraryTranslationStrategy" />
+                              CommandParameter="{x:Static enums:StrategyNames.LiteraryTranslation}" />
                     <MenuItem Header="Оригинал"
                               Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="OriginalTextStrategy" />
+                              CommandParameter="{x:Static enums:StrategyNames.OriginalText}" />
                     <MenuItem Header="Часть речи"
                               Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="SpeechPartStrategy" />
+                              CommandParameter="{x:Static enums:StrategyNames.SpeechPart}" />
                     <MenuItem Header="Формы слова"
                               IsVisible="{Binding IsWordFormsTabItemVisible}"
                               Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="NonVerbWordFormsStrategy" />
+                              CommandParameter="{x:Static enums:StrategyNames.NonVerbWordForms}" />
                     <MenuItem Header="Формы глагола"
                               IsVisible="{Binding IsVerbFormsTabItemVisible}"
                               Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="VerbWordFormsStrategy" />
+                              CommandParameter="{x:Static enums:StrategyNames.VerbWordForms}" />
                     <MenuItem Header="Управление частью речи"
                               Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="SpeechPartGovernmentStrategy" />
+                              CommandParameter="{x:Static enums:StrategyNames.SpeechPartGovernment}" />
                 </MenuFlyout>
             </Button.Flyout>
         </Button>

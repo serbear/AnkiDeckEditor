@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reflection;
+using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Libs;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
@@ -19,7 +20,7 @@ namespace AnkiDeckEditor.ViewModels;
 public partial class EstonianScreenViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
-    public ReactiveCommand<string, Unit> CopyFieldClipboardCommand { get; }
+    public ReactiveCommand<StrategyNames, Unit> CopyFieldClipboardCommand { get; }
     public ObservableCollection<ToggleItem> VerbControlItems { get; }
     public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
     [Reactive] public ObservableCollection<SpeechPartToggleItem> SpeechPartItems { get; set; }
@@ -37,15 +38,15 @@ public partial class EstonianScreenViewModel : ViewModelBase
     public ReactiveCommand<Unit, Unit> ExportFileCommand { get; }
     public ReactiveCommand<Unit, Unit> ExitCommand { get; }
 
-    private Dictionary<string, string> CopyStrategyDict { get; set; }
-    private Dictionary<string, object> CopyStrategyDataDict { get; set; }
+    private Dictionary<StrategyNames, string?> CopyStrategyDict { get; } = new();
+    private Dictionary<StrategyNames, object> CopyStrategyDataDict { get; }
 
 
     public EstonianScreenViewModel()
     {
         // commands
         CopyButtonCommand = ReactiveCommand.Create(ExitButtonExecute);
-        CopyFieldClipboardCommand = ReactiveCommand.Create<string>(CopyDeckFieldClipboardExecute);
+        CopyFieldClipboardCommand = ReactiveCommand.Create<StrategyNames>(CopyDeckFieldClipboardExecute);
         PasteFromClipboardCommand = ReactiveCommand.Create<Control>(PasteFromClipboardExecute);
         SelectDeckCommand = ReactiveCommand.Create(SelectDeckExecute);
         NewEntityCommand = ReactiveCommand.Create(NewEntityExecute);
@@ -73,29 +74,21 @@ public partial class EstonianScreenViewModel : ViewModelBase
         IsVerbFormsTabItemVisible = false;
         IsWordFormsTabItemVisible = false;
 
-        // Key - avalonia control tag.
-        // Value - tuple (the copy strategy class full name, data to copy, FieldTags string)
-        CopyStrategyDict = new Dictionary<string, string>
-        {
-            { "LiteralTranslationStrategy", typeof(LiteralTranslationCopyStrategy).FullName! },
-            { "LiteraryTranslationStrategy", typeof(LiteraryTranslationCopyStrategy).FullName! },
-            { "OriginalTextStrategy", typeof(OriginalPhraseCopyStrategy).FullName! },
-            { "SpeechPartStrategy", typeof(SpeechPartCopyStrategy).FullName! },
-            { "VocabularyEntryStrategy", typeof(VocabularyEntryCopyStrategy).FullName! },
-            { "SpeechPartGovernmentStrategy", typeof(SpeechPartGovernmentCopyStrategy).FullName! },
-            { "NonVerbWordFormsStrategy", typeof(WordFormsCopyStrategy).FullName! },
-            { "VerbWordFormsStrategy", typeof(WordFormsCopyStrategy).FullName! }
-        };
+        foreach (StrategyNames name in Enum.GetValues(typeof(StrategyNames)))
+            // Key - avalonia control tag.
+            // Value - tuple (the copy strategy class full name, data to copy, FieldTags string)
+            CopyStrategyDict.Add(name, name.StrategyFullName());
 
-        CopyStrategyDataDict = new Dictionary<string, object>
+
+        CopyStrategyDataDict = new Dictionary<StrategyNames, object>
         {
-            { "LiteralTranslationStrategy", WordByWordContextSelectedItems },
-            { "LiteraryTranslationStrategy", LiteraryContextSelectedItems },
-            { "OriginalTextStrategy", OriginalContextSelectedItems },
-            { "SpeechPartStrategy", SpeechPartItems },
-            { "SpeechPartGovernmentStrategy", VerbControlItems },
-            { "NonVerbWordFormsStrategy", (Func<NonVerbWordFormCollection>)GetNonVerbWordForms },
-            { "VerbWordFormsStrategy", (Func<VerbWordFormCollection>)GetVerbWordForms }
+            { StrategyNames.LiteralTranslation, WordByWordContextSelectedItems },
+            { StrategyNames.LiteraryTranslation, LiteraryContextSelectedItems },
+            { StrategyNames.OriginalText, OriginalContextSelectedItems },
+            { StrategyNames.SpeechPart, SpeechPartItems },
+            { StrategyNames.SpeechPartGovernment, VerbControlItems },
+            { StrategyNames.NonVerbWordForms, (Func<NonVerbWordFormCollection>)GetNonVerbWordForms },
+            { StrategyNames.VerbWordForms, (Func<VerbWordFormCollection>)GetVerbWordForms }
         };
     }
 
@@ -187,7 +180,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
             lifetime.Shutdown();
     }
 
-    private void CopyDeckFieldClipboardExecute(string value)
+    private void CopyDeckFieldClipboardExecute(StrategyNames value)
     {
         var strategy = Activator.CreateInstance(Type.GetType(CopyStrategyDict[value])!);
         var copyContext = new Context();
@@ -200,7 +193,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         object result;
 
         if (!isDataCollectionExist)
-            result = GetFieldValue(value);
+            result = GetFieldValue(value.ClassFieldName());
         else
             result = fieldValue is Func<NonVerbWordFormCollection> func
                 ? func()
