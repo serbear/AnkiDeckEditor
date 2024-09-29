@@ -1,16 +1,17 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
+             xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
              x:DataType="viewModels:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.ContextTab">
     <StackPanel>
-        <TextBlock Text="Дословный:" />
-        <TextBox x:Name="WordForWordTextBox"
-                 Tag="WordByWordTranslationAnkiField"
-                 TextChanged="WordForWordTextBox_OnTextChanged" />
+        <!-- The PasteTextBox container name must match a key in the EntityContextCollections.  -->
 
+        <controls:PasteTextBox Name="WordForWordTextBox"
+                               Title="Дословный перевод:" />
+
+        <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
         <TextBlock Text="Выделение:" />
-
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding WordByWordContextSelectedItems}">
                 <ItemsRepeater.Layout>
@@ -32,22 +33,11 @@
             </ItemsRepeater>
         </ScrollViewer>
 
-        <TextBlock Text="Литературный:" />
+        <controls:PasteTextBox Name="LiteraryTextBox"
+                               Title="Литературный перевод:" />
 
-        <Grid RowDefinitions="Auto" ColumnDefinitions="*,*">
-            <TextBox Name="LiteraryTextBox"
-                     Tag="LiteraryTranslationAnkiField"
-                     TextChanged="WordForWordTextBox_OnTextChanged"
-                     Grid.Column="0"
-                     Grid.Row="0" />
-            <Button Content="Paste"
-                    Command="{Binding PasteFromClipboardCommand}"
-                    CommandParameter="{Binding ElementName=LiteraryTextBox}"
-                    Grid.Column="1"
-                    Grid.Row="0" />
-        </Grid>
+        <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
         <TextBlock Text="Выделение:" />
-
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding LiteraryContextSelectedItems}">
                 <ItemsRepeater.Layout>
@@ -69,22 +59,11 @@
             </ItemsRepeater>
         </ScrollViewer>
 
-        <TextBlock Text="Оригинал:" />
+        <controls:PasteTextBox Name="OriginalTextBox"
+                               Title="Оригинал:" />
 
-        <Grid RowDefinitions="Auto" ColumnDefinitions="*,*">
-            <TextBox Name="OriginalTextBox"
-                     Tag="OriginalAnkiField"
-                     TextChanged="WordForWordTextBox_OnTextChanged"
-                     Grid.Column="0"
-                     Grid.Row="0" />
-            <Button Content="Paste"
-                    Command="{Binding PasteFromClipboardCommand}"
-                    CommandParameter="{Binding ElementName=OriginalTextBox}"
-                    Grid.Column="1"
-                    Grid.Row="0" />
-        </Grid>
+        <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
         <TextBlock Text="Выделение:" />
-
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding OriginalContextSelectedItems}">
                 <ItemsRepeater.Layout>

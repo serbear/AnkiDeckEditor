@@ -81,14 +81,6 @@
                             Его высота будет вычитаться из общей суммы высот элементов в массиве. -->
                             <Binding ElementName="SpeechPartGovernmentTitleLabel" Path="Bounds.Height" />
                             <Binding ElementName="VerbWordFormsTabUserControl" Path="Bounds.Height" />
-                            <!-- <Binding ElementName="MaInfinitiveWordForm" Path="Bounds.Height" /> -->
-                            <!-- <Binding ElementName="DaInfinitiveWordForm" Path="Bounds.Height" /> -->
-                            <!-- <Binding ElementName="IndicativeMoodWordForm" Path="Bounds.Height" /> -->
-                            <!-- <Binding ElementName="PassiveParticiplePastTenseWordForm" Path="Bounds.Height" /> -->
-                            <!-- <Binding ElementName="ThirdPersonPastTenseWordForm" Path="Bounds.Height" /> -->
-                            <!-- <Binding ElementName="ActiveParticipleWordForm" Path="Bounds.Height" /> -->
-                            <!-- <Binding ElementName="ImperativeMoodSingularWordForm" Path="Bounds.Height" /> -->
-                            <!-- <Binding ElementName="PassiveVoicePresentTenseWordForm" Path="Bounds.Height" /> -->
                         </MultiBinding>
                     </ScrollViewer.Height>
 

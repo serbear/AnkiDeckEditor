@@ -20,7 +20,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
 {
     public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
     public ReactiveCommand<string, Unit> CopyFieldClipboardCommand { get; }
-    public ReactiveCommand<string, Unit> CopyWordFormsFieldClipboardCommand { get; }
     public ObservableCollection<ToggleItem> VerbControlItems { get; }
     public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
     [Reactive] public ObservableCollection<SpeechPartToggleItem> SpeechPartItems { get; set; }
@@ -47,8 +46,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // commands
         CopyButtonCommand = ReactiveCommand.Create(ExitButtonExecute);
         CopyFieldClipboardCommand = ReactiveCommand.Create<string>(CopyDeckFieldClipboardExecute);
-        // CopyWordFormsFieldClipboardCommand =
-        //     ReactiveCommand.Create<string>(CopyWordFormsDeckFieldClipboardExecute);
         PasteFromClipboardCommand = ReactiveCommand.Create<Control>(PasteFromClipboardExecute);
         SelectDeckCommand = ReactiveCommand.Create(SelectDeckExecute);
         NewEntityCommand = ReactiveCommand.Create(NewEntityExecute);
@@ -80,9 +77,9 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // Value - tuple (the copy strategy class full name, data to copy, FieldTags string)
         CopyStrategyDict = new Dictionary<string, string>
         {
-            { "LiteralTranslationValue", typeof(LiteralTranslationCopyStrategy).FullName! },
-            { "LiteraryTranslationAnkiField", typeof(LiteraryTranslationCopyStrategy).FullName! },
-            { "OriginalTextValue", typeof(OriginalPhraseCopyStrategy).FullName! },
+            { "LiteralTranslationStrategy", typeof(LiteralTranslationCopyStrategy).FullName! },
+            { "LiteraryTranslationStrategy", typeof(LiteraryTranslationCopyStrategy).FullName! },
+            { "OriginalTextStrategy", typeof(OriginalPhraseCopyStrategy).FullName! },
             { "SpeechPartStrategy", typeof(SpeechPartCopyStrategy).FullName! },
             { "VocabularyEntryStrategy", typeof(VocabularyEntryCopyStrategy).FullName! },
             { "SpeechPartGovernmentStrategy", typeof(SpeechPartGovernmentCopyStrategy).FullName! },
@@ -200,17 +197,14 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // If there is no data collection, take a string value of the field with name 'value'.
         var isDataCollectionExist = CopyStrategyDataDict.TryGetValue(value, out var fieldValue);
 
-        object result = null!;
+        object result;
 
         if (!isDataCollectionExist)
-        {
             result = GetFieldValue(value);
-        }
         else
-        {
-            if (fieldValue is Func<NonVerbWordFormCollection> func)
-                result = func();
-        }
+            result = fieldValue is Func<NonVerbWordFormCollection> func
+                ? func()
+                : fieldValue!;
 
         copyContext.DoCopyLogic(result);
     }

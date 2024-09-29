@@ -1,10 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.ViewModels;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.VisualTree;
 
 namespace AnkiDeckEditor.Controls.Tabs.EstonianScreen;
 
@@ -21,16 +25,35 @@ public partial class ContextTab : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void WordForWordTextBox_OnTextChanged(object? sender, TextChangedEventArgs e)
+    private readonly List<string> _onTextChangedListenerNames =
+        ["WordForWordTextBox", "LiteraryTextBox", "OriginalTextBox"];
+
+    protected override void OnLoaded(RoutedEventArgs routedEventArgs)
+    {
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var listenerName in _onTextChangedListenerNames)
+        {
+            var innerTextBox = this
+                .FindControl<PasteTextBox>(listenerName)!
+                .FindControl<TextBox>("MainTextBox");
+            innerTextBox?.GetObservable(TextBox.TextProperty)
+                .Subscribe(_ => WordForWordTextBox_OnTextChanged(innerTextBox, null));
+        }
+    }
+
+    private void WordForWordTextBox_OnTextChanged(object? sender, TextChangedEventArgs? e)
     {
         if (sender is not TextBox textBox) return;
-        var splitted = textBox.Text?.Trim().Split(" ").ToList();
+
+        var split = textBox.Text?.Trim().Split(" ").ToList();
+
+        if (split == null) return;
 
         // ----- Word [word] word.
 
         List<string?> output = [];
 
-        foreach (var s in splitted)
+        foreach (var s in split)
         {
             var fullList = ProcessSplittedWord(s);
 
@@ -69,8 +92,9 @@ public partial class ContextTab : UserControl
 
         // -----
 
+        var parentContainerName = textBox.GetVisualAncestors().First(visual => visual is PasteTextBox).Name;
         UpdateEntityContextCollection(
-            ((EstonianScreenViewModel)DataContext!).EntityContextCollections[textBox.Name],
+            ((EstonianScreenViewModel)DataContext!).EntityContextCollections[parentContainerName!],
             output);
     }
 
@@ -107,7 +131,7 @@ public partial class ContextTab : UserControl
 
     private static void UpdateEntityContextCollection<T>(
         T collection,
-        List<string?> contextWords)
+        List<string?>? contextWords)
         where T : ObservableCollection<ContextToggleItem>
     {
         if (contextWords == null) return;
