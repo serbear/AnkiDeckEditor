@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
 using System.Reflection;
 using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Libs;
@@ -13,47 +12,23 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
 
 namespace AnkiDeckEditor.ViewModels;
 
 public partial class EstonianScreenViewModel : ViewModelBase
 {
-    public ReactiveCommand<Unit, Unit> CopyButtonCommand { get; }
-    public ReactiveCommand<StrategyNames, Unit> CopyFieldClipboardCommand { get; }
-    public ObservableCollection<ToggleItem> VerbControlItems { get; }
-    public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
-    [Reactive] public ObservableCollection<SpeechPartToggleItem> SpeechPartItems { get; set; }
-    [Reactive] public ObservableCollection<ContextToggleItem> WordByWordContextSelectedItems { get; set; }
-    [Reactive] public ObservableCollection<ContextToggleItem> LiteraryContextSelectedItems { get; set; }
-    [Reactive] public ObservableCollection<ContextToggleItem> OriginalContextSelectedItems { get; set; }
-
-    [Reactive] public bool IsVerbFormsTabItemVisible { get; set; }
-    [Reactive] public bool IsWordFormsTabItemVisible { get; set; }
-    public ReactiveCommand<Control, Unit> PasteFromClipboardCommand { get; }
-    public ReactiveCommand<Unit, Unit> SelectDeckCommand { get; }
-    public ReactiveCommand<Unit, Unit> NewEntityCommand { get; }
-    public ReactiveCommand<Unit, Unit> AddListCommand { get; }
-    public ReactiveCommand<Unit, Unit> ClearFormCommand { get; }
-    public ReactiveCommand<Unit, Unit> ExportFileCommand { get; }
-    public ReactiveCommand<Unit, Unit> ExitCommand { get; }
-
-    private Dictionary<StrategyNames, string?> CopyStrategyDict { get; } = new();
-    private Dictionary<StrategyNames, object> CopyStrategyDataDict { get; }
-
-
     public EstonianScreenViewModel()
     {
         // commands
-        CopyButtonCommand = ReactiveCommand.Create(ExitButtonExecute);
         CopyFieldClipboardCommand = ReactiveCommand.Create<StrategyNames>(CopyDeckFieldClipboardExecute);
-        PasteFromClipboardCommand = ReactiveCommand.Create<Control>(PasteFromClipboardExecute);
+        PasteCommand = ReactiveCommand.Create<Control>(PasteCommandExecute);
         SelectDeckCommand = ReactiveCommand.Create(SelectDeckExecute);
         NewEntityCommand = ReactiveCommand.Create(NewEntityExecute);
         AddListCommand = ReactiveCommand.Create(AddListExecute);
         ClearFormCommand = ReactiveCommand.Create(ClearFormExecute);
         ExportFileCommand = ReactiveCommand.Create(ExportFileExecute);
         ExitCommand = ReactiveCommand.Create(ExitExecute);
+
 
         // Collections
         VerbControlItems = CollectionLoader.LoadVerbControls();
@@ -139,7 +114,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void ExitExecute()
     {
-        throw new NotImplementedException();
+        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
+            lifetime.Shutdown();
     }
 
     private void ExportFileExecute()
@@ -167,19 +143,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         Console.WriteLine("Select deck");
     }
 
-    private static async void PasteFromClipboardExecute(Control value)
-    {
-        var text = await Clipboard.Get();
-        ((TextBox)value).Text = text;
-    }
-
-    // ReSharper disable once MemberCanBeMadeStatic.Local
-    private void ExitButtonExecute()
-    {
-        if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
-            lifetime.Shutdown();
-    }
-
     private void CopyDeckFieldClipboardExecute(StrategyNames value)
     {
         var strategy = Activator.CreateInstance(Type.GetType(CopyStrategyDict[value])!);
@@ -200,5 +163,11 @@ public partial class EstonianScreenViewModel : ViewModelBase
                 : fieldValue!;
 
         copyContext.DoCopyLogic(result);
+    }
+
+    private static async void PasteCommandExecute(Control control)
+    {
+        if (control is not TextBox textBox) throw new Exception("The control must be type of TextBox.");
+        textBox.Text = await Clipboard.Get();
     }
 }

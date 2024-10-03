@@ -41,9 +41,7 @@ public static class Clipboard
     /// </summary>
     public static async Task<string?> Get()
     {
-        var window = GetWindow();
-        var output = await window.Clipboard?.GetTextAsync()!;
-
-        return output;
+        if (GetWindow().Clipboard == null) return string.Empty;
+        return await GetWindow().Clipboard?.GetTextAsync()!;
     }
 }

@@ -14,6 +14,7 @@ public partial class App : Application
     public static EstonianScreenViewModel EstonianScreen => Locator.Current.GetService<EstonianScreenViewModel>()!;
     public static EnglishScreenViewModel EnglishScreen => Locator.Current.GetService<EnglishScreenViewModel>()!;
 
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);

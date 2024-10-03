@@ -3,7 +3,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:AnkiDeckEditor.Converters"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
+             x:DataType="viewModels:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.PasteTextBox"
              x:Name="PasteTextBoxUserControl"
              x:CompileBindings="True">
@@ -48,7 +52,7 @@
                        Grid.Row="1">
             <TextBox x:Name="MainTextBox"
                      VerticalContentAlignment="Center"
-                     Text="{Binding Text, Mode=OneWayToSource, ElementName=PasteTextBoxUserControl}">
+                     Text="{Binding Text, Mode=TwoWay, ElementName=PasteTextBoxUserControl}">
                 <TextBox.Resources>
                     <converters:WidthToPaddingConverter x:Key="WidthToPaddingConverter" />
                 </TextBox.Resources>
@@ -64,9 +68,9 @@
             <Button x:Name="PasteButton"
                     RelativePanel.AlignRightWith="MainTextBox"
                     RelativePanel.AlignVerticalCenterWith="MainTextBox"
-                    Content="PASTE" />
+                    Content="PASTE"
+                    Command="{Binding PasteCommand}"
+                    CommandParameter="{Binding ElementName=MainTextBox}" />
         </RelativePanel>
     </Grid>
 </UserControl>
-<!-- Command="{Binding PasteFromClipboardCommand}" -->
-<!-- CommandParameter="{Binding ElementName=GenitiveCaseSingularWordForm}" -->

@@ -1,24 +1,16 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
+             xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
              x:DataType="viewModels:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.VocabularyEntryTab">
     <StackPanel Orientation="Vertical">
 
         <!-- The vocabulary entry title -->
 
-        <TextBlock Text="Изучаемое слово или выражение:" />
-        <Grid RowDefinitions="Auto" ColumnDefinitions="*,*">
-            <TextBox Name="MainEntityAnkiFieldTextBox"
-                     Text="{Binding VocabularyEntryText}"
-                     Grid.Column="0"
-                     Grid.Row="0" />
-            <Button Content="Paste"
-                    Command="{Binding PasteFromClipboardCommand}"
-                    CommandParameter="{Binding ElementName=MainEntityAnkiFieldTextBox}"
-                    Grid.Column="1"
-                    Grid.Row="0" />
-        </Grid>
+        <controls:PasteTextBox Name="VocabularyEntryText"
+                               Title="Изучаемое слово или выражение:"
+                               Text="{Binding VocabularyEntryText, Mode=TwoWay}" />
 
         <!-- Parts' of speech checkboxes -->
 
