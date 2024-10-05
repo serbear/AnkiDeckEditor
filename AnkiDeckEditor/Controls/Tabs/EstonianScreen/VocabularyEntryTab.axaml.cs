@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using AnkiDeckEditor.Models;
+using AnkiDeckEditor.Services;
 using AnkiDeckEditor.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -12,6 +13,19 @@ public partial class VocabularyEntryTab : UserControl
     public VocabularyEntryTab()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object? sender, RoutedEventArgs e)
+    {
+        // Set reference to the TextBox of the PasteTextBox control.
+        const string PASTE_TEXT_BOX_NAME = "VocabularyEntryText";
+        const string TEXT_BOX_NAME = "MainTextBox";
+        const string FIELD_NAME = "FirstFocusControl";
+        var control = this
+            .FindControl<PasteTextBox>(PASTE_TEXT_BOX_NAME)!
+            .FindControl<TextBox>(TEXT_BOX_NAME);
+        ControlHelper.SetControlReference((EstonianScreenViewModel)DataContext!, FIELD_NAME, control);
     }
 
     private void InitializeComponent()

@@ -19,14 +19,16 @@
         <TextBlock Grid.Column="0"
                    Grid.Row="0"
                    Text="{Binding Title, Mode=OneWay, ElementName=PasteTextBoxUserControl}"
-                   Name="PasteTextBoxTitleLabel">
+                   TabIndex="0"
+                   x:Name="PasteTextBoxTitleLabel">
 
             <TextBlock.Resources>
                 <converters:TextToVisibleConverter x:Key="TextToVisibleConverter" />
             </TextBlock.Resources>
 
             <TextBlock.IsVisible>
-                <Binding ElementName="PasteTextBoxTitleLabel" Path="Text"
+                <Binding ElementName="PasteTextBoxTitleLabel"
+                         Path="Text"
                          Converter="{StaticResource TextToVisibleConverter}" />
             </TextBlock.IsVisible>
 
@@ -52,6 +54,8 @@
                        Grid.Row="1">
             <TextBox x:Name="MainTextBox"
                      VerticalContentAlignment="Center"
+                     AcceptsTab="False"
+                     TabIndex="1"
                      Text="{Binding Text, Mode=TwoWay, ElementName=PasteTextBoxUserControl}">
                 <TextBox.Resources>
                     <converters:WidthToPaddingConverter x:Key="WidthToPaddingConverter" />
@@ -68,6 +72,7 @@
             <Button x:Name="PasteButton"
                     RelativePanel.AlignRightWith="MainTextBox"
                     RelativePanel.AlignVerticalCenterWith="MainTextBox"
+                    TabIndex="2"
                     Content="PASTE"
                     Command="{Binding PasteCommand}"
                     CommandParameter="{Binding ElementName=MainTextBox}" />

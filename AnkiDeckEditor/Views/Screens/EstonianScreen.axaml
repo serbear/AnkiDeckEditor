@@ -17,21 +17,22 @@
         <!-- Toolbar -->
         <controls:AdeToolbar DockPanel.Dock="Top" />
         <!-- Tabs -->
-        <TabControl Name="DeckConfigTabControl" DockPanel.Dock="Top">
+        <TabControl x:Name="DeckConfigTabControl"
+                    DockPanel.Dock="Top">
             <!-- MainEntity Anki field -->
             <TabItem Header="Словарная статья">
                 <estonianScreen:VocabularyEntryTab />
             </TabItem>
             <!-- Non-verb word forms -->
             <TabItem Header="Формы слова"
-                     Name="WordFormsTabItem"
+                     x:Name="WordFormsTabItem"
                      IsVisible="{Binding IsWordFormsTabItemVisible}">
                 <estonianScreen:NonVerbWordFormsTab />
             </TabItem>
             <!-- Verb forms -->
             <TabItem Header="Формы глагола"
                      IsVisible="{Binding IsVerbFormsTabItemVisible}"
-                     Name="VerbFormsTabItem">
+                     x:Name="VerbFormsTabItem">
                 <estonianScreen:VerbWordFormsTab />
             </TabItem>
             <!-- Context -->

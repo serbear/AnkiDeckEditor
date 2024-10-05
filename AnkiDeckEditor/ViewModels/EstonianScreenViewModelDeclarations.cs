@@ -15,6 +15,13 @@ public partial class EstonianScreenViewModel
 
     [Reactive] public string VocabularyEntryText { get; set; }
 
+    // Context
+
+
+    [Reactive] public string LiteralTranslationText { get; set; }
+    [Reactive] public string LiteraryTranslationText { get; set; }
+    [Reactive] public string OriginalText { get; set; }
+
     // Word forms (verb and non-verb) tab
 
     [Reactive] public string NominativeCaseSingularWordForm { get; set; }
@@ -38,19 +45,21 @@ public partial class EstonianScreenViewModel
 
     // Commands
 
-    public ReactiveCommand<StrategyNames, Unit> CopyFieldClipboardCommand { get; }
-    public ReactiveCommand<Unit, Unit> SelectDeckCommand { get; }
-    public ReactiveCommand<Unit, Unit> NewEntityCommand { get; }
-    public ReactiveCommand<Unit, Unit> AddListCommand { get; }
-    public ReactiveCommand<Unit, Unit> ClearFormCommand { get; }
-    public ReactiveCommand<Unit, Unit> ExportFileCommand { get; }
-    public ReactiveCommand<Unit, Unit> ExitCommand { get; }
-    public ReactiveCommand<Control, Unit> PasteCommand { get; }
+    public ReactiveCommand<StrategyNames, Unit> CopyFieldClipboardCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> SelectDeckCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> NewEntityCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> AddListCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> ClearFormCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> ExportFileCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> ExitCommand { get; set; }
+    public ReactiveCommand<Control, Unit> PasteCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> RemoveListCommand { get; set; }
 
     // Flags
 
     [Reactive] public bool IsVerbFormsTabItemVisible { get; set; }
     [Reactive] public bool IsWordFormsTabItemVisible { get; set; }
+    [Reactive] public bool IsAddEntityButtonEnabled { get; set; }
 
     // Collections
 
@@ -58,8 +67,8 @@ public partial class EstonianScreenViewModel
     [Reactive] public ObservableCollection<ContextToggleItem> WordByWordContextSelectedItems { get; set; }
     [Reactive] public ObservableCollection<ContextToggleItem> LiteraryContextSelectedItems { get; set; }
     [Reactive] public ObservableCollection<ContextToggleItem> OriginalContextSelectedItems { get; set; }
-    public ObservableCollection<ToggleItem> VerbControlItems { get; }
-    public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; }
+    public ObservableCollection<ToggleItem> VerbControlItems { get; set; }
+    public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
     private Dictionary<StrategyNames, string?> CopyStrategyDict { get; } = new();
-    private Dictionary<StrategyNames, object> CopyStrategyDataDict { get; }
+    private Dictionary<StrategyNames, object> CopyStrategyDataDict { get; set; }
 }

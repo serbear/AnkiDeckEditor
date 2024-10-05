@@ -12,44 +12,44 @@
 
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="1"
-                               Name="MaInfinitiveWordForm"
+                               x:Name="MaInfinitiveWordForm"
                                Title="MA-инфинитив:"
                                Text="{Binding MaInfinitiveWordForm, Mode=TwoWay}" />
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="2"
-                               Name="DaInfinitiveWordForm"
+                               x:Name="DaInfinitiveWordForm"
                                Title="DA-инфинитив:"
                                Text="{Binding DaInfinitiveWordForm, Mode=TwoWay}" />
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="3"
-                               Name="IndicativeMoodWordForm"
+                               x:Name="IndicativeMoodWordForm"
                                Title="Изъявительное наклонение (3 лицо):"
                                Text="{Binding IndicativeMoodWordForm, Mode=TwoWay}" />
         <!-- todo: tooltip: страдательное причастие прошедшего времени -->
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="4"
-                               Name="PassiveParticiplePastTenseWordForm"
+                               x:Name="PassiveParticiplePastTenseWordForm"
                                Title="Причастие (страд., прош.):"
                                Text="{Binding PassiveParticiplePastTenseWordForm, Mode=TwoWay}" />
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="5"
-                               Name="ThirdPersonPastTenseWordForm"
+                               x:Name="ThirdPersonPastTenseWordForm"
                                Title="Изъявительное наклонение (3 лицо, прош.):"
                                Text="{Binding ThirdPersonPastTenseWordForm, Mode=TwoWay}" />
         <!-- todo: tooltip: действительное причастие прошедшего времени -->
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="6"
-                               Name="ActiveParticipleWordForm"
+                               x:Name="ActiveParticipleWordForm"
                                Title="Причастие (действ. прош.):"
                                Text="{Binding ActiveParticipleWordForm, Mode=TwoWay}" />
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="7"
-                               Name="ImperativeMoodSingularWordForm"
+                               x:Name="ImperativeMoodSingularWordForm"
                                Title="Повелительное наклонение (ед.ч.):"
                                Text="{Binding ImperativeMoodSingularWordForm, Mode=TwoWay}" />
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="8"
-                               Name="PassiveVoicePresentTenseWordForm"
+                               x:Name="PassiveVoicePresentTenseWordForm"
                                Title="Страдательный залог (наст.):"
                                Text="{Binding PassiveVoicePresentTenseWordForm, Mode=TwoWay}" />
 
@@ -64,7 +64,7 @@
             <StackPanel Orientation="Vertical">
 
                 <TextBlock Text="Управление частью речи:"
-                           Name="SpeechPartGovernmentTitleLabel"
+                           x:Name="SpeechPartGovernmentTitleLabel"
                            HorizontalAlignment="Center" />
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto"

@@ -8,7 +8,7 @@
 
         <!-- The vocabulary entry title -->
 
-        <controls:PasteTextBox Name="VocabularyEntryText"
+        <controls:PasteTextBox x:Name="VocabularyEntryText"
                                Title="Изучаемое слово или выражение:"
                                Text="{Binding VocabularyEntryText, Mode=TwoWay}" />
 

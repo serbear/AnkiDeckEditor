@@ -13,7 +13,7 @@
                    Grid.Row="0"
                    TextAlignment="Center"
                    Text="Единственное число:"
-                   Name="SingularTitleTextBlock" />
+                   x:Name="SingularTitleTextBlock" />
         <TextBlock Grid.Column="1"
                    Grid.Row="0"
                    TextAlignment="Center"
@@ -27,11 +27,11 @@
                    Text="Именительный падеж:" />
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="2"
-                               Name="NominativeCaseSingularWordForm"
+                               x:Name="NominativeCaseSingularWordForm"
                                Text="{Binding NominativeCaseSingularWordForm, Mode=TwoWay}" />
         <controls:PasteTextBox Grid.Column="1"
                                Grid.Row="2"
-                               Name="NominativeCasePluralWordForm"
+                               x:Name="NominativeCasePluralWordForm"
                                Text="{Binding NominativeCasePluralWordForm, Mode=TwoWay}" />
 
         <TextBlock Grid.Column="0"
@@ -41,11 +41,11 @@
                    Text="Родительный падеж:" />
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="4"
-                               Name="GenitiveCaseSingularWordForm"
+                               x:Name="GenitiveCaseSingularWordForm"
                                Text="{Binding GenitiveCaseSingularWordForm, Mode=TwoWay}" />
         <controls:PasteTextBox Grid.Column="1"
                                Grid.Row="4"
-                               Name="GenitiveCasePluralWordForm"
+                               x:Name="GenitiveCasePluralWordForm"
                                Text="{Binding GenitiveCasePluralWordForm, Mode=TwoWay}" />
 
         <TextBlock Grid.Column="0"
@@ -55,11 +55,11 @@
                    Text="Партитив:" />
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="6"
-                               Name="PartitiveCaseSingularWordForm"
+                               x:Name="PartitiveCaseSingularWordForm"
                                Text="{Binding PartitiveCaseSingularWordForm, Mode=TwoWay}" />
         <controls:PasteTextBox Grid.Column="1"
                                Grid.Row="6"
-                               Name="PartitiveCasePluralWordForm"
+                               x:Name="PartitiveCasePluralWordForm"
                                Text="{Binding PartitiveCasePluralWordForm, Mode=TwoWay}" />
 
         <TextBlock Grid.Column="0"
@@ -70,7 +70,7 @@
         <controls:PasteTextBox Grid.Column="0"
                                Grid.Row="8"
                                Grid.ColumnSpan="2"
-                               Name="ShortIllativeCaseWordForm"
+                               x:Name="ShortIllativeCaseWordForm"
                                Width="{Binding #SingularTitleTextBlock.Bounds.Width }"
                                Text="{Binding ShortIllativeCaseWordForm, Mode=TwoWay}" />
 

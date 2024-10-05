@@ -1,71 +1,54 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using AnkiDeckEditor.Controls;
 using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Libs;
-using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
 using AnkiDeckEditor.Services.FieldsCopy;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using ReactiveUI;
 
 namespace AnkiDeckEditor.ViewModels;
 
 public partial class EstonianScreenViewModel : ViewModelBase
 {
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private Control RootControl { get; set; }
+
+    /// <summary>
+    /// The field stores a reference to the text box that will be focused on after the form cleanup function
+    /// is executed.
+    /// </summary>
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private Control FirstFocusControl { get; set; }
+
+
     public EstonianScreenViewModel()
+
     {
-        // commands
-        CopyFieldClipboardCommand = ReactiveCommand.Create<StrategyNames>(CopyDeckFieldClipboardExecute);
-        PasteCommand = ReactiveCommand.Create<Control>(PasteCommandExecute);
-        SelectDeckCommand = ReactiveCommand.Create(SelectDeckExecute);
-        NewEntityCommand = ReactiveCommand.Create(NewEntityExecute);
-        AddListCommand = ReactiveCommand.Create(AddListExecute);
-        ClearFormCommand = ReactiveCommand.Create(ClearFormExecute);
-        ExportFileCommand = ReactiveCommand.Create(ExportFileExecute);
-        ExitCommand = ReactiveCommand.Create(ExitExecute);
-
-
-        // Collections
-        VerbControlItems = CollectionLoader.LoadVerbControls();
-        SpeechPartItems = CollectionLoader.LoadSpeechParts();
-
-        WordByWordContextSelectedItems = [];
-        LiteraryContextSelectedItems = [];
-        OriginalContextSelectedItems = [];
-
-        EntityContextCollections = new Dictionary<string, ObservableCollection<ContextToggleItem>>
-        {
-            { "WordForWordTextBox", WordByWordContextSelectedItems },
-            { "LiteraryTextBox", LiteraryContextSelectedItems },
-            { "OriginalTextBox", OriginalContextSelectedItems }
-        };
-
-        // Toggles
-        IsVerbFormsTabItemVisible = false;
-        IsWordFormsTabItemVisible = false;
-
-        foreach (StrategyNames name in Enum.GetValues(typeof(StrategyNames)))
-            // Key - avalonia control tag.
-            // Value - tuple (the copy strategy class full name, data to copy, FieldTags string)
-            CopyStrategyDict.Add(name, name.StrategyFullName());
-
-
-        CopyStrategyDataDict = new Dictionary<StrategyNames, object>
-        {
-            { StrategyNames.LiteralTranslation, WordByWordContextSelectedItems },
-            { StrategyNames.LiteraryTranslation, LiteraryContextSelectedItems },
-            { StrategyNames.OriginalText, OriginalContextSelectedItems },
-            { StrategyNames.SpeechPart, SpeechPartItems },
-            { StrategyNames.SpeechPartGovernment, VerbControlItems },
-            { StrategyNames.NonVerbWordForms, (Func<NonVerbWordFormCollection>)GetNonVerbWordForms },
-            { StrategyNames.VerbWordForms, (Func<VerbWordFormCollection>)GetVerbWordForms }
-        };
+        InitializeCommands();
+        InitializeCollections();
+        InitializeFlags();
+        InitializeSubscriptions();
     }
+
+
+    private void OnFieldTextChanged(string newText)
+    {
+        // Set enable status for the button "Add to the Card List".
+        // If all fields are empty, enable status is 'false'.
+        var isTextBoxesEmpty = FieldHelper.IsUnsavedContent<PasteTextBox>(RootControl);
+        IsAddEntityButtonEnabled = isTextBoxesEmpty;
+    }
+
+
+    private void RemoveListCommandExecute()
+    {
+        throw new NotImplementedException();
+    }
+
 
     private NonVerbWordFormCollection GetNonVerbWordForms()
     {
@@ -130,22 +113,28 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void AddListExecute()
     {
-        throw new NotImplementedException();
+        // todo: add to the list
+
+        FieldHelper.ClearFields<PasteTextBox>(RootControl);
     }
 
     private void NewEntityExecute()
     {
-        throw new NotImplementedException();
+        FieldHelper.ClearFields<PasteTextBox>(RootControl);
+        // Switch to the Vocabulary Entry tab.
+        RootControl.FindControl<TabControl>("DeckConfigTabControl")!.SelectedIndex = 0;
+        // Put focus on the Vocabulary Entry text box.
+        FirstFocusControl.Focus();
     }
 
     private void SelectDeckExecute()
     {
-        Console.WriteLine("Select deck");
+        throw new NotImplementedException();
     }
 
     private void CopyDeckFieldClipboardExecute(StrategyNames value)
     {
-        var strategy = Activator.CreateInstance(Type.GetType(CopyStrategyDict[value])!);
+        var strategy = Activator.CreateInstance(Type.GetType(CopyStrategyDict[value]!)!);
         var copyContext = new Context();
         copyContext.SetStrategy((strategy as ICopyStrategy)!);
 
@@ -169,5 +158,10 @@ public partial class EstonianScreenViewModel : ViewModelBase
     {
         if (control is not TextBox textBox) throw new Exception("The control must be type of TextBox.");
         textBox.Text = await Clipboard.Get();
+    }
+
+    private void SetButtonEnable()
+    {
+        Console.WriteLine("set button enable");
     }
 }

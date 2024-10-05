@@ -6,23 +6,31 @@
              x:DataType="vm:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.AdeToolbar">
     <StackPanel Orientation="Horizontal">
+        <!-- Deck -->
         <Button Name="SelectDeckToolButton"
                 Content="Deck"
                 Command="{Binding SelectDeckCommand}"
                 IsVisible="False" />
         <controls:ToolbarSeparator IsVisible="False" />
+        <!-- Deck -->
         <Button Name="NewDictionaryEntityToolButton"
                 Content="New"
                 Command="{Binding NewEntityCommand}" />
-        <Button Name="AddEntityListButton"
-                Content="Add List"
-                Command="{Binding AddListCommand}" />
-        <Button Name="ClearFormToolButton"
-                Content="Clear"
-                Command="{Binding ClearFormCommand}" />
+
         <controls:ToolbarSeparator />
+
+        <Button Name="AddEntityListButton"
+                IsEnabled="{Binding IsAddEntityButtonEnabled}"
+                Content="Add"
+                Command="{Binding AddListCommand}" />
+        <Button Name="RemoveEntityListButton"
+                Content="Remove"
+                Command="{Binding RemoveListCommand}" />
+
+        <controls:ToolbarSeparator />
+
         <Button Name="ActionsButton"
-                Content="Copy">
+                Content="Copy Field">
             <Button.Flyout>
                 <MenuFlyout Placement="BottomEdgeAlignedLeft">
                     <!-- todo: refact: Меню, как коллекция.  -->
@@ -59,7 +67,9 @@
         <Button Name="ExportFileButton"
                 Content="Export"
                 Command="{Binding ExportFileCommand}" />
+
         <controls:ToolbarSeparator />
+
         <Button Name="ExitButton"
                 Content="Exit"
                 Command="{Binding ExitCommand}" />
