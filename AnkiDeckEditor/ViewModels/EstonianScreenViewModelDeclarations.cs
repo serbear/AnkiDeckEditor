@@ -63,6 +63,7 @@ public partial class EstonianScreenViewModel
 
     // Collections
 
+    [Reactive] public ObservableCollection<EstonianCardRecord> CardCollectionItems { get; set; } = [];
     [Reactive] public ObservableCollection<SpeechPartToggleItem> SpeechPartItems { get; set; }
     [Reactive] public ObservableCollection<ContextToggleItem> WordByWordContextSelectedItems { get; set; }
     [Reactive] public ObservableCollection<ContextToggleItem> LiteraryContextSelectedItems { get; set; }

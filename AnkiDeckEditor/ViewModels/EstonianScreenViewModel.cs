@@ -4,6 +4,7 @@ using System.Reflection;
 using AnkiDeckEditor.Controls;
 using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Libs;
+using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
 using AnkiDeckEditor.Services.FieldsCopy;
 using Avalonia;
@@ -80,6 +81,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         ]);
     }
 
+    // todo: refact: make universal method.
     private string GetFieldValue(string fieldName)
     {
         // Get this class type.
@@ -113,9 +115,26 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void AddListExecute()
     {
-        // todo: add to the list
+        var newCard = new EstonianCardRecord();
+        var estonianScreenViewModel = this;
 
-        FieldHelper.ClearFields<PasteTextBox>(RootControl);
+        PropertySetter.Set(ref estonianScreenViewModel, ref newCard);
+        CardCollectionItems.Add(newCard);
+
+        // todo: sort list alphabetically.
+        //...
+
+        NewEntityExecute();
+    }
+
+    public void EditCardListEntry(EstonianCardRecord? cardListEntry)
+    {
+        // todo: unsaved data
+        //...
+
+        var estonianScreenViewModel = this;
+        PropertySetter.SetReactive(ref cardListEntry, ref estonianScreenViewModel);
+        // todo: обновить reactive property
     }
 
     private void NewEntityExecute()

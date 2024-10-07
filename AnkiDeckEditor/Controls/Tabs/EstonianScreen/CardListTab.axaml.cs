@@ -1,4 +1,6 @@
+using AnkiDeckEditor.Models;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 
 namespace AnkiDeckEditor.Controls.Tabs.EstonianScreen;
@@ -14,5 +16,10 @@ public partial class CardListTab : UserControl
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
+    }
+
+    private void InputElement_OnDoubleTapped(object? sender, TappedEventArgs e)
+    {
+        App.EstonianScreen.EditCardListEntry(((DataGrid)sender!).SelectedItem as EstonianCardRecord);
     }
 }
