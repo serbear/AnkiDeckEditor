@@ -15,7 +15,6 @@ namespace AnkiDeckEditor.ViewModels;
 
 public partial class EstonianScreenViewModel : ViewModelBase
 {
-    // ReSharper disable once UnusedAutoPropertyAccessor.Local
     private Control RootControl { get; set; }
 
     /// <summary>
@@ -127,16 +126,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         NewEntityExecute();
     }
 
-    public void EditCardListEntry(EstonianCardRecord? cardListEntry)
-    {
-        // todo: unsaved data
-        //...
-
-        var estonianScreenViewModel = this;
-        PropertySetter.SetReactive(ref cardListEntry, ref estonianScreenViewModel);
-        // todo: обновить reactive property
-    }
-
     private void NewEntityExecute()
     {
         FieldHelper.ClearFields<PasteTextBox>(RootControl);
@@ -145,6 +134,18 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // Put focus on the Vocabulary Entry text box.
         FirstFocusControl.Focus();
     }
+
+
+    public void EditCardListEntry(EstonianCardRecord? cardListEntry)
+    {
+        // todo: unsaved data
+        //...
+
+        // Update reactive properties.
+        var estonianScreenViewModel = this;
+        PropertySetter.SetReactive(ref cardListEntry, ref estonianScreenViewModel);
+    }
+
 
     private void SelectDeckExecute()
     {

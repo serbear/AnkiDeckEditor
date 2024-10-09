@@ -3,15 +3,21 @@
              xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
              x:DataType="viewModels:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.CardListTab">
-    <StackPanel Orientation="Vertical">
-        <TextBlock Text="Double click to edit." />
-        <DataGrid ItemsSource="{Binding CardCollectionItems}"
+    <Grid ColumnDefinitions="*"
+          RowDefinitions="Auto,*">
+        <TextBlock Grid.Column="0"
+                   Grid.Row="0"
+                   Text="Double click to edit." />
+        <DataGrid Grid.Column="0"
+                  Grid.Row="1"
+                  ItemsSource="{Binding CardCollectionItems}"
                   GridLinesVisibility="None"
                   HeadersVisibility="None"
                   SelectionMode="Extended"
                   BorderThickness="1"
                   BorderBrush="Gray"
-                  DoubleTapped="InputElement_OnDoubleTapped">
+                  DoubleTapped="InputElement_OnDoubleTapped"
+                  Height="">
             <DataGrid.Styles>
                 <!-- Disable the data grid cell border on focus. -->
                 <Style Selector="DataGrid:focus DataGridCell:current /template/ Grid#FocusVisual">
@@ -26,5 +32,5 @@
                                     CanUserSort="True" />
             </DataGrid.Columns>
         </DataGrid>
-    </StackPanel>
+    </Grid>
 </UserControl>
