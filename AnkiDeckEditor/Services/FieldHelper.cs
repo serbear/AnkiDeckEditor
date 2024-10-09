@@ -50,4 +50,10 @@ public static class FieldHelper
         var childrenControls = FindChildren<T>(parentControl);
         foreach (var childControl in childrenControls) FindChildren<TextBox>(childControl).ToList()[0].Text = "";
     }
+
+    public static Control GetChildren<T>(Control? parent, string controlName) where T : Control
+    {
+        var children = FindChildren<T>(parent);
+        return children.First(c => c.Name!.Equals(controlName));
+    }
 }

@@ -5,7 +5,7 @@ using Avalonia.Controls;
 
 namespace AnkiDeckEditor.Services;
 
-public class ControlHelper
+public static class ControlHelper
 {
     public static void SetControlReference(object obj, string fieldName, Control? control)
     {

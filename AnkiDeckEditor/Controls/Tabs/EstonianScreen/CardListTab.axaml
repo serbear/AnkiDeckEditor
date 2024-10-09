@@ -10,6 +10,7 @@
                    Text="Double click to edit." />
         <DataGrid Grid.Column="0"
                   Grid.Row="1"
+                  x:Name="CardCollectionDataGrid"
                   ItemsSource="{Binding CardCollectionItems}"
                   GridLinesVisibility="None"
                   HeadersVisibility="None"

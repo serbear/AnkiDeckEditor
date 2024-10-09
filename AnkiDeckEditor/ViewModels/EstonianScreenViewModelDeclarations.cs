@@ -15,8 +15,7 @@ public partial class EstonianScreenViewModel
 
     [Reactive] public string VocabularyEntryText { get; set; }
 
-    // Context
-
+    // Context Tab
 
     [Reactive] public string LiteralTranslationText { get; set; }
     [Reactive] public string LiteraryTranslationText { get; set; }

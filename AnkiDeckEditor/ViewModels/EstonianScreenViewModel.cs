@@ -46,9 +46,10 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void RemoveListCommandExecute()
     {
-        throw new NotImplementedException();
+        var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, "CardCollectionDataGrid");
+        var selectedItem = (dataGrid as DataGrid)?.SelectedItem as EstonianCardRecord;
+        CardCollectionItems.Remove(selectedItem!);
     }
-
 
     private NonVerbWordFormCollection GetNonVerbWordForms()
     {
