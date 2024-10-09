@@ -86,5 +86,6 @@ public partial class EstonianScreenViewModel
         IsVerbFormsTabItemVisible = false;
         IsWordFormsTabItemVisible = false;
         IsAddEntityButtonEnabled = false;
+        IsRemoveCardButtonEnabled = false;
     }
 }

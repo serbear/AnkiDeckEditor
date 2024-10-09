@@ -48,8 +48,8 @@ public class Context
 
     private static bool IsObservableCollection(object obj)
     {
-        return obj.GetType().IsGenericType &&
-               obj.GetType().GetGenericTypeDefinition() == typeof(ObservableCollection<>);
+        return obj.GetType().IsGenericType &
+               (obj.GetType().GetGenericTypeDefinition() == typeof(ObservableCollection<>));
     }
 
     private string DoCopyCollectionGeneric<T>(ObservableCollection<T> items)

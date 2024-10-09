@@ -16,7 +16,7 @@ public class LiteralTranslationCopyStrategy : ICopyStrategy
         //         var isCompoundVerbSelected = SpeechPartItems.Any(
         //             e => e is { VerbType: VerbTypes.Compound, IsChecked: true });
         //         var resultString =
-        //             totalMarkedEntities == 1 && isCompoundVerbSelected
+        //             totalMarkedEntities == 1 & isCompoundVerbSelected
         //                 ? $"{tagged}{FieldTags.CompoundVerbMarker}"
         //                 : $"{tagged}";
         //

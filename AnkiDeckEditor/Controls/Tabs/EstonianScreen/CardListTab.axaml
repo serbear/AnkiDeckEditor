@@ -18,6 +18,7 @@
                   BorderThickness="1"
                   BorderBrush="Gray"
                   DoubleTapped="InputElement_OnDoubleTapped"
+                  Tapped="CardCollectionDataGrid_OnTapped"
                   Height="">
             <DataGrid.Styles>
                 <!-- Disable the data grid cell border on focus. -->

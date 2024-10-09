@@ -55,7 +55,7 @@ public partial class VocabularyEntryTab : UserControl
         var isCheckBoxChecked = checkbox.IsChecked.Equals(true);
         var isVerbSelected = checkbox.Tag != null;
 
-        isVerbSelected = isVerbSelected && isCheckBoxChecked;
+        isVerbSelected = isVerbSelected & isCheckBoxChecked;
         dataContext.IsWordFormsTabItemVisible = !isVerbSelected;
         dataContext.IsVerbFormsTabItemVisible = isVerbSelected;
     }

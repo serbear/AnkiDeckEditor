@@ -11,7 +11,7 @@ public class TextToVisibleConverter : IValueConverter
     {
         try
         {
-            return value != null && value.ToString()!.Length > 0;
+            return (value != null) & (value.ToString()!.Length > 0);
         }
         catch
         {

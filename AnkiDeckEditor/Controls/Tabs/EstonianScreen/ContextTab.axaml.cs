@@ -104,8 +104,8 @@ public partial class ContextTab : UserControl
         if (string.IsNullOrEmpty(splittedWord)) return [];
 
         // Base case. There are no any punctuation marks in a word.
-        if (char.IsPunctuation(splittedWord.First()) == false &&
-            char.IsPunctuation(splittedWord.Last()) == false)
+        if ((char.IsPunctuation(splittedWord.First()) == false) &
+            (char.IsPunctuation(splittedWord.Last()) == false))
             return [splittedWord];
 
         string? addstr = null;
@@ -140,7 +140,7 @@ public partial class ContextTab : UserControl
 
         foreach (var s in contextWords)
         {
-            var isPunctuation = s!.Length.Equals(1) && char.IsPunctuation(s[0]);
+            var isPunctuation = s!.Length.Equals(1) & char.IsPunctuation(s[0]);
             collection.Add(new ContextToggleItem(s, isPunctuation, false));
         }
     }

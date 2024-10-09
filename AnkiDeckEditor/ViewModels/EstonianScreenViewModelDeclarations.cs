@@ -59,6 +59,8 @@ public partial class EstonianScreenViewModel
     [Reactive] public bool IsVerbFormsTabItemVisible { get; set; }
     [Reactive] public bool IsWordFormsTabItemVisible { get; set; }
     [Reactive] public bool IsAddEntityButtonEnabled { get; set; }
+    [Reactive] public bool IsRemoveCardButtonEnabled { get; set; }
+
 
     // Collections
 

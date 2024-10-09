@@ -27,4 +27,9 @@ public partial class EstonianScreen : UserControl
     {
         AvaloniaXamlLoader.Load(this);
     }
+
+    private void DeckConfigTabControl_OnSelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        (DataContext as EstonianScreenViewModel)?.UpdateIsRemoveCardButtonEnabledFlag();
+    }
 }

@@ -24,6 +24,7 @@
                 Content="Add"
                 Command="{Binding AddListCommand}" />
         <Button Name="RemoveEntityListButton"
+                IsEnabled="{Binding IsRemoveCardButtonEnabled}"
                 Content="Remove"
                 Command="{Binding RemoveListCommand}" />
 

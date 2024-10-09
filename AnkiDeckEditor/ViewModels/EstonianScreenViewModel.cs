@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using AnkiDeckEditor.Controls;
@@ -15,7 +16,9 @@ namespace AnkiDeckEditor.ViewModels;
 
 public partial class EstonianScreenViewModel : ViewModelBase
 {
-    private Control RootControl { get; set; }
+    private const string CardCollectionDataGridName = "CardCollectionDataGrid";
+    private const string EstonianDeckMainTabControlName = "DeckConfigTabControl";
+    private Control RootControl { get; } = new();
 
     /// <summary>
     /// The field stores a reference to the text box that will be focused on after the form cleanup function
@@ -26,7 +29,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
 
     public EstonianScreenViewModel()
-
     {
         InitializeCommands();
         InitializeCollections();
@@ -46,9 +48,13 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void RemoveListCommandExecute()
     {
-        var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, "CardCollectionDataGrid");
+        // todo: Process multiple choice.
+        // ...
+
+        var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CardCollectionDataGridName);
         var selectedItem = (dataGrid as DataGrid)?.SelectedItem as EstonianCardRecord;
         CardCollectionItems.Remove(selectedItem!);
+        UpdateIsRemoveCardButtonEnabledFlag();
     }
 
     private NonVerbWordFormCollection GetNonVerbWordForms()
@@ -124,6 +130,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // todo: sort list alphabetically.
         //...
 
+        UpdateIsRemoveCardButtonEnabledFlag();
         NewEntityExecute();
     }
 
@@ -131,11 +138,23 @@ public partial class EstonianScreenViewModel : ViewModelBase
     {
         FieldHelper.ClearFields<PasteTextBox>(RootControl);
         // Switch to the Vocabulary Entry tab.
-        RootControl.FindControl<TabControl>("DeckConfigTabControl")!.SelectedIndex = 0;
+        RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)!.SelectedIndex = 0;
         // Put focus on the Vocabulary Entry text box.
         FirstFocusControl.Focus();
     }
 
+    internal void UpdateIsRemoveCardButtonEnabledFlag()
+    {
+        var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CardCollectionDataGridName);
+        List<bool> condition =
+        [
+            // The card collection contains the elements.
+            (dataGrid as DataGrid)?.SelectedItems.Count > 0,
+            // The tab with the list of cards is active.
+            RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)!.SelectedIndex.Equals(4)
+        ];
+        IsRemoveCardButtonEnabled = condition.All(e => e.Equals(true));
+    }
 
     public void EditCardListEntry(EstonianCardRecord? cardListEntry)
     {

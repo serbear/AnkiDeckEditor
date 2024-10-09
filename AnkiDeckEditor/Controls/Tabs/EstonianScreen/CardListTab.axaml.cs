@@ -25,4 +25,9 @@ public partial class CardListTab : UserControl
             ((DataGrid)sender!).SelectedItem as EstonianCardRecord
         );
     }
+
+    private void CardCollectionDataGrid_OnTapped(object? sender, TappedEventArgs e)
+    {
+        (DataContext as EstonianScreenViewModel)?.UpdateIsRemoveCardButtonEnabledFlag();
+    }
 }

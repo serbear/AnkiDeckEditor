@@ -18,7 +18,8 @@
         <controls:AdeToolbar DockPanel.Dock="Top" />
         <!-- Tabs -->
         <TabControl x:Name="DeckConfigTabControl"
-                    DockPanel.Dock="Top">
+                    DockPanel.Dock="Top"
+                    SelectionChanged="DeckConfigTabControl_OnSelectionChanged">
             <!-- MainEntity Anki field -->
             <TabItem Header="Словарная статья">
                 <estonianScreen:VocabularyEntryTab />
