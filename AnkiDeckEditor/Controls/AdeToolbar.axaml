@@ -27,6 +27,10 @@
                 IsEnabled="{Binding IsRemoveCardButtonEnabled}"
                 Content="Remove"
                 Command="{Binding RemoveListCommand}" />
+        <Button Name="ClearCardCollectionButton"
+                IsEnabled="{Binding IsClearCardCollectionButtonEnabled}"
+                Content="Clear"
+                Command="{Binding ClearCardCollectionCommand}" />
 
         <controls:ToolbarSeparator />
 

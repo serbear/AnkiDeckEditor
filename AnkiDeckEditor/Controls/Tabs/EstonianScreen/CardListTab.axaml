@@ -14,7 +14,7 @@
                   ItemsSource="{Binding CardCollectionItems}"
                   GridLinesVisibility="None"
                   HeadersVisibility="None"
-                  SelectionMode="Extended"
+                  SelectionMode="Single"
                   BorderThickness="1"
                   BorderBrush="Gray"
                   DoubleTapped="InputElement_OnDoubleTapped"

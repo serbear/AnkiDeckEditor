@@ -11,6 +11,7 @@ using AnkiDeckEditor.Services.FieldsCopy;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using DynamicData;
 
 namespace AnkiDeckEditor.ViewModels;
 
@@ -18,7 +19,9 @@ public partial class EstonianScreenViewModel : ViewModelBase
 {
     private const string CardCollectionDataGridName = "CardCollectionDataGrid";
     private const string EstonianDeckMainTabControlName = "DeckConfigTabControl";
-    private Control RootControl { get; } = new();
+
+    // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
+    private Control RootControl { get; set; } = new();
 
     /// <summary>
     /// The field stores a reference to the text box that will be focused on after the form cleanup function
@@ -48,13 +51,25 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void RemoveListCommandExecute()
     {
-        // todo: Process multiple choice.
-        // ...
+        var isMultiselect = CardCollectionItems.Any(c => c.IsChecked.Equals(true));
+        if (isMultiselect)
+            RemoveManyItems();
+        else
+            RemoveOneItem();
+        UpdateIsRemoveCardButtonEnabledFlag();
+    }
 
+    private void RemoveManyItems()
+    {
+        var items = CardCollectionItems.Where(c => c.IsChecked.Equals(true));
+        CardCollectionItems.RemoveMany(items);
+    }
+
+    private void RemoveOneItem()
+    {
         var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CardCollectionDataGridName);
         var selectedItem = (dataGrid as DataGrid)?.SelectedItem as EstonianCardRecord;
         CardCollectionItems.Remove(selectedItem!);
-        UpdateIsRemoveCardButtonEnabledFlag();
     }
 
     private NonVerbWordFormCollection GetNonVerbWordForms()
@@ -146,14 +161,15 @@ public partial class EstonianScreenViewModel : ViewModelBase
     internal void UpdateIsRemoveCardButtonEnabledFlag()
     {
         var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CardCollectionDataGridName);
-        List<bool> condition =
+        List<bool> removeCardCondition =
         [
             // The card collection contains the elements.
             (dataGrid as DataGrid)?.SelectedItems.Count > 0,
             // The tab with the list of cards is active.
             RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)!.SelectedIndex.Equals(4)
         ];
-        IsRemoveCardButtonEnabled = condition.All(e => e.Equals(true));
+        IsRemoveCardButtonEnabled = removeCardCondition.All(e => e.Equals(true));
+        IsClearCardCollectionButtonEnabled = removeCardCondition[1];
     }
 
     public void EditCardListEntry(EstonianCardRecord? cardListEntry)
@@ -200,8 +216,9 @@ public partial class EstonianScreenViewModel : ViewModelBase
         textBox.Text = await Clipboard.Get();
     }
 
-    private void SetButtonEnable()
+    private void ClearCardCollectionCommandExecute()
     {
-        Console.WriteLine("set button enable");
+        CardCollectionItems.Clear();
+        UpdateIsRemoveCardButtonEnabledFlag();
     }
 }

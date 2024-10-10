@@ -46,6 +46,7 @@ public partial class EstonianScreenViewModel
         ExportFileCommand = ReactiveCommand.Create(ExportFileExecute);
         ExitCommand = ReactiveCommand.Create(ExitExecute);
         RemoveListCommand = ReactiveCommand.Create(RemoveListCommandExecute);
+        ClearCardCollectionCommand = ReactiveCommand.Create(ClearCardCollectionCommandExecute);
     }
 
     private void InitializeCollections()
@@ -87,5 +88,6 @@ public partial class EstonianScreenViewModel
         IsWordFormsTabItemVisible = false;
         IsAddEntityButtonEnabled = false;
         IsRemoveCardButtonEnabled = false;
+        IsClearCardCollectionButtonEnabled = false;
     }
 }
