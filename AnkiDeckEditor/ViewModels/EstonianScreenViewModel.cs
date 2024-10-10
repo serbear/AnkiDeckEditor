@@ -7,11 +7,11 @@ using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Libs;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
+using AnkiDeckEditor.Services.Estonian;
 using AnkiDeckEditor.Services.FieldsCopy;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using DynamicData;
 
 namespace AnkiDeckEditor.ViewModels;
 
@@ -51,26 +51,21 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void RemoveListCommandExecute()
     {
-        var isMultiselect = CardCollectionItems.Any(c => c.IsChecked.Equals(true));
-        if (isMultiselect)
-            RemoveManyItems();
+        var cardCollectionItems = CardCollectionItems;
+
+        if (CardCollection.AreManyCardsChecked(ref cardCollectionItems))
+        {
+            CardCollection.RemoveManyItems(ref cardCollectionItems);
+        }
         else
-            RemoveOneItem();
+        {
+            var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CardCollectionDataGridName) as DataGrid;
+            CardCollection.RemoveOneItem(dataGrid, ref cardCollectionItems);
+        }
+
         UpdateIsRemoveCardButtonEnabledFlag();
     }
 
-    private void RemoveManyItems()
-    {
-        var items = CardCollectionItems.Where(c => c.IsChecked.Equals(true));
-        CardCollectionItems.RemoveMany(items);
-    }
-
-    private void RemoveOneItem()
-    {
-        var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CardCollectionDataGridName);
-        var selectedItem = (dataGrid as DataGrid)?.SelectedItem as EstonianCardRecord;
-        CardCollectionItems.Remove(selectedItem!);
-    }
 
     private NonVerbWordFormCollection GetNonVerbWordForms()
     {
@@ -218,7 +213,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void ClearCardCollectionCommandExecute()
     {
-        CardCollectionItems.Clear();
+        var cardCollectionItems = CardCollectionItems;
+        CardCollection.ClearCollection(ref cardCollectionItems);
         UpdateIsRemoveCardButtonEnabledFlag();
     }
 }

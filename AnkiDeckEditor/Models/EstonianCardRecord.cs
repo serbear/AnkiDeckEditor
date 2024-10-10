@@ -5,11 +5,8 @@ namespace AnkiDeckEditor.Models;
 
 // todo: refact: ExpandoObject
 
-public class EstonianCardRecord
+public class EstonianCardRecord : VocabularyCardRecord
 {
-    // Check box for the data grid control on the Card List tab.
-    public bool IsChecked { get; set; }
-
     public string VocabularyEntryText { get; set; }
     public ObservableCollection<ContextToggleItem> WordByWordContextSelectedItems { get; set; }
     public ObservableCollection<ContextToggleItem> LiteraryContextSelectedItems { get; set; }
