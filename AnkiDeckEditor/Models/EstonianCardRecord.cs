@@ -7,14 +7,21 @@ namespace AnkiDeckEditor.Models;
 
 public class EstonianCardRecord : VocabularyCardRecord
 {
-    public string VocabularyEntryText { get; set; }
+    // -- 
     public ObservableCollection<ContextToggleItem> WordByWordContextSelectedItems { get; set; }
     public ObservableCollection<ContextToggleItem> LiteraryContextSelectedItems { get; set; }
-    public ObservableCollection<ContextToggleItem> OriginalContextSelectedItems { get; set; }
-    public ObservableCollection<ToggleItem> VerbControlItems { get; set; }
-    public ObservableCollection<SpeechPartToggleItem> SpeechPartItems { get; set; }
-    public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
 
+    public ObservableCollection<ContextToggleItem> OriginalContextSelectedItems { get; set; }
+
+    // public ObservableCollection<ToggleItem> VerbControlItems { get; set; }
+    // public ObservableCollection<SpeechPartToggleItem> SpeechPartItems { get; set; }
+    public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
+    // -- 
+
+    public string SpeechPart { get; set; }
+    public List<string?> SpeechPartGovernment { get; set; }
+
+    public string VocabularyEntryText { get; set; }
     public string LiteralTranslationText { get; set; }
     public string LiteraryTranslationText { get; set; }
     public string OriginalText { get; set; }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Controls;
@@ -45,15 +46,50 @@ public static class FieldHelper
         }
     }
 
-    public static void ClearFields<T>(Control? parentControl) where T : Control
+    public static void ClearTextFields<T>(Control? parentControl) where T : Control
     {
         var childrenControls = FindChildren<T>(parentControl);
-        foreach (var childControl in childrenControls) FindChildren<TextBox>(childControl).ToList()[0].Text = "";
+        foreach (var childControl in childrenControls)
+            FindChildren<TextBox>(childControl).ToList()[0].Text = string.Empty;
+    }
+
+    public static void ResetCheckBoxFields(Control? parentControl)
+    {
+        var childrenControls = FindChildren<CheckBox>(parentControl);
+        foreach (var childControl in childrenControls)
+            childControl.IsChecked = false;
     }
 
     public static Control GetChildren<T>(Control? parent, string controlName) where T : Control
     {
         var children = FindChildren<T>(parent);
         return children.First(c => c.Name!.Equals(controlName));
+    }
+
+    public static List<T> GetChildrenList<T>(object? parent) where T : Control
+    {
+        return FindChildren<T>(parent as Control).ToList();
+    }
+
+    public static void RestoreCheckBoxes(Control? parentControl, List<string>? valueCollection)
+    {
+        // Skip if the value collection is empty.
+        if ((valueCollection == null) | (valueCollection!.Count == 0))
+            return;
+
+        var checkBoxes = GetChildrenList<CheckBox>(parentControl);
+
+        if (checkBoxes == null) throw new InvalidOperationException("There are no {speech part} check boxes.");
+
+        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+        foreach (var checkBoxText in valueCollection)
+        {
+            var checkBox = checkBoxes.FirstOrDefault(b => b.Content!.Equals(checkBoxText));
+
+            if (checkBox != null)
+                checkBox.IsChecked = true;
+            else
+                throw new InvalidOperationException("The speech part check box not found.");
+        }
     }
 }

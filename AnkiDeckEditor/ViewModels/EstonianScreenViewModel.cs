@@ -134,7 +134,20 @@ public partial class EstonianScreenViewModel : ViewModelBase
         var newCard = new EstonianCardRecord();
         var estonianScreenViewModel = this;
 
+        // todo: Какая-то структура данных переменной в VocabularyCardRecord для хранения
+        //     - названия части речи
+        //     - управления частью речи.
+        // То, что имеет check box. 
+        //     - Выделенные слова в переводе.
+
         PropertySetter.Set(ref estonianScreenViewModel, ref newCard);
+
+        // Set the speech part and the speech part government checkbox.
+        newCard.SpeechPart = SpeechPartItems.FirstOrDefault(sp => sp.IsChecked.Equals(true))?.Title!;
+        newCard.SpeechPartGovernment = VerbControlItems
+            .Where(e => e.IsChecked.Equals(true))
+            .Select(e => e.Title).ToList();
+
         CardCollectionItems.Add(newCard);
 
         // todo: sort list alphabetically.
@@ -146,10 +159,11 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void NewEntityExecute()
     {
-        FieldHelper.ClearFields<PasteTextBox>(RootControl);
+        FieldHelper.ClearTextFields<PasteTextBox>(RootControl);
+        FieldHelper.ResetCheckBoxFields(RootControl);
         // Switch to the Vocabulary Entry tab.
-        RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)!.SelectedIndex = 0;
-        // Put focus on the Vocabulary Entry text box.
+        RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)!.SelectedIndex =
+            (int)EstonianDeckTabs.VocabularyEntryTab;
         FirstFocusControl.Focus();
     }
 
@@ -161,7 +175,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
             // The card collection contains the elements.
             (dataGrid as DataGrid)?.SelectedItems.Count > 0,
             // The tab with the list of cards is active.
-            RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)!.SelectedIndex.Equals(4)
+            RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)!.SelectedIndex.Equals(
+                (int)EstonianDeckTabs.CardCollectionTab)
         ];
         IsRemoveCardButtonEnabled = removeCardCondition.All(e => e.Equals(true));
         IsClearCardCollectionButtonEnabled = removeCardCondition[1];
@@ -175,6 +190,15 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // Update reactive properties.
         var estonianScreenViewModel = this;
         PropertySetter.SetReactive(ref cardListEntry, ref estonianScreenViewModel);
+
+        // Restore checkboxes.
+        var parentTabItem = RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)?
+            .Items[(int)EstonianDeckTabs.VocabularyEntryTab] as Control;
+        FieldHelper.RestoreCheckBoxes(parentTabItem, [cardListEntry?.SpeechPart!]);
+
+        parentTabItem = RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)?
+            .Items[(int)EstonianDeckTabs.VerbWordFormsTab] as Control;
+        FieldHelper.RestoreCheckBoxes(parentTabItem, cardListEntry?.SpeechPartGovernment!);
     }
 
 
