@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using AnkiDeckEditor.Models;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -24,18 +21,6 @@ public static class PropertySetter
 
                 // todo: error: no attributes
                 targetProperty.SetValue(target, property.GetValue(source));
-
-                // if (property.Name.Equals("SpeechPartItems"))
-                // {
-                // var x = (property.GetValue(source) as ObservableCollection<SpeechPartToggleItem>).ToList();
-                // SpeechPartToggleItem[] y=new SpeechPartToggleItem[x.Count] ;
-                // x.CopyTo(y , 0 );
-                // targetProperty.SetValue(target, y);
-                // }
-                // else
-                // {
-                // targetProperty.SetValue(target, property.GetValue(source));
-                // } 
             }
             catch (Exception e) when (e is InvalidOperationException or ArgumentNullException)
             {
