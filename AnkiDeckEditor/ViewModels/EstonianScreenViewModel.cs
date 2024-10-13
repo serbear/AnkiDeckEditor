@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using AnkiDeckEditor.Controls;
@@ -134,12 +135,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         var newCard = new EstonianCardRecord();
         var estonianScreenViewModel = this;
 
-        // todo: Какая-то структура данных переменной в VocabularyCardRecord для хранения
-        //     - названия части речи
-        //     - управления частью речи.
-        // То, что имеет check box. 
-        //     - Выделенные слова в переводе.
-
         PropertySetter.Set(ref estonianScreenViewModel, ref newCard);
 
         // Set the speech part and the speech part government checkbox.
@@ -148,10 +143,16 @@ public partial class EstonianScreenViewModel : ViewModelBase
             .Where(e => e.IsChecked.Equals(true))
             .Select(e => e.Title).ToList();
 
+        // Assign indexes of selected words in the context fields. 
+        newCard.LiteralTranslationSelection = FieldHelper.GetContextSelectedWordIndexes(WordByWordContextSelectedItems);
+        newCard.LiteraryTranslationSelection = FieldHelper.GetContextSelectedWordIndexes(LiteraryContextSelectedItems);
+        newCard.OriginalTextSelection = FieldHelper.GetContextSelectedWordIndexes(OriginalContextSelectedItems);
+
         CardCollectionItems.Add(newCard);
 
-        // todo: sort list alphabetically.
-        //...
+        // Sort the card list alphabetically.
+        CardCollectionItems = new ObservableCollection<EstonianCardRecord>(
+            CardCollectionItems.OrderBy(e => e.VocabularyEntryText));
 
         UpdateIsRemoveCardButtonEnabledFlag();
         NewEntityExecute();
@@ -161,6 +162,12 @@ public partial class EstonianScreenViewModel : ViewModelBase
     {
         FieldHelper.ClearTextFields<PasteTextBox>(RootControl);
         FieldHelper.ResetCheckBoxFields(RootControl);
+
+        // Reset context word selections.
+
+        WordByWordContextSelectedItems.Clear();
+
+
         // Switch to the Vocabulary Entry tab.
         RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)!.SelectedIndex =
             (int)EstonianDeckTabs.VocabularyEntryTab;
@@ -187,6 +194,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // todo: unsaved data
         //...
 
+        NewEntityExecute();
+
         // Update reactive properties.
         var estonianScreenViewModel = this;
         PropertySetter.SetReactive(ref cardListEntry, ref estonianScreenViewModel);
@@ -199,6 +208,17 @@ public partial class EstonianScreenViewModel : ViewModelBase
         parentTabItem = RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)?
             .Items[(int)EstonianDeckTabs.VerbWordFormsTab] as Control;
         FieldHelper.RestoreCheckBoxes(parentTabItem, cardListEntry?.SpeechPartGovernment!);
+
+        // Restore selected text of the context fields.
+        FieldHelper.CheckContextSelectedWords(
+            cardListEntry?.LiteralTranslationSelection,
+            WordByWordContextSelectedItems);
+        FieldHelper.CheckContextSelectedWords(
+            cardListEntry?.LiteraryTranslationSelection,
+            LiteraryContextSelectedItems);
+        FieldHelper.CheckContextSelectedWords(
+            cardListEntry?.OriginalTextSelection,
+            OriginalContextSelectedItems);
     }
 
 

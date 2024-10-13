@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using AnkiDeckEditor.Models;
 using Avalonia.Controls;
 using Avalonia.LogicalTree;
 
@@ -91,5 +93,21 @@ public static class FieldHelper
             else
                 throw new InvalidOperationException("The speech part check box not found.");
         }
+    }
+
+    public static List<int> GetContextSelectedWordIndexes(ObservableCollection<ContextToggleItem> collection)
+    {
+        // The index of the selected word in the collection is stored in the record.
+        // It is possible that there may be several identical words in a sentence, but only one of them is highlighted.
+        return collection.Select(e => e.IsChecked ? collection.IndexOf(e) : -1).Where(e => e >= 0).ToList();
+    }
+
+    public static void CheckContextSelectedWords(
+        List<int>? indexesCollection,
+        ObservableCollection<ContextToggleItem> targetCollection)
+    {
+        if (indexesCollection == null || indexesCollection.Count == 0) return;
+
+        foreach (var idx in indexesCollection) targetCollection[idx].IsChecked = true;
     }
 }

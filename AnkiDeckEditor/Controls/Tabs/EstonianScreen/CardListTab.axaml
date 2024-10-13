@@ -18,8 +18,7 @@
                   BorderThickness="1"
                   BorderBrush="Gray"
                   DoubleTapped="InputElement_OnDoubleTapped"
-                  Tapped="CardCollectionDataGrid_OnTapped"
-                  Height="">
+                  Tapped="CardCollectionDataGrid_OnTapped">
             <DataGrid.Styles>
                 <!-- Disable the data grid cell border on focus. -->
                 <Style Selector="DataGrid:focus DataGridCell:current /template/ Grid#FocusVisual">
@@ -31,7 +30,8 @@
                 <DataGridCheckBoxColumn Binding="{Binding IsChecked}" />
                 <DataGridTextColumn Binding="{Binding VocabularyEntryText}"
                                     IsReadOnly="True"
-                                    CanUserSort="True" />
+                                    CanUserSort="True"
+                                    SortMemberPath="VocabularyEntryText" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

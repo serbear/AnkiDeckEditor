@@ -93,9 +93,8 @@ public partial class ContextTab : UserControl
         // -----
 
         var parentContainerName = textBox.GetVisualAncestors().First(visual => visual is PasteTextBox).Name;
-        UpdateEntityContextCollection(
-            ((EstonianScreenViewModel)DataContext!).EntityContextCollections[parentContainerName!],
-            output);
+        var collection = ((EstonianScreenViewModel)DataContext!).EntityContextCollections[parentContainerName!];
+        UpdateEntityContextCollection(collection, output);
     }
 
     private static List<string> ProcessSplittedWord(string? splittedWord)
@@ -134,14 +133,41 @@ public partial class ContextTab : UserControl
         List<string?>? contextWords)
         where T : ObservableCollection<ContextToggleItem>
     {
-        if (contextWords == null) return;
+        if (contextWords == null || contextWords.Count == 0) return;
+
+        // todo: comment
+
+        // save checked status
+
+        var checkedWords = new Dictionary<string, int>();
+
+        if (collection.Count > 0)
+            for (var i = collection.Count - 1; i >= 0; i--)
+                if (collection[i].IsChecked)
+                    checkedWords.Add(collection[i].Title!, i);
 
         collection.Clear();
 
         foreach (var s in contextWords)
         {
             var isPunctuation = s!.Length.Equals(1) & char.IsPunctuation(s[0]);
-            collection.Add(new ContextToggleItem(s, isPunctuation, false));
+
+            // ---
+            bool isChecked;
+            int savedWordIndex;
+            var isSavedWord = checkedWords.TryGetValue(s, out savedWordIndex);
+
+            // Если индекс слова и значение слова совпадают, установить выделение.
+            List<bool> condition =
+            [
+                isSavedWord,
+                contextWords.IndexOf(s).Equals(savedWordIndex)
+            ];
+
+            isChecked = condition.All(e => e.Equals(true));
+
+            // ---
+            collection.Add(new ContextToggleItem(s, isPunctuation, isChecked));
         }
     }
 }
