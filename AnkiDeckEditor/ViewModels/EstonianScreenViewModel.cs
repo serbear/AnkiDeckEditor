@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
 using AnkiDeckEditor.Controls;
 using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Libs;
@@ -31,6 +30,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
     // ReSharper disable once UnusedAutoPropertyAccessor.Local
     private Control FirstFocusControl { get; set; }
 
+    private EditModes _currentEditMode;
+    private EstonianCardRecord? _currentEditCard;
 
     public EstonianScreenViewModel()
     {
@@ -38,15 +39,36 @@ public partial class EstonianScreenViewModel : ViewModelBase
         InitializeCollections();
         InitializeFlags();
         InitializeSubscriptions();
+
+        // Set default work mode of deck editor.
+        _currentEditMode = EditModes.Add;
     }
 
 
     private void OnFieldTextChanged(string newText)
     {
+        if (_currentEditMode == EditModes.Add) AddModeTextChanged();
+        if (_currentEditMode == EditModes.Edit) EditModeTextChanged();
+    }
+
+    private void AddModeTextChanged()
+    {
         // Set enable status for the button "Add to the Card List".
         // If all fields are empty, enable status is 'false'.
         var isTextBoxesEmpty = FieldHelper.IsUnsavedContent<PasteTextBox>(RootControl);
         IsAddEntityButtonEnabled = isTextBoxesEmpty;
+    }
+
+    private void EditModeTextChanged()
+    {
+        if (_currentEditCard == null) return;
+
+        // Checks each PasteTextBox element to see if the text of its main text box matches the stored value
+        // of the corresponding vocabulary card field.
+        IsSaveEntityListButtonEnabled = FieldHelper.IsFieldsChanged<PasteTextBox>(RootControl, _currentEditCard);
+
+        // todo: implement for checkboxes
+        // ...
     }
 
 
@@ -99,20 +121,27 @@ public partial class EstonianScreenViewModel : ViewModelBase
     }
 
     // todo: refact: make universal method.
-    private string GetFieldValue(string fieldName)
-    {
-        // Get this class type.
-        var type = GetType();
-
-        // ReSharper disable once GrammarMistakeInComment
-        // Expression 'f.Name[1..]' means: skip the "$" symbol in the name of the class field.
-        var field = type.GetRuntimeFields().First(f => f.Name[1..].Equals(fieldName));
-
-        if (field == null) throw new ArgumentException($"Field with the name '{fieldName}' is not found.");
-
-        // If the field is public and exists, return its value.
-        return (string)field.GetValue(this)!;
-    }
+    // private string GetFieldValue(string fieldName)
+    // {
+    //     // Get this class type.
+    //     var type = GetType();
+    //
+    //     FieldInfo field;
+    //
+    //     try
+    //     {
+    //         // ReSharper disable once GrammarMistakeInComment
+    //         // Expression 'f.Name[1..]' means: skip the "$" symbol in the name of the class field.
+    //         field = type.GetRuntimeFields().First(f => f.Name[1..].Equals(fieldName));
+    //     }
+    //     catch (Exception e) when (e is ArgumentNullException or InvalidOperationException)
+    //     {
+    //         throw new ArgumentException($"Field with the name '{fieldName}' is not found.");
+    //     }
+    //
+    //     // If the field is public and exists, return its value.
+    //     return (string)field.GetValue(this)!;
+    // }
 
     private void ExitExecute()
     {
@@ -160,6 +189,9 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void NewEntityExecute()
     {
+        // todo: Unsaved content.
+        // ...
+
         FieldHelper.ClearTextFields<PasteTextBox>(RootControl);
         FieldHelper.ResetCheckBoxFields(RootControl);
 
@@ -194,6 +226,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // todo: unsaved data
         //...
 
+        _currentEditMode = EditModes.Edit;
+
         NewEntityExecute();
 
         // Update reactive properties.
@@ -219,8 +253,24 @@ public partial class EstonianScreenViewModel : ViewModelBase
         FieldHelper.CheckContextSelectedWords(
             cardListEntry?.OriginalTextSelection,
             OriginalContextSelectedItems);
+
+        // Show 'Save' button.
+        IsVisibleAddEntityListButton = false;
+
+        _currentEditCard = cardListEntry;
     }
 
+    private void SaveListCommandExecute()
+    {
+        // todo: implement
+        // ...
+
+        // Hide 'Save' button and show 'Add' button.
+        IsVisibleAddEntityListButton = true;
+
+        _currentEditCard = null;
+        _currentEditMode = EditModes.Add;
+    }
 
     private void SelectDeckExecute()
     {
@@ -240,7 +290,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         object result;
 
         if (!isDataCollectionExist)
-            result = GetFieldValue(value.ClassFieldName());
+            result = FieldHelper.GetFieldValue(this, value.ClassFieldName());
         else
             result = fieldValue is Func<NonVerbWordFormCollection> func
                 ? func()

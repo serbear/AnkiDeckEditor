@@ -54,6 +54,7 @@ public partial class EstonianScreenViewModel
     public ReactiveCommand<Control, Unit> PasteCommand { get; set; }
     public ReactiveCommand<Unit, Unit> RemoveListCommand { get; set; }
     public ReactiveCommand<Unit, Unit> ClearCardCollectionCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> SaveListCommand { get; set; }
 
     // Flags
 
@@ -62,6 +63,8 @@ public partial class EstonianScreenViewModel
     [Reactive] public bool IsAddEntityButtonEnabled { get; set; }
     [Reactive] public bool IsRemoveCardButtonEnabled { get; set; }
     [Reactive] public bool IsClearCardCollectionButtonEnabled { get; set; }
+    [Reactive] public bool IsVisibleAddEntityListButton { get; set; }
+    [Reactive] public bool IsSaveEntityListButtonEnabled { get; set; }
 
 
     // Collections

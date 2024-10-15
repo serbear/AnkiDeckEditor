@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using AnkiDeckEditor.Models;
 using Avalonia.Controls;
 using Avalonia.LogicalTree;
@@ -30,6 +31,22 @@ public static class FieldHelper
         return childrenControls
             .Select(child => FindChildren<TextBox>(child).ToList()[0].Text)
             .Any(textBoxText => !string.IsNullOrEmpty(textBoxText));
+    }
+
+    public static bool IsFieldsChanged<T>(Control parentControl, EstonianCardRecord vocabularyCard) where T : Control
+    {
+        var childrenControls = FindChildren<T>(parentControl);
+
+        // ReSharper disable once LoopCanBeConvertedToQuery
+        foreach (var control in childrenControls)
+        {
+            var savedEntityValue = GetPropertyValueByName(vocabularyCard, control.Name);
+            var currentValue = GetPropertyValueByName(parentControl.DataContext, control.Name);
+            if (savedEntityValue == currentValue) continue;
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -68,6 +85,7 @@ public static class FieldHelper
         return children.First(c => c.Name!.Equals(controlName));
     }
 
+    // ReSharper disable once MemberCanBePrivate.Global
     public static List<T> GetChildrenList<T>(object? parent) where T : Control
     {
         return FindChildren<T>(parent as Control).ToList();
@@ -109,5 +127,42 @@ public static class FieldHelper
         if (indexesCollection == null || indexesCollection.Count == 0) return;
 
         foreach (var idx in indexesCollection) targetCollection[idx].IsChecked = true;
+    }
+
+    public static string GetFieldValue(object parent, string fieldName)
+    {
+        // Get this class type.
+        var type = parent.GetType();
+
+        FieldInfo field;
+
+        try
+        {
+            // ReSharper disable once GrammarMistakeInComment
+            // Expression 'f.Name[1..]' means: skip the "$" symbol in the name of the class field.
+            field = type.GetRuntimeFields().First(f => f.Name[1..].Equals(fieldName));
+        }
+        catch (Exception e) when (e is ArgumentNullException or InvalidOperationException)
+        {
+            throw new ArgumentException($"Field with the name '{fieldName}' is not found.");
+        }
+
+        // If the field is public and exists, return its value.
+        return (string)field.GetValue(parent)!;
+    }
+
+    // ReSharper disable once MemberCanBePrivate.Global
+    public static string GetPropertyValueByName(object? parent, string? propertyName)
+    {
+        if (parent == null) throw new ArgumentException("Argument 'parent' cannot be null.");
+        if (string.IsNullOrEmpty(propertyName)) throw new ArgumentException("Argument 'propertyName' cannot be null.");
+
+        // Get this class type.
+        var type = parent.GetType();
+
+        var field = type.GetProperty(propertyName);
+        if (field == null) throw new ArgumentException($"Property with the name '{propertyName}' is not found.");
+
+        return (string)field.GetValue(parent)!;
     }
 }

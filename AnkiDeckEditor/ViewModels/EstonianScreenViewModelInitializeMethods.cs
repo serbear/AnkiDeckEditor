@@ -14,6 +14,7 @@ public partial class EstonianScreenViewModel
 {
     private void InitializeSubscriptions()
     {
+        // todo: refact: automatically subscribe
         this.WhenAnyValue(x => x.VocabularyEntryText).Subscribe(OnFieldTextChanged);
         this.WhenAnyValue(x => x.NominativeCaseSingularWordForm).Subscribe(OnFieldTextChanged);
         this.WhenAnyValue(x => x.GenitiveCaseSingularWordForm).Subscribe(OnFieldTextChanged);
@@ -47,6 +48,7 @@ public partial class EstonianScreenViewModel
         ExitCommand = ReactiveCommand.Create(ExitExecute);
         RemoveListCommand = ReactiveCommand.Create(RemoveListCommandExecute);
         ClearCardCollectionCommand = ReactiveCommand.Create(ClearCardCollectionCommandExecute);
+        SaveListCommand = ReactiveCommand.Create(SaveListCommandExecute);
     }
 
     private void InitializeCollections()
@@ -89,5 +91,7 @@ public partial class EstonianScreenViewModel
         IsAddEntityButtonEnabled = false;
         IsRemoveCardButtonEnabled = false;
         IsClearCardCollectionButtonEnabled = false;
+        IsVisibleAddEntityListButton = true;
+        IsSaveEntityListButtonEnabled = false;
     }
 }

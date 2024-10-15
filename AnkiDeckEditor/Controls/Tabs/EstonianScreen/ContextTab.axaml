@@ -7,7 +7,7 @@
     <StackPanel>
         <!-- The PasteTextBox container name must match a key in the EntityContextCollections.  -->
 
-        <controls:PasteTextBox x:Name="WordForWordTextBox"
+        <controls:PasteTextBox x:Name="LiteralTranslationText"
                                Title="Дословный перевод:"
                                Text="{Binding LiteralTranslationText, Mode=TwoWay}" />
 
@@ -34,7 +34,7 @@
             </ItemsRepeater>
         </ScrollViewer>
 
-        <controls:PasteTextBox x:Name="LiteraryTextBox"
+        <controls:PasteTextBox x:Name="LiteraryTranslationText"
                                Title="Литературный перевод:"
                                Text="{Binding LiteraryTranslationText, Mode=TwoWay}" />
 
@@ -61,7 +61,7 @@
             </ItemsRepeater>
         </ScrollViewer>
 
-        <controls:PasteTextBox x:Name="OriginalTextBox"
+        <controls:PasteTextBox x:Name="OriginalText"
                                Title="Оригинал:"
                                Text="{Binding OriginalText, Mode=TwoWay}" />
 

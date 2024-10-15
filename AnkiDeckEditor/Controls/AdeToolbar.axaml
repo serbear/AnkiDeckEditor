@@ -6,13 +6,14 @@
              x:DataType="vm:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.AdeToolbar">
     <StackPanel Orientation="Horizontal">
-        <!-- Deck -->
+        <!-- Deck... -->
         <Button Name="SelectDeckToolButton"
                 Content="Deck"
                 Command="{Binding SelectDeckCommand}"
                 IsVisible="False" />
         <controls:ToolbarSeparator IsVisible="False" />
-        <!-- Deck -->
+        <!-- ...Deck -->
+
         <Button Name="NewDictionaryEntityToolButton"
                 Content="New"
                 Command="{Binding NewEntityCommand}" />
@@ -21,8 +22,14 @@
 
         <Button Name="AddEntityListButton"
                 IsEnabled="{Binding IsAddEntityButtonEnabled}"
+                IsVisible="{Binding IsVisibleAddEntityListButton}"
                 Content="Add"
                 Command="{Binding AddListCommand}" />
+        <Button Name="SaveEntityListButton"
+                IsEnabled="{Binding IsSaveEntityListButtonEnabled}"
+                IsVisible="{Binding !IsVisibleAddEntityListButton}"
+                Content="Save"
+                Command="{Binding SaveListCommand}" />
         <Button Name="RemoveEntityListButton"
                 IsEnabled="{Binding IsRemoveCardButtonEnabled}"
                 Content="Remove"
