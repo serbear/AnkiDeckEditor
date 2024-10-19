@@ -1,9 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 
 namespace AnkiDeckEditor.Controls;
 
+// ReSharper disable once PartialTypeWithSinglePart
 public partial class PasteTextBox : UserControl
 {
     private string _text;

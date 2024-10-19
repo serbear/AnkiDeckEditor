@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:AnkiDeckEditor.Converters"
-             xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              mc:Ignorable="d"
              d:DesignWidth="800"
@@ -40,6 +39,7 @@
                      VerticalContentAlignment="Center"
                      AcceptsTab="False"
                      TabIndex="1"
+                     AcceptsReturn="False"
                      Text="{Binding Text, Mode=TwoWay, ElementName=PasteTextBoxUserControl}">
                 <TextBox.Resources>
                     <converters:WidthToPaddingConverter x:Key="WidthToPaddingConverter" />
