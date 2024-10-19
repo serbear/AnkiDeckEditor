@@ -55,6 +55,7 @@ public partial class EstonianScreenViewModel
     public ReactiveCommand<Unit, Unit> RemoveListCommand { get; set; }
     public ReactiveCommand<Unit, Unit> ClearCardCollectionCommand { get; set; }
     public ReactiveCommand<Unit, Unit> SaveListCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> CancelEditCommand { get; set; }
 
     // Flags
 

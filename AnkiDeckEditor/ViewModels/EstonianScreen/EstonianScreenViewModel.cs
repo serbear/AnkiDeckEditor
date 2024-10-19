@@ -268,12 +268,18 @@ public partial class EstonianScreenViewModel : ViewModelBase
         CardCollectionItems.Remove(_currentEditCard);
 
         AddListExecute();
+        CancelEditCommandExecute();
+    }
 
+    private void CancelEditCommandExecute()
+    {
         // Hide 'Save' button and show 'Add' button.
         IsVisibleAddEntityListButton = true;
 
         _currentEditCard = null;
         _currentOperationalMode = EditModes.Add;
+
+        NewEntityExecute();
     }
 
     private void SelectDeckExecute()

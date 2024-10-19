@@ -67,6 +67,7 @@ public partial class EstonianScreenViewModel
         RemoveListCommand = ReactiveCommand.Create(RemoveListCommandExecute);
         ClearCardCollectionCommand = ReactiveCommand.Create(ClearCardCollectionCommandExecute);
         SaveListCommand = ReactiveCommand.Create(SaveListCommandExecute);
+        CancelEditCommand = ReactiveCommand.Create(CancelEditCommandExecute);
     }
 
     private void InitializeCollections()

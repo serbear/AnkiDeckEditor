@@ -1,6 +1,5 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="using:AnkiDeckEditor.ViewModels"
              xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
              xmlns:enums="clr-namespace:AnkiDeckEditor.Enums"
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
@@ -31,6 +30,15 @@
                 IsVisible="{Binding !IsVisibleAddEntityListButton}"
                 Content="Save"
                 Command="{Binding SaveListCommand}" />
+        <Button Name="CancelEditButton"
+                IsVisible="{Binding !IsVisibleAddEntityListButton}"
+                Content="Cancel"
+                Command="{Binding CancelEditCommand}" />
+
+        <!-- Card collection manipulation buttons -->
+
+        <controls:ToolbarSeparator />
+
         <Button Name="RemoveEntityListButton"
                 IsEnabled="{Binding IsRemoveCardButtonEnabled}"
                 Content="Remove"
