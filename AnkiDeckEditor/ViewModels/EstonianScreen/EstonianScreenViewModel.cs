@@ -30,7 +30,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
     // ReSharper disable once UnusedAutoPropertyAccessor.Local
     private Control FirstFocusControl { get; set; }
 
-    private EditModes _currentEditMode;
+    private EditModes _currentOperationalMode;
     private EstonianCardRecord? _currentEditCard;
 
     public EstonianScreenViewModel()
@@ -41,14 +41,14 @@ public partial class EstonianScreenViewModel : ViewModelBase
         InitializeSubscriptions();
 
         // Set default work mode of deck editor.
-        _currentEditMode = EditModes.Add;
+        _currentOperationalMode = EditModes.Add;
     }
 
 
     private void OnFieldTextChanged(string newText)
     {
-        if (_currentEditMode == EditModes.Add) AddModeTextChanged();
-        if (_currentEditMode == EditModes.Edit) EditModeTextChanged();
+        if (_currentOperationalMode == EditModes.Add) AddModeTextChanged();
+        if (_currentOperationalMode == EditModes.Edit) EditModeTextChanged();
     }
 
 
@@ -225,7 +225,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // todo: unsaved data
         //...
 
-        _currentEditMode = EditModes.Edit;
+        _currentOperationalMode = EditModes.Edit;
 
         NewEntityExecute();
 
@@ -273,7 +273,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         IsVisibleAddEntityListButton = true;
 
         _currentEditCard = null;
-        _currentEditMode = EditModes.Add;
+        _currentOperationalMode = EditModes.Add;
     }
 
     private void SelectDeckExecute()
