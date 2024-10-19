@@ -49,10 +49,7 @@ public partial class EstonianScreenViewModel
         this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.LiteraryTranslationText)
             .Subscribe(OnFieldTextChanged);
         this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.OriginalText).Subscribe(OnFieldTextChanged);
-
-        // Check boxes
-        // this.WhenAnyValue<EstonianScreenViewModel, ObservableCollection<SpeechPartToggleItem>>(x => x.SpeechPartItems).Subscribe(OnFieldCheckboxChanged);
-    }
+   }
 
     private void InitializeCommands()
     {
