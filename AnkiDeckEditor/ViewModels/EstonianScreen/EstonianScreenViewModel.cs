@@ -51,7 +51,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         if (_currentEditMode == EditModes.Edit) EditModeTextChanged();
     }
 
- 
+
     private void AddModeTextChanged()
     {
         // Set enable status for the button "Add to the Card List".
@@ -261,8 +261,13 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void SaveListCommandExecute()
     {
-        // todo: implement
-        // ...
+        if (_currentEditCard == null)
+            throw new InvalidOperationException("There is no a vocabulary card being edited.");
+
+        // Remove an old vocabulary card from the card collection.
+        CardCollectionItems.Remove(_currentEditCard);
+
+        AddListExecute();
 
         // Hide 'Save' button and show 'Add' button.
         IsVisibleAddEntityListButton = true;
