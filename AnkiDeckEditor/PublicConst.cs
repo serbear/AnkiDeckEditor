@@ -1,7 +1,6 @@
 namespace AnkiDeckEditor;
 
-// ReSharper disable once IdentifierTypo
-public struct PublicConsts
+public struct PublicConst
 {
     /// <summary>
     /// The identifier of the top-level dialog screen.
@@ -12,6 +11,8 @@ public struct PublicConsts
     /// The marker identified the absence of a word form.
     /// </summary>
     public const string LongDashHtmlCode = "&mdash;";
+
+    public const string PasteTextBoxMainTextBoxName = "MainTextBox";
 }
 
 /// <summary>

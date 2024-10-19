@@ -21,7 +21,7 @@ public class MainWindowViewModel : ViewModelBase
     private async void ShutdownApplicationExecute()
     {
         // Ask user for exit confirmation.
-        var dialogResult = (bool)(await DialogHost.Show(new ExitDialog(), PublicConsts.MainDialogHost))!;
+        var dialogResult = (bool)(await DialogHost.Show(new ExitDialog(), PublicConst.MainDialogHost))!;
 
         // Other values - Exit is not confirmed.
         bool[] checks =

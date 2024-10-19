@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using AnkiDeckEditor.Models;
-using AnkiDeckEditor.ViewModels;
+using AnkiDeckEditor.Services;
+using AnkiDeckEditor.ViewModels.EstonianScreen;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.VisualTree;
-using EstonianScreenViewModel = AnkiDeckEditor.ViewModels.EstonianScreen.EstonianScreenViewModel;
 
 namespace AnkiDeckEditor.Controls.Tabs.EstonianScreen;
 
@@ -26,20 +26,14 @@ public partial class ContextTab : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private readonly List<string> _onTextChangedListenerNames =
-        ["WordForWordTextBox", "LiteraryTextBox", "OriginalTextBox"];
-
     protected override void OnLoaded(RoutedEventArgs routedEventArgs)
     {
-        // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
-        foreach (var listenerName in _onTextChangedListenerNames)
-        {
-            var innerTextBox = this
-                .FindControl<PasteTextBox>(listenerName)!
-                .FindControl<TextBox>("MainTextBox");
-            innerTextBox?.GetObservable(TextBox.TextProperty)
-                .Subscribe(_ => WordForWordTextBox_OnTextChanged(innerTextBox, null));
-        }
+        var pasteTextBoxes = FieldHelper.GetChildrenList<PasteTextBox>(this);
+
+        foreach (var innerTextBox in pasteTextBoxes
+                     .Select(p => p.FindControl<TextBox>(PublicConst.PasteTextBoxMainTextBoxName)))
+            innerTextBox?.GetObservable(TextBox.TextProperty).Subscribe(
+                _ => WordForWordTextBox_OnTextChanged(innerTextBox, null));
     }
 
     private void WordForWordTextBox_OnTextChanged(object? sender, TextChangedEventArgs? e)

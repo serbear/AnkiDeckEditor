@@ -81,9 +81,9 @@ public partial class EstonianScreenViewModel
 
         EntityContextCollections = new Dictionary<string, ObservableCollection<ContextToggleItem>>
         {
-            { "WordForWordTextBox", WordByWordContextSelectedItems },
-            { "LiteraryTextBox", LiteraryContextSelectedItems },
-            { "OriginalTextBox", OriginalContextSelectedItems }
+            { "LiteralTranslationText", WordByWordContextSelectedItems },
+            { "LiteraryTranslationText", LiteraryContextSelectedItems },
+            { "OriginalText", OriginalContextSelectedItems }
         };
 
         foreach (StrategyNames name in Enum.GetValues(typeof(StrategyNames)))

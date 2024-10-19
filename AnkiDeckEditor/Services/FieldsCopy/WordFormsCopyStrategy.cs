@@ -19,7 +19,7 @@ public class WordFormsCopyStrategy : ICopyStrategy
         {
             fieldIndex++;
             var replacement = string.IsNullOrWhiteSpace(wordForm)
-                ? PublicConsts.LongDashHtmlCode
+                ? PublicConst.LongDashHtmlCode
                 : wordForm.Trim();
             wordForms = wordForms.Replace(FieldTags.GetPlaceMarker(fieldIndex), replacement);
         }
