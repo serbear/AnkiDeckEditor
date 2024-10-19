@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using AnkiDeckEditor.Controls;
 using AnkiDeckEditor.Models;
 using Avalonia.Controls;
 using Avalonia.LogicalTree;
@@ -36,6 +37,8 @@ public static class FieldHelper
     public static bool IsFieldsChanged<T>(Control parentControl, EstonianCardRecord vocabularyCard) where T : Control
     {
         var childrenControls = FindChildren<T>(parentControl);
+        // Remove duplicates.
+        childrenControls = new HashSet<T>(childrenControls);
 
         // ReSharper disable once LoopCanBeConvertedToQuery
         foreach (var control in childrenControls)
@@ -43,6 +46,32 @@ public static class FieldHelper
             var savedEntityValue = GetPropertyValueByName(vocabularyCard, control.Name);
             var currentValue = GetPropertyValueByName(parentControl.DataContext, control.Name);
             if (savedEntityValue == currentValue) continue;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public static bool IsCheckboxFieldsChanged<T>(Control parentControl, EstonianCardRecord vocabularyCard)
+        where T : Control
+    {
+        if (typeof(T) != typeof(CheckBox))
+            throw new InvalidOperationException("The generic method must be called with the 'CheckBox' type.");
+
+        var childrenControls = FindChildren<T>(parentControl);
+        // Remove duplicates.
+        childrenControls = new HashSet<T>(childrenControls);
+
+        // ReSharper disable once LoopCanBeConvertedToQuery
+        foreach (var control in childrenControls)
+        {
+            var savedEntityValue = GetPropertyValueByName(vocabularyCard, control.Name);
+            var currentValue = GetPropertyValueByName(parentControl.DataContext, control.Name);
+
+            if (savedEntityValue == currentValue) continue;
+
+
             return true;
         }
 

@@ -9,6 +9,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.VisualTree;
+using EstonianScreenViewModel = AnkiDeckEditor.ViewModels.EstonianScreen.EstonianScreenViewModel;
 
 namespace AnkiDeckEditor.Controls.Tabs.EstonianScreen;
 

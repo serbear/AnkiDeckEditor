@@ -7,7 +7,7 @@ using Avalonia.Controls;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-namespace AnkiDeckEditor.ViewModels;
+namespace AnkiDeckEditor.ViewModels.EstonianScreen;
 
 public partial class EstonianScreenViewModel
 {

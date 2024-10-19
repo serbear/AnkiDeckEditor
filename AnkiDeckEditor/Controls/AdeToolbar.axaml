@@ -3,7 +3,8 @@
              xmlns:vm="using:AnkiDeckEditor.ViewModels"
              xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
              xmlns:enums="clr-namespace:AnkiDeckEditor.Enums"
-             x:DataType="vm:EstonianScreenViewModel"
+             xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
+             x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.AdeToolbar">
     <StackPanel Orientation="Horizontal">
         <!-- Deck... -->

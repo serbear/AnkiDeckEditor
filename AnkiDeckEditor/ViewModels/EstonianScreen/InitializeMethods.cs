@@ -8,32 +8,50 @@ using AnkiDeckEditor.Services.FieldsCopy;
 using Avalonia.Controls;
 using ReactiveUI;
 
-namespace AnkiDeckEditor.ViewModels;
+namespace AnkiDeckEditor.ViewModels.EstonianScreen;
 
 public partial class EstonianScreenViewModel
 {
     private void InitializeSubscriptions()
     {
         // todo: refact: automatically subscribe
-        this.WhenAnyValue(x => x.VocabularyEntryText).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.NominativeCaseSingularWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.GenitiveCaseSingularWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.PartitiveCaseSingularWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.NominativeCasePluralWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.GenitiveCasePluralWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.PartitiveCasePluralWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.ShortIllativeCaseWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.MaInfinitiveWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.DaInfinitiveWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.IndicativeMoodWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.PassiveParticiplePastTenseWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.ThirdPersonPastTenseWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.ActiveParticipleWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.ImperativeMoodSingularWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.PassiveVoicePresentTenseWordForm).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.LiteralTranslationText).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.LiteraryTranslationText).Subscribe(OnFieldTextChanged);
-        this.WhenAnyValue(x => x.OriginalText).Subscribe(OnFieldTextChanged);
+
+        // Text boxes
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.VocabularyEntryText).Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.NominativeCaseSingularWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.GenitiveCaseSingularWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.PartitiveCaseSingularWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.NominativeCasePluralWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.GenitiveCasePluralWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.PartitiveCasePluralWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.ShortIllativeCaseWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.MaInfinitiveWordForm).Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.DaInfinitiveWordForm).Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.IndicativeMoodWordForm).Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.PassiveParticiplePastTenseWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.ThirdPersonPastTenseWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.ActiveParticipleWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.ImperativeMoodSingularWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.PassiveVoicePresentTenseWordForm)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.LiteralTranslationText).Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.LiteraryTranslationText)
+            .Subscribe(OnFieldTextChanged);
+        this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.OriginalText).Subscribe(OnFieldTextChanged);
+
+        // Check boxes
+        // this.WhenAnyValue<EstonianScreenViewModel, ObservableCollection<SpeechPartToggleItem>>(x => x.SpeechPartItems).Subscribe(OnFieldCheckboxChanged);
     }
 
     private void InitializeCommands()

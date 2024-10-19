@@ -1,10 +1,10 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
              xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
              xmlns:converters="clr-namespace:AnkiDeckEditor.Converters"
+             xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.VerbWordFormsTab"
-             x:DataType="viewModels:EstonianScreenViewModel"
+             x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Name="VerbWordFormsTabUserControl">
 
     <Grid ColumnDefinitions="*,*"
@@ -94,7 +94,8 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <CheckBox IsChecked="{Binding IsChecked}"
-                                              Content="{Binding Title}" />
+                                              Content="{Binding Title}"
+                                              IsCheckedChanged="ToggleButton_OnIsCheckedChanged" />
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsRepeater.ItemTemplate>

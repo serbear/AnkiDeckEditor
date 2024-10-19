@@ -1,13 +1,15 @@
 using System.Collections.ObjectModel;
+using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
-using AnkiDeckEditor.ViewModels;
+using AnkiDeckEditor.ViewModels.EstonianScreen;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
 namespace AnkiDeckEditor.Controls.Tabs.EstonianScreen;
 
+// ReSharper disable once PartialTypeWithSinglePart
 public partial class VocabularyEntryTab : UserControl
 {
     public VocabularyEntryTab()
@@ -33,7 +35,7 @@ public partial class VocabularyEntryTab : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void SpeechPartCheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
+    private void SpeechPartCheckBox_OnIsCheckedChanged(object sender, RoutedEventArgs e)
     {
         var dataContext = (EstonianScreenViewModel)DataContext!;
         var speechPartItems = dataContext.SpeechPartItems;
@@ -48,15 +50,17 @@ public partial class VocabularyEntryTab : UserControl
         foreach (var check in toggleItems) check.IsChecked = false;
     }
 
-    private static void SwitchTabItems(ref EstonianScreenViewModel dataContext, ref object? sender)
+    private static void SwitchTabItems(ref EstonianScreenViewModel dataContext, ref object sender)
     {
         // Switch tabs between "word forms" and "verb forms" according to a selected speech part.
         var checkbox = (CheckBox)sender!;
         var isCheckBoxChecked = checkbox.IsChecked.Equals(true);
         var isVerbSelected = checkbox.Tag != null;
 
-        isVerbSelected = isVerbSelected & isCheckBoxChecked;
+        isVerbSelected &= isCheckBoxChecked;
         dataContext.IsWordFormsTabItemVisible = !isVerbSelected;
         dataContext.IsVerbFormsTabItemVisible = isVerbSelected;
+
+        dataContext.OnCheckboxChanged(sender as CheckBox, StrategyNames.SpeechPart);
     }
 }

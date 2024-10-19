@@ -6,12 +6,13 @@
              xmlns:fluentContentDialog="clr-namespace:AnkiDeckEditor"
              xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.Controls.Tabs.EstonianScreen"
+             xmlns:estonianScreen1="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              mc:Ignorable="d"
              d:DesignWidth="1024"
              d:DesignHeight="768"
              d:DataContext="{x:Static fluentContentDialog:App.EstonianScreen}"
              x:Class="AnkiDeckEditor.Views.Screens.EstonianScreen"
-             x:DataType="vm:EstonianScreenViewModel"
+             x:DataType="estonianScreen1:EstonianScreenViewModel"
              x:CompileBindings="True">
     <DockPanel x:Name="MyDockPanel">
         <!-- Toolbar -->

@@ -13,7 +13,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 
-namespace AnkiDeckEditor.ViewModels;
+namespace AnkiDeckEditor.ViewModels.EstonianScreen;
 
 public partial class EstonianScreenViewModel : ViewModelBase
 {
@@ -51,6 +51,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         if (_currentEditMode == EditModes.Edit) EditModeTextChanged();
     }
 
+ 
     private void AddModeTextChanged()
     {
         // Set enable status for the button "Add to the Card List".
@@ -66,9 +67,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // Checks each PasteTextBox element to see if the text of its main text box matches the stored value
         // of the corresponding vocabulary card field.
         IsSaveEntityListButtonEnabled = FieldHelper.IsFieldsChanged<PasteTextBox>(RootControl, _currentEditCard);
-
-        // todo: implement for checkboxes
-        // ...
     }
 
 
@@ -167,7 +165,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
         PropertySetter.Set(ref estonianScreenViewModel, ref newCard);
 
         // Set the speech part and the speech part government checkbox.
-        newCard.SpeechPart = SpeechPartItems.FirstOrDefault(sp => sp.IsChecked.Equals(true))?.Title!;
+        newCard.SpeechPart = SpeechPartItems
+            .FirstOrDefault(sp => sp.IsChecked.Equals(true))?.Title!;
         newCard.SpeechPartGovernment = VerbControlItems
             .Where(e => e.IsChecked.Equals(true))
             .Select(e => e.Title).ToList();
@@ -181,7 +180,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
         // Sort the card list alphabetically.
         CardCollectionItems = new ObservableCollection<EstonianCardRecord>(
-            CardCollectionItems.OrderBy(e => e.VocabularyEntryText));
+            CardCollectionItems.OrderBy<EstonianCardRecord, string>(e => e.VocabularyEntryText));
 
         UpdateIsRemoveCardButtonEnabledFlag();
         NewEntityExecute();

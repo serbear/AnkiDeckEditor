@@ -4,10 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:AnkiDeckEditor.Converters"
              xmlns:viewModels="clr-namespace:AnkiDeckEditor.ViewModels"
+             xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              mc:Ignorable="d"
              d:DesignWidth="800"
              d:DesignHeight="450"
-             x:DataType="viewModels:EstonianScreenViewModel"
+             x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.PasteTextBox"
              x:Name="PasteTextBoxUserControl"
              x:CompileBindings="True">
@@ -21,31 +22,14 @@
                    Text="{Binding Title, Mode=OneWay, ElementName=PasteTextBoxUserControl}"
                    TabIndex="0"
                    x:Name="PasteTextBoxTitleLabel">
-
             <TextBlock.Resources>
                 <converters:TextToVisibleConverter x:Key="TextToVisibleConverter" />
             </TextBlock.Resources>
-
             <TextBlock.IsVisible>
                 <Binding ElementName="PasteTextBoxTitleLabel"
                          Path="Text"
                          Converter="{StaticResource TextToVisibleConverter}" />
             </TextBlock.IsVisible>
-
-            <!-- <TextBlock.Styles> -->
-            <!-- <Style Selector="TextBlock#PasteTextBoxTitleLabel"> -->
-            <!-- <Styles TargetType="TextBlock"> -->
-            <!-- </Style.Resources> -->
-            <!-- <Setter Property="IsVisible" Value="{StaticResource TextToVisibleConverter}"> -->
-            <!-- <Binding ElementName="PasteTextBoxUserControl" Path="Bounds.Width" /> -->
-            <!-- </Setter> -->
-            <!-- <Style.Triggers> -->
-            <!-- <DataTrigger Binding="{Binding SomeTextProperty}" Value=""> -->
-            <!-- <Setter Property="Visibility" Value="Visible" /> -->
-            <!-- </DataTrigger> -->
-            <!-- </Style.Triggers> -->
-            <!-- </Style> -->
-            <!-- </TextBlock.Styles> -->
         </TextBlock>
 
         <!-- TextBox with Paste button -->

@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 using AnkiDeckEditor.ViewModels;
 using AnkiDeckEditor.Views;
 using Splat;
+using EstonianScreenViewModel = AnkiDeckEditor.ViewModels.EstonianScreen.EstonianScreenViewModel;
 
 namespace AnkiDeckEditor;
 

@@ -3,6 +3,7 @@ using AnkiDeckEditor.ViewModels;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using EstonianScreenViewModel = AnkiDeckEditor.ViewModels.EstonianScreen.EstonianScreenViewModel;
 
 namespace AnkiDeckEditor.Controls.Tabs.EstonianScreen;
 
