@@ -118,29 +118,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         ]);
     }
 
-    // todo: refact: make universal method.
-    // private string GetFieldValue(string fieldName)
-    // {
-    //     // Get this class type.
-    //     var type = GetType();
-    //
-    //     FieldInfo field;
-    //
-    //     try
-    //     {
-    //         // ReSharper disable once GrammarMistakeInComment
-    //         // Expression 'f.Name[1..]' means: skip the "$" symbol in the name of the class field.
-    //         field = type.GetRuntimeFields().First(f => f.Name[1..].Equals(fieldName));
-    //     }
-    //     catch (Exception e) when (e is ArgumentNullException or InvalidOperationException)
-    //     {
-    //         throw new ArgumentException($"Field with the name '{fieldName}' is not found.");
-    //     }
-    //
-    //     // If the field is public and exists, return its value.
-    //     return (string)field.GetValue(this)!;
-    // }
-
     private void ExitExecute()
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
