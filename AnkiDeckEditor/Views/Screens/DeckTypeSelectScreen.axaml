@@ -18,11 +18,11 @@
         <TextBlock Text="Выберите тип колоды:"
                    Grid.Column="0"
                    Grid.Row="1" />
-        <Button HorizontalAlignment="Center"
-                Content="Английский язык"
-                Grid.Column="0"
-                Grid.Row="2"
-                Click="ShowEnglishScreenButton_OnClick" />
+        <!-- <Button HorizontalAlignment="Center" -->
+        <!--         Content="Английский язык" -->
+        <!--         Grid.Column="0" -->
+        <!--         Grid.Row="2" -->
+        <!--         Click="ShowEnglishScreenButton_OnClick" /> -->
         <Button HorizontalAlignment="Center"
                 Content="Эстонский язык"
                 Grid.Column="0"
