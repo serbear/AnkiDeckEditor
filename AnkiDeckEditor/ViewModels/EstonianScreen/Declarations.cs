@@ -57,8 +57,7 @@ public partial class EstonianScreenViewModel
     public ReactiveCommand<Unit, Unit> SaveListCommand { get; set; }
     public ReactiveCommand<Unit, Unit> CancelEditCommand { get; set; }
 
-    // Flags
-
+    #region Flags
     [Reactive] public bool IsVerbFormsTabItemVisible { get; set; }
     [Reactive] public bool IsWordFormsTabItemVisible { get; set; }
     [Reactive] public bool IsAddEntityButtonEnabled { get; set; }
@@ -66,6 +65,7 @@ public partial class EstonianScreenViewModel
     [Reactive] public bool IsClearCardCollectionButtonEnabled { get; set; }
     [Reactive] public bool IsVisibleAddEntityListButton { get; set; }
     [Reactive] public bool IsSaveEntityListButtonEnabled { get; set; }
+    #endregion
 
 
     // Collections

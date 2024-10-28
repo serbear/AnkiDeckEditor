@@ -85,6 +85,9 @@ public partial class EstonianScreenViewModel : ViewModelBase
         }
 
         UpdateIsRemoveCardButtonEnabledFlag();
+        IsVisibleAddEntityListButton = true;
+        IsSaveEntityListButtonEnabled = false;
+        _currentOperationalMode = EditModes.Add;
     }
 
 
