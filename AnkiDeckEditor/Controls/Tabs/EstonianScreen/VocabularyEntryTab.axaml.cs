@@ -50,16 +50,21 @@ public partial class VocabularyEntryTab : UserControl
         foreach (var check in toggleItems) check.IsChecked = false;
     }
 
+    /// <summary>
+    /// Switches the word form editing tabs depending on the selected part of speech type.
+    /// </summary>
+    /// <param name="dataContext"></param>
+    /// <param name="sender"></param>
     private static void SwitchTabItems(ref EstonianScreenViewModel dataContext, ref object sender)
     {
         // Switch tabs between "word forms" and "verb forms" according to a selected speech part.
-        var checkbox = (CheckBox)sender!;
-        var isCheckBoxChecked = checkbox.IsChecked.Equals(true);
+        var checkbox = (CheckBox)sender;
+        
         var isVerbSelected = checkbox.Tag != null;
-
-        isVerbSelected &= isCheckBoxChecked;
-        dataContext.IsWordFormsTabItemVisible = !isVerbSelected;
-        dataContext.IsVerbFormsTabItemVisible = isVerbSelected;
+        isVerbSelected &= (bool)checkbox.IsChecked!;
+        
+        dataContext.IsWordFormsTabItemVisible = !isVerbSelected & (bool)checkbox.IsChecked;
+        dataContext.IsVerbFormsTabItemVisible = isVerbSelected & (bool)checkbox.IsChecked;
 
         dataContext.OnCheckboxChanged(sender as CheckBox, StrategyNames.SpeechPart);
     }
