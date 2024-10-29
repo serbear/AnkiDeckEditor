@@ -2,10 +2,10 @@ using System.Collections.Generic;
 
 namespace AnkiDeckEditor.Models;
 
-public abstract class VocabularyCardRecord : IVocabularyCardRecord
+public interface IVocabularyCardRecord
 {
-    // Check box for the data grid control on the Card List tab.
     public bool IsChecked { get; set; }
+
     public string SpeechPart { get; set; }
     public string VocabularyEntryText { get; set; }
 

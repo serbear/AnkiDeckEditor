@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace AnkiDeckEditor.Services.FieldsCopy;
 
-public class WordFormsCopyStrategy : ICopyStrategy
+public class WordFormsCopyStrategy : BaseCopyStrategy
 {
     private readonly Dictionary<object, string> _tagTemplates = new()
     {
@@ -10,7 +11,27 @@ public class WordFormsCopyStrategy : ICopyStrategy
         { typeof(VerbWordFormCollection), FieldTags.VerbItemsTemplate }
     };
 
-    public string DoCopyWordForms(WordFormsCollectionBase data)
+    // public string DoCopyCollection<T>(ObservableCollection<T> data)
+    // {
+    // throw new System.NotImplementedException();
+    // }
+
+    // public string DoCopyString(string data)
+    // {
+    // throw new System.NotImplementedException();
+    // }
+
+    // public string DoCopyList(List<string> data)
+    // {
+    // throw new System.NotImplementedException();
+    // }
+
+    // public string DoCopyValueTuple((string, List<int>) data)
+    // {
+    // throw new System.NotImplementedException();
+    // }
+
+    public override string DoCopyWordForms(WordFormsCollectionBase data)
     {
         var wordForms = _tagTemplates[data.GetType()];
         var fieldIndex = 0;

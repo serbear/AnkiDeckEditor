@@ -163,13 +163,15 @@ public static class FieldHelper
         // Get this class type.
         var type = parent.GetType();
 
-        FieldInfo field;
+        // FieldInfo field;
+        PropertyInfo field;
 
         try
         {
             // ReSharper disable once GrammarMistakeInComment
             // Expression 'f.Name[1..]' means: skip the "$" symbol in the name of the class field.
-            field = type.GetRuntimeFields().First(f => f.Name[1..].Equals(fieldName));
+            // field = type.GetRuntimeFields().First(f => f.Name[1..].Equals(fieldName));
+            field = type.GetRuntimeProperties().First(f => f.Name.Equals(fieldName));
         }
         catch (Exception e) when (e is ArgumentNullException or InvalidOperationException)
         {

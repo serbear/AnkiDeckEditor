@@ -7,12 +7,9 @@ namespace AnkiDeckEditor.Models;
 
 public class EstonianCardRecord : VocabularyCardRecord
 {
-    // todo: ??? используется ли где?
-    public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
+    // public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
 
     public List<string?> SpeechPartGovernment { get; set; }
-
-
     public string NominativeCaseSingularWordForm { get; set; }
     public string GenitiveCaseSingularWordForm { get; set; }
     public string PartitiveCaseSingularWordForm { get; set; }

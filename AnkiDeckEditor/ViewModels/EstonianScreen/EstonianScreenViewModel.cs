@@ -129,7 +129,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void ExportFileExecute()
     {
-        throw new NotImplementedException();
+        DeckExporter.ExportCollection(CardCollectionItems, CopyStrategyDict);
     }
 
     private void ClearFormExecute()
@@ -286,7 +286,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
                 ? func()
                 : fieldValue!;
 
-        copyContext.DoCopyLogic(result);
+        copyContext.DoCopyLogic(result, out _);
     }
 
     private static async void PasteCommandExecute(Control control)

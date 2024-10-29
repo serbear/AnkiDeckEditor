@@ -33,13 +33,14 @@ public class Context
 
     // Вместо того чтобы самостоятельно реализовывать множественные версии
     // алгоритма, Контекст делегирует некоторую работу объекту Стратегии.
-    public void DoCopyLogic<T>(T data)
+    public void DoCopyLogic<T>(T data, out string textToCopy)
     {
-        var textToCopy = data switch
+        textToCopy = data switch
         {
             string => data.ToString()!,
             _ when IsObservableCollection(data!) => DoCopyCollectionGeneric((dynamic)data!),
             List<string> => _strategy.DoCopyList((dynamic)data),
+            ValueTuple<string, List<int>> => _strategy.DoCopyValueTuple((dynamic)data),
             WordFormsCollectionBase => _strategy.DoCopyWordForms((dynamic)data),
             _ => throw new NotSupportedException($"There is no copy logic for type {data?.GetType().Name}")
         };
@@ -48,8 +49,8 @@ public class Context
 
     private static bool IsObservableCollection(object obj)
     {
-        return obj.GetType().IsGenericType &
-               (obj.GetType().GetGenericTypeDefinition() == typeof(ObservableCollection<>));
+        return obj.GetType().IsGenericType &&
+               obj.GetType().GetGenericTypeDefinition() == typeof(ObservableCollection<>);
     }
 
     private string DoCopyCollectionGeneric<T>(ObservableCollection<T> items)

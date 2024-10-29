@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
@@ -12,28 +13,9 @@ namespace AnkiDeckEditor.Services.FieldsCopy;
 /// </para>
 public interface ICopyStrategy
 {
-    string DoCopyCollection<T>(ObservableCollection<T> data)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    string DoCopyString(string data)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    string DoCopyList(List<string> data)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    string DoCopyWordForms(WordFormsCollectionBase data)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    // string DoCopyList(List<object> data)
-    // {
-    //     throw new System.NotImplementedException();
-    // }
+    string DoCopyCollection<T>(ObservableCollection<T> data);
+    string DoCopyString(string data);
+    string DoCopyList(List<string> data);
+    string DoCopyValueTuple(ValueTuple<string, List<int>> data);
+    string DoCopyWordForms(WordFormsCollectionBase data);
 }
