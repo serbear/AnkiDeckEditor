@@ -21,25 +21,18 @@ public class SpeechPartGovernmentCopyStrategy : BaseCopyStrategy
         return result;
     }
 
-    // public string DoCopyString(string data)
-    // {
-    //     throw new System.NotImplementedException();
-    // }
-    //
     public override string DoCopyList(List<string> data)
     {
-        if (data.Count.Equals(0)) return ":: NO SPEECH PART GOVERNMENT ::";
+        if (data.Count.Equals(0)) return "";
 
-        return ":: GOVERNMENT ::";
+        var result = data
+            .Select(verbControl =>
+                FieldTags.VerbControlItemTemplate.Replace(
+                    FieldTags.GetPlaceMarker(1),
+                    verbControl))
+            .Aggregate("", (current, item) => current + item);
+
+        result = FieldTags.VerbControlTemplate.Replace(FieldTags.GetPlaceMarker(1), result);
+        return result;
     }
-    //
-    // public string DoCopyValueTuple((string, List<int>) data)
-    // {
-    //     throw new System.NotImplementedException();
-    // }
-    //
-    // public string DoCopyWordForms(WordFormsCollectionBase data)
-    // {
-    //     throw new System.NotImplementedException();
-    // }
 }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Text;
 using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Models;
@@ -48,17 +50,20 @@ public static class DeckExporter
                 { StrategyNames.SpeechPart, card.SpeechPart! },
                 { StrategyNames.SpeechPartGovernment, card.SpeechPartGovernment },
                 { StrategyNames.NonVerbWordForms, GetNonVerbWordForms(card) },
-                { StrategyNames.VerbWordForms, GetVerbWordForms(card) }
+                { StrategyNames.VerbWordForms, GetVerbWordForms(card) },
+                { StrategyNames.VocabularyEntry, card.VocabularyEntryText }
             };
 
             // todo: Если не глагол, пропускать глагольные формы слова.
-            copyStrategyDict.Remove(
+            copyStrategyDataDict.Remove(
                 card.SpeechPart!.IsVerb
-                    ? StrategyNames.NonVerbWordForms
-                    : StrategyNames.VerbWordForms);
+                    ? StrategyNames.VerbWordForms
+                    : StrategyNames.NonVerbWordForms);
 
             foreach (var copyStrategy in Enum.GetValues(typeof(StrategyNames)))
             {
+                if(!copyStrategyDataDict.ContainsKey((StrategyNames)copyStrategy)) continue;
+
                 var copyStrategyValue = (StrategyNames)copyStrategy;
                 object strategy;
                 try
@@ -93,11 +98,22 @@ public static class DeckExporter
             }
         }
 
+        // Remove the last separator.
         sb.Remove(sb.Length - 1, 1);
-        
-        
-        
-        Console.WriteLine(sb.ToString());
+
+        // todo: save to file. 
+
+        const string FILE_PATH = "example.csv";
+
+        try
+        {
+            // todo: возможность записи. доступность директории.
+            File.WriteAllText(FILE_PATH, sb.ToString());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
     }
 
 

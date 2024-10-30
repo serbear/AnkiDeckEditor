@@ -11,25 +11,6 @@ public class WordFormsCopyStrategy : BaseCopyStrategy
         { typeof(VerbWordFormCollection), FieldTags.VerbItemsTemplate }
     };
 
-    // public string DoCopyCollection<T>(ObservableCollection<T> data)
-    // {
-    // throw new System.NotImplementedException();
-    // }
-
-    // public string DoCopyString(string data)
-    // {
-    // throw new System.NotImplementedException();
-    // }
-
-    // public string DoCopyList(List<string> data)
-    // {
-    // throw new System.NotImplementedException();
-    // }
-
-    // public string DoCopyValueTuple((string, List<int>) data)
-    // {
-    // throw new System.NotImplementedException();
-    // }
 
     public override string DoCopyWordForms(WordFormsCollectionBase data)
     {
