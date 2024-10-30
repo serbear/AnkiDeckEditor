@@ -31,6 +31,11 @@ public static class DeckExporter
         Dictionary<StrategyNames, string?> copyStrategyDict)
     {
         var sb = new StringBuilder();
+        const string SEPARATOR = "|";
+
+
+        // Add field separator.
+        sb.Append($"{SEPARATOR}\n");
 
         foreach (var card in cardCollectionItems)
         {
@@ -40,31 +45,39 @@ public static class DeckExporter
                 { StrategyNames.LiteralTranslation, LiteralTranslationContext },
                 { StrategyNames.LiteraryTranslation, LiteraryTranslationContext },
                 { StrategyNames.OriginalText, OriginalTextContext },
-                { StrategyNames.SpeechPart, card.SpeechPart },
+                { StrategyNames.SpeechPart, card.SpeechPart! },
                 { StrategyNames.SpeechPartGovernment, card.SpeechPartGovernment },
                 { StrategyNames.NonVerbWordForms, GetNonVerbWordForms(card) },
                 { StrategyNames.VerbWordForms, GetVerbWordForms(card) }
             };
 
-            
             // todo: Если не глагол, пропускать глагольные формы слова.
-            
+            copyStrategyDict.Remove(
+                card.SpeechPart!.IsVerb
+                    ? StrategyNames.NonVerbWordForms
+                    : StrategyNames.VerbWordForms);
+
             foreach (var copyStrategy in Enum.GetValues(typeof(StrategyNames)))
             {
                 var copyStrategyValue = (StrategyNames)copyStrategy;
-                var strategy = Activator.CreateInstance(Type.GetType(copyStrategyDict[copyStrategyValue]!)!);
+                object strategy;
+                try
+                {
+                    strategy = Activator.CreateInstance(Type.GetType(copyStrategyDict[copyStrategyValue]!)!)!;
+                }
+                catch (KeyNotFoundException)
+                {
+                    continue;
+                }
+
                 var copyContext = new Context();
                 copyContext.SetStrategy((strategy as ICopyStrategy)!);
 
-
                 var isDataCollectionExist = copyStrategyDataDict.TryGetValue(copyStrategyValue, out var fieldValue);
 
-
-                // Если поле пустое, вставить пустое значение.
-
+                // todo: Если поле пустое, вставить пустое значение.
 
                 object result;
-
 
                 if (!isDataCollectionExist)
                     result = FieldHelper.GetFieldValue(card, copyStrategyValue.ClassFieldName());
@@ -75,9 +88,16 @@ public static class DeckExporter
 
                 copyContext.DoCopyLogic(result, out var fieldText);
 
-                Console.WriteLine($"{copyStrategy} === {fieldText}");
+                sb.Append(fieldText);
+                sb.Append(SEPARATOR);
             }
         }
+
+        sb.Remove(sb.Length - 1, 1);
+        
+        
+        
+        Console.WriteLine(sb.ToString());
     }
 
 

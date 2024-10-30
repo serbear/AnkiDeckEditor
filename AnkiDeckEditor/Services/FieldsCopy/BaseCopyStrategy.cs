@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using AnkiDeckEditor.Models;
 
 namespace AnkiDeckEditor.Services.FieldsCopy;
 
@@ -30,6 +31,11 @@ public abstract class BaseCopyStrategy : ICopyStrategy
     }
 
     public virtual string DoCopyWordForms(WordFormsCollectionBase data)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public virtual string DoCopySpeechPart(SpeechPartToggleItem speechPartToggleItem)
     {
         throw new System.NotImplementedException();
     }

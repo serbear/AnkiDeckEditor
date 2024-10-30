@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace AnkiDeckEditor.Models;
 
@@ -7,8 +6,6 @@ namespace AnkiDeckEditor.Models;
 
 public class EstonianCardRecord : VocabularyCardRecord
 {
-    // public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
-
     public List<string?> SpeechPartGovernment { get; set; }
     public string NominativeCaseSingularWordForm { get; set; }
     public string GenitiveCaseSingularWordForm { get; set; }

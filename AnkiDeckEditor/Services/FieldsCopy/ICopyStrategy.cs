@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using AnkiDeckEditor.Models;
 
 namespace AnkiDeckEditor.Services.FieldsCopy;
 
@@ -18,4 +19,5 @@ public interface ICopyStrategy
     string DoCopyList(List<string> data);
     string DoCopyValueTuple(ValueTuple<string, List<int>> data);
     string DoCopyWordForms(WordFormsCollectionBase data);
+    string DoCopySpeechPart(SpeechPartToggleItem speechPartToggleItem);
 }

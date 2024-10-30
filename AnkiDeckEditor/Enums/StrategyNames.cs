@@ -3,16 +3,17 @@ using AnkiDeckEditor.Services.FieldsCopy;
 
 namespace AnkiDeckEditor.Enums;
 
+// Имена стратегий следуют порядку полей в словарной карточке.
 public enum StrategyNames
 {
     LiteralTranslation,
     LiteraryTranslation,
     OriginalText,
     SpeechPart,
-    VocabularyEntry,
-    SpeechPartGovernment,
     NonVerbWordForms,
-    VerbWordForms
+    VerbWordForms,
+    SpeechPartGovernment,
+    VocabularyEntry
 }
 
 public static class StrategyNamesExtensions

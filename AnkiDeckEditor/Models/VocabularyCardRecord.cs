@@ -6,7 +6,7 @@ public abstract class VocabularyCardRecord : IVocabularyCardRecord
 {
     // Check box for the data grid control on the Card List tab.
     public bool IsChecked { get; set; }
-    public string SpeechPart { get; set; }
+    public SpeechPartToggleItem? SpeechPart { get; set; }
     public string VocabularyEntryText { get; set; }
 
     public string LiteralTranslationText { get; set; }

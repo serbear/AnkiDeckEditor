@@ -145,8 +145,9 @@ public partial class EstonianScreenViewModel : ViewModelBase
         PropertySetter.Set(ref estonianScreenViewModel, ref newCard);
 
         // Set the speech part and the speech part government checkbox.
-        newCard.SpeechPart = SpeechPartItems
-            .FirstOrDefault(sp => sp.IsChecked.Equals(true))?.Title!;
+        newCard.SpeechPart = SpeechPartItems.FirstOrDefault(sp => sp.IsChecked.Equals(true));
+        // newCard.SpeechPart = SpeechPartItems.FirstOrDefault(sp => sp.IsChecked.Equals(true))?.Title!;
+
         newCard.SpeechPartGovernment = VerbControlItems
             .Where(e => e.IsChecked.Equals(true))
             .Select(e => e.Title).ToList();
@@ -216,7 +217,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // Restore checkboxes.
         var parentTabItem = RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)?
             .Items[(int)EstonianDeckTabs.VocabularyEntryTab] as Control;
-        FieldHelper.RestoreCheckBoxes(parentTabItem, [cardListEntry?.SpeechPart!]);
+        FieldHelper.RestoreCheckBoxes(parentTabItem, cardListEntry?.SpeechPart);
 
         parentTabItem = RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)?
             .Items[(int)EstonianDeckTabs.VerbWordFormsTab] as Control;

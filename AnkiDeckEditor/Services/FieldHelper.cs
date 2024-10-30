@@ -123,23 +123,39 @@ public static class FieldHelper
     public static void RestoreCheckBoxes(Control? parentControl, List<string>? valueCollection)
     {
         // Skip if the value collection is empty.
-        if ((valueCollection == null) | (valueCollection!.Count == 0))
-            return;
+        if ((valueCollection == null) | (valueCollection!.Count == 0)) return;
 
         var checkBoxes = GetChildrenList<CheckBox>(parentControl);
 
-        if (checkBoxes == null) throw new InvalidOperationException("There are no {speech part} check boxes.");
+        if (checkBoxes == null)
+            throw new InvalidOperationException(
+                "There are no {speech part government} check boxes.");
 
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (var checkBoxText in valueCollection)
         {
             var checkBox = checkBoxes.FirstOrDefault(b => b.Content!.Equals(checkBoxText));
 
-            if (checkBox != null)
-                checkBox.IsChecked = true;
+            if (checkBox != null) checkBox.IsChecked = true;
             else
-                throw new InvalidOperationException("The speech part check box not found.");
+                throw new InvalidOperationException(
+                    "The speech part government check box not found.");
         }
+    }
+
+    public static void RestoreCheckBoxes(Control? parentControl, SpeechPartToggleItem? speechPartToggleItem)
+    {
+        // Skip if the value collection is empty.
+        if (speechPartToggleItem == null) return;
+
+        var checkBoxes = GetChildrenList<CheckBox>(parentControl);
+
+        if (checkBoxes == null) throw new InvalidOperationException("There are no {speech part} check boxes.");
+
+        var checkBox = checkBoxes.FirstOrDefault(b => b.Content!.Equals(speechPartToggleItem.Title));
+
+        if (checkBox != null) checkBox.IsChecked = true;
+        else throw new InvalidOperationException("The speech part check box not found.");
     }
 
     public static List<int> GetContextSelectedWordIndexes(ObservableCollection<ContextToggleItem> collection)

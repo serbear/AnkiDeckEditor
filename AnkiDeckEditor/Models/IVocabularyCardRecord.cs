@@ -6,7 +6,7 @@ public interface IVocabularyCardRecord
 {
     public bool IsChecked { get; set; }
 
-    public string SpeechPart { get; set; }
+    public SpeechPartToggleItem? SpeechPart { get; set; }
     public string VocabularyEntryText { get; set; }
 
     public string LiteralTranslationText { get; set; }
