@@ -172,8 +172,13 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // todo: Unsaved content.
         // ...
 
-        ClearControlData();
+        _currentOperationalMode = EditModes.Add;
+        CancelEditCommandExecute();
+    }
 
+    private void ClearAndSwitchVocabularyEntry()
+    {
+        ClearControlData();
         // Switch to the Vocabulary Entry tab.
         RootControl.FindControl<TabControl>(ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME)!.SelectedIndex =
             (int)EstonianDeckTabs.VocabularyEntryTab;
@@ -216,7 +221,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
         _currentOperationalMode = EditModes.Edit;
 
-        NewEntityExecute();
+        ClearAndSwitchVocabularyEntry();
 
         // Update reactive properties.
         var estonianScreenViewModel = this;
@@ -268,7 +273,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         _currentEditCard = null;
         _currentOperationalMode = EditModes.Add;
 
-        NewEntityExecute();
+        ClearAndSwitchVocabularyEntry();
     }
 
     private void SelectDeckExecute()
