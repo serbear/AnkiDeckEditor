@@ -39,4 +39,20 @@ public partial class PasteTextBox : UserControl
         get => _title;
         set => SetAndRaise(TitleProperty, ref _title, value);
     }
+
+
+    private void MainTextBox_OnTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        if (sender is not TextBox textBox) return;
+        // Сохраняем текущий текст
+        var currentText = textBox.Text;
+
+        // Удаляем символы новой строки
+        var cleanedText = currentText?.Replace("\n", "").Replace("\r", "");
+
+        // Проверяем, если текст изменился
+        if (cleanedText == currentText) return;
+        textBox.Text = cleanedText;
+        textBox.CaretIndex = cleanedText!.Length; // Устанавливаем курсор в конец текста
+    }
 }

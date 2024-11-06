@@ -62,7 +62,7 @@ public static class DeckExporter
 
             foreach (var copyStrategy in Enum.GetValues(typeof(StrategyNames)))
             {
-                if(!copyStrategyDataDict.ContainsKey((StrategyNames)copyStrategy)) continue;
+                if (!copyStrategyDataDict.ContainsKey((StrategyNames)copyStrategy)) continue;
 
                 var copyStrategyValue = (StrategyNames)copyStrategy;
                 object strategy;
@@ -96,12 +96,16 @@ public static class DeckExporter
                 sb.Append(fieldText);
                 sb.Append(SEPARATOR);
             }
+
+            // Remove the last separator.
+            sb.Remove(sb.Length - 1, 1);
+
+            sb.Append("\n");
         }
 
-        // Remove the last separator.
-        sb.Remove(sb.Length - 1, 1);
 
-        // todo: save to file. 
+        // save to file. 
+        // todo: settings: add or rewrite.
 
         const string FILE_PATH = "example.csv";
 

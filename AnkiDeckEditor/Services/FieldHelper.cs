@@ -125,11 +125,10 @@ public static class FieldHelper
         // Skip if the value collection is empty.
         if ((valueCollection == null) | (valueCollection!.Count == 0)) return;
 
-        var checkBoxes = GetChildrenList<CheckBox>(parentControl);
+        var checkBoxes = GetChildrenList<CheckBox>(parentControl).Where(cb => cb.Content != null).ToList();
 
         if (checkBoxes == null)
-            throw new InvalidOperationException(
-                "There are no {speech part government} check boxes.");
+            throw new InvalidOperationException("There are no {speech part government} check boxes.");
 
         // ReSharper disable once ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
         foreach (var checkBoxText in valueCollection)
@@ -137,9 +136,7 @@ public static class FieldHelper
             var checkBox = checkBoxes.FirstOrDefault(b => b.Content!.Equals(checkBoxText));
 
             if (checkBox != null) checkBox.IsChecked = true;
-            else
-                throw new InvalidOperationException(
-                    "The speech part government check box not found.");
+            else throw new InvalidOperationException("The speech part government check box not found.");
         }
     }
 

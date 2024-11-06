@@ -17,8 +17,8 @@ namespace AnkiDeckEditor.ViewModels.EstonianScreen;
 
 public partial class EstonianScreenViewModel : ViewModelBase
 {
-    private const string CardCollectionDataGridName = "CardCollectionDataGrid";
-    private const string EstonianDeckMainTabControlName = "DeckConfigTabControl";
+    private const string CARD_COLLECTION_DATA_GRID_NAME = "CardCollectionDataGrid";
+    private const string ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME = "DeckConfigTabControl";
 
     // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
     private Control RootControl { get; set; } = new();
@@ -80,7 +80,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         }
         else
         {
-            var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CardCollectionDataGridName) as DataGrid;
+            var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CARD_COLLECTION_DATA_GRID_NAME) as DataGrid;
             CardCollection.RemoveOneItem(dataGrid, ref cardCollectionItems);
         }
 
@@ -172,29 +172,37 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // todo: Unsaved content.
         // ...
 
-        FieldHelper.ClearTextFields<PasteTextBox>(RootControl);
-        FieldHelper.ResetCheckBoxFields(RootControl);
-
-        // Reset context word selections.
-
-        WordByWordContextSelectedItems.Clear();
-
+        ClearControlData();
 
         // Switch to the Vocabulary Entry tab.
-        RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)!.SelectedIndex =
+        RootControl.FindControl<TabControl>(ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME)!.SelectedIndex =
             (int)EstonianDeckTabs.VocabularyEntryTab;
         FirstFocusControl.Focus();
     }
 
+    private void ClearControlData()
+    {
+        FieldHelper.ClearTextFields<PasteTextBox>(RootControl);
+        FieldHelper.ResetCheckBoxFields(RootControl);
+        ClearContextSelectedItems();
+    }
+
+    private void ClearContextSelectedItems()
+    {
+        WordByWordContextSelectedItems.Clear();
+        LiteraryContextSelectedItems.Clear();
+        OriginalContextSelectedItems.Clear();
+    }
+
     internal void UpdateIsRemoveCardButtonEnabledFlag()
     {
-        var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CardCollectionDataGridName);
+        var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CARD_COLLECTION_DATA_GRID_NAME);
         List<bool> removeCardCondition =
         [
             // The card collection contains the elements.
             (dataGrid as DataGrid)?.SelectedItems.Count > 0,
             // The tab with the list of cards is active.
-            RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)!.SelectedIndex.Equals(
+            RootControl.FindControl<TabControl>(ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME)!.SelectedIndex.Equals(
                 (int)EstonianDeckTabs.CardCollectionTab)
         ];
         IsRemoveCardButtonEnabled = removeCardCondition.All(e => e.Equals(true));
@@ -215,11 +223,11 @@ public partial class EstonianScreenViewModel : ViewModelBase
         PropertySetter.SetReactive(ref cardListEntry, ref estonianScreenViewModel);
 
         // Restore checkboxes.
-        var parentTabItem = RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)?
+        var parentTabItem = RootControl.FindControl<TabControl>(ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME)?
             .Items[(int)EstonianDeckTabs.VocabularyEntryTab] as Control;
         FieldHelper.RestoreCheckBoxes(parentTabItem, cardListEntry?.SpeechPart);
 
-        parentTabItem = RootControl.FindControl<TabControl>(EstonianDeckMainTabControlName)?
+        parentTabItem = RootControl.FindControl<TabControl>(ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME)?
             .Items[(int)EstonianDeckTabs.VerbWordFormsTab] as Control;
         FieldHelper.RestoreCheckBoxes(parentTabItem, cardListEntry?.SpeechPartGovernment!);
 

@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text.RegularExpressions;
+using DynamicData;
 
 namespace AnkiDeckEditor.Services;
 
 /// <summary>
-/// Contains functionality for manipaliting with text strings.
+/// Contains functionality for manipulating with text strings.
 /// </summary>
 public partial class StringManipulator
 {
@@ -94,5 +96,20 @@ public partial class StringManipulator
         }
 
         return output;
+    }
+
+    // Регулярное выражение для разделения по любым символам, кроме букв
+    [GeneratedRegex("([^a-zA-Zа-яА-ЯõäöüÕÄÖÜ]+)")]
+    private static partial Regex SeparateLettersRegex();
+
+    public IEnumerable<string> SeparateLetters(out List<int> letterIndexes)
+    {
+        letterIndexes = [];
+
+        var result = SeparateLettersRegex().Split(_resultString);
+        letterIndexes.AddRange(
+            from s in result where SeparateLettersRegex().IsMatch(s) select result.IndexOf(s));
+
+        return result;
     }
 }

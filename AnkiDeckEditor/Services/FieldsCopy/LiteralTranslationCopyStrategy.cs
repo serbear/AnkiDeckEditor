@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace AnkiDeckEditor.Services.FieldsCopy;
@@ -13,7 +11,6 @@ public class LiteralTranslationCopyStrategy : BaseCopyStrategy
     {
         var result = Common.ProcessCollection(translationData);
         return new StringManipulator(result).FixDotPunctuation().ResultString;
-        ;
     }
 
     // public string DoCopyString(string data)

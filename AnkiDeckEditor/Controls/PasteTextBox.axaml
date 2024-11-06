@@ -38,8 +38,9 @@
             <TextBox x:Name="MainTextBox"
                      VerticalContentAlignment="Center"
                      AcceptsTab="False"
-                     TabIndex="1"
                      AcceptsReturn="False"
+                     TabIndex="1"
+                     TextChanged="MainTextBox_OnTextChanged"
                      Text="{Binding Text, Mode=TwoWay, ElementName=PasteTextBoxUserControl}">
                 <TextBox.Resources>
                     <converters:WidthToPaddingConverter x:Key="WidthToPaddingConverter" />
