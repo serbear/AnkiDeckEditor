@@ -84,6 +84,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
             CardCollection.RemoveOneItem(dataGrid, ref cardCollectionItems);
         }
 
+        UpdateCollectionCounter();
         UpdateIsRemoveCardButtonEnabledFlag();
         IsVisibleAddEntityListButton = true;
         IsSaveEntityListButtonEnabled = false;
@@ -163,8 +164,29 @@ public partial class EstonianScreenViewModel : ViewModelBase
         CardCollectionItems = new ObservableCollection<EstonianCardRecord>(
             CardCollectionItems.OrderBy<EstonianCardRecord, string>(e => e.VocabularyEntryText));
 
+        UpdateCollectionCounter();
         UpdateIsRemoveCardButtonEnabledFlag();
         NewEntityExecute();
+    }
+
+    private const string COLLECTION_COUNTER_NAME = "CollectionCounter";
+    private const string COLLECTION_COUNTER_TEXT_BLOCK_NAME = "CollectionCounterValue";
+
+    private void UpdateCollectionCounter()
+    {
+        var counter = FieldHelper.GetChildrenList<Border>(RootControl)
+            .FirstOrDefault(e => e.Name == COLLECTION_COUNTER_NAME);
+        if (counter == null) throw new InvalidOperationException("The collection counter control not found.");
+
+        // Show the counter if the collection is not empty.
+        counter.IsVisible = CardCollectionItems.Count > 0;
+
+        var counterTextBlock = FieldHelper.GetChildrenList<TextBlock>(RootControl)
+            .FirstOrDefault(e => e.Name == COLLECTION_COUNTER_TEXT_BLOCK_NAME);
+        if (counterTextBlock == null)
+            throw new InvalidOperationException("The collection counter text block not found.");
+
+        counterTextBlock.Text = CardCollectionItems.Count.ToString();
     }
 
     private void NewEntityExecute()
@@ -314,5 +336,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         var cardCollectionItems = CardCollectionItems;
         CardCollection.ClearCollection(ref cardCollectionItems);
         UpdateIsRemoveCardButtonEnabledFlag();
+        UpdateCollectionCounter();
     }
 }

@@ -41,7 +41,26 @@
                 <estonianScreen:ContextTab />
             </TabItem>
             <!-- Vocabulary card list -->
-            <TabItem Header="Список карточек">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="Список карточек" />
+                        <Border x:Name="CollectionCounter"
+                                Background="Magenta"
+                                CornerRadius="4"
+                                Padding="4"
+                                Margin="4 0 0 0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                IsVisible="False">
+                            <TextBlock x:Name="CollectionCounterValue"
+                                       Foreground="Black"
+                                       FontSize="12"
+                                       FontWeight="Bold" />
+                        </Border>
+                    </StackPanel>
+                </TabItem.Header>
                 <estonianScreen:CardListTab />
             </TabItem>
         </TabControl>
