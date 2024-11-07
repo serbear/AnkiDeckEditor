@@ -68,7 +68,8 @@ public partial class EstonianScreenViewModel
     [Reactive] public bool IsClearCardCollectionButtonEnabled { get; set; }
     [Reactive] public bool IsVisibleAddEntityListButton { get; set; }
     [Reactive] public bool IsSaveEntityListButtonEnabled { get; set; }
-
+    [Reactive] public bool IsExportButtonEnabled{ get; set; }
+                
     #endregion
 
 

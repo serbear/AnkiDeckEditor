@@ -19,19 +19,11 @@ public partial class EstonianScreenViewModel : ViewModelBase
 {
     private const string CARD_COLLECTION_DATA_GRID_NAME = "CardCollectionDataGrid";
     private const string ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME = "DeckConfigTabControl";
-
-    // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
-    private Control RootControl { get; set; } = new();
-
-    /// <summary>
-    /// The field stores a reference to the text box that will be focused on after the form cleanup function
-    /// is executed.
-    /// </summary>
-    // ReSharper disable once UnusedAutoPropertyAccessor.Local
-    private Control FirstFocusControl { get; set; }
+    private const string COLLECTION_COUNTER_NAME = "CollectionCounter";
+    private const string COLLECTION_COUNTER_TEXT_BLOCK_NAME = "CollectionCounterValue";
+    private EstonianCardRecord? _currentEditCard;
 
     private EditModes _currentOperationalMode;
-    private EstonianCardRecord? _currentEditCard;
 
     public EstonianScreenViewModel()
     {
@@ -43,6 +35,16 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // Set default work mode of deck editor.
         _currentOperationalMode = EditModes.Add;
     }
+
+    // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
+    private Control RootControl { get; set; } = new();
+
+    /// <summary>
+    /// The field stores a reference to the text box that will be focused on after the form cleanup function
+    /// is executed.
+    /// </summary>
+    // ReSharper disable once UnusedAutoPropertyAccessor.Local
+    private Control FirstFocusControl { get; set; }
 
 
     private void OnFieldTextChanged(string newText)
@@ -86,6 +88,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
         UpdateCollectionCounter();
         UpdateIsRemoveCardButtonEnabledFlag();
+        UpdateExportButtonEnableFlag();
+        
         IsVisibleAddEntityListButton = true;
         IsSaveEntityListButtonEnabled = false;
         _currentOperationalMode = EditModes.Add;
@@ -165,12 +169,15 @@ public partial class EstonianScreenViewModel : ViewModelBase
             CardCollectionItems.OrderBy<EstonianCardRecord, string>(e => e.VocabularyEntryText));
 
         UpdateCollectionCounter();
+        UpdateExportButtonEnableFlag();
         UpdateIsRemoveCardButtonEnabledFlag();
         NewEntityExecute();
     }
 
-    private const string COLLECTION_COUNTER_NAME = "CollectionCounter";
-    private const string COLLECTION_COUNTER_TEXT_BLOCK_NAME = "CollectionCounterValue";
+    private void UpdateExportButtonEnableFlag()
+    {
+        IsExportButtonEnabled = CardCollectionItems.Count > 0;
+    }
 
     private void UpdateCollectionCounter()
     {
@@ -337,5 +344,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         CardCollection.ClearCollection(ref cardCollectionItems);
         UpdateIsRemoveCardButtonEnabledFlag();
         UpdateCollectionCounter();
+        UpdateExportButtonEnableFlag();
     }
 }

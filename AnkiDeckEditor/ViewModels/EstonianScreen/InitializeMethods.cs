@@ -109,5 +109,6 @@ public partial class EstonianScreenViewModel
         IsClearCardCollectionButtonEnabled = false;
         IsVisibleAddEntityListButton = true;
         IsSaveEntityListButtonEnabled = false;
+        IsExportButtonEnabled = false;
     }
 }

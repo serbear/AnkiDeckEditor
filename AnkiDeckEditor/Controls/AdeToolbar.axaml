@@ -87,12 +87,15 @@
 
         <Button Name="ExportFileButton"
                 Content="Export"
-                Command="{Binding ExportFileCommand}" />
+                Command="{Binding ExportFileCommand}" 
+                IsEnabled="{Binding IsExportButtonEnabled}"
+                />
 
         <controls:ToolbarSeparator />
 
         <Button Name="ExitButton"
                 Content="Exit"
-                Command="{Binding ExitCommand}" />
+                Command="{Binding ExitCommand}"
+                />
     </StackPanel>
 </UserControl>
