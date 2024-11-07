@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AnkiDeckEditor.Enums;
+using AnkiDeckEditor.Models;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 
 namespace AnkiDeckEditor.ViewModels.EstonianScreen;
 
@@ -24,7 +26,7 @@ public partial class EstonianScreenViewModel
         }
     }
 
-    private void OnSpeechPartCheckboxChanged(CheckBox? sender)
+    private void OnSpeechPartCheckboxChanged(ToggleButton? sender)
     {
         if (sender == null) throw new Exception("There is no checkbox object.");
         if (_currentEditCard == null) return;
@@ -32,7 +34,7 @@ public partial class EstonianScreenViewModel
         List<bool> condition =
         [
             // The selected part of speech corresponds to the part of speech being edited.
-            _currentEditCard.SpeechPart.Equals(sender.Content),
+            _currentEditCard.SpeechPart!.Equals(sender.Content),
             // The checkbox is checked.
             sender.IsChecked == true
         ];
@@ -40,7 +42,7 @@ public partial class EstonianScreenViewModel
         IsSaveEntityListButtonEnabled = !condition.All(e => e);
     }
 
-    private void OnSpeechPartGovernmentCheckboxChanged(CheckBox? sender)
+    private void OnSpeechPartGovernmentCheckboxChanged(ToggleButton? sender)
     {
         if (sender == null) throw new Exception("There is no checkbox object.");
         if (_currentEditCard == null) return;

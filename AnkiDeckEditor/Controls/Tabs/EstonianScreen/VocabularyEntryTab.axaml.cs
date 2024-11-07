@@ -4,6 +4,7 @@ using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
 using AnkiDeckEditor.ViewModels.EstonianScreen;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
@@ -35,7 +36,7 @@ public partial class VocabularyEntryTab : UserControl
         AvaloniaXamlLoader.Load(this);
     }
 
-    private void SpeechPartCheckBox_OnIsCheckedChanged(object sender, RoutedEventArgs e)
+    private void SpeechPartCheckBox_OnIsCheckedChanged(object? sender, RoutedEventArgs e)
     {
         var dataContext = (EstonianScreenViewModel)DataContext!;
         var speechPartItems = dataContext.SpeechPartItems;
@@ -55,17 +56,34 @@ public partial class VocabularyEntryTab : UserControl
     /// </summary>
     /// <param name="dataContext"></param>
     /// <param name="sender"></param>
-    private static void SwitchTabItems(ref EstonianScreenViewModel dataContext, ref object sender)
+    private void SwitchTabItems(ref EstonianScreenViewModel dataContext, ref object? sender)
     {
         // Switch tabs between "word forms" and "verb forms" according to a selected speech part.
         var checkbox = (CheckBox)sender;
-        
+
         var isVerbSelected = checkbox.Tag != null;
         isVerbSelected &= (bool)checkbox.IsChecked!;
-        
+
         dataContext.IsWordFormsTabItemVisible = !isVerbSelected & (bool)checkbox.IsChecked;
         dataContext.IsVerbFormsTabItemVisible = isVerbSelected & (bool)checkbox.IsChecked;
 
         dataContext.OnCheckboxChanged(sender as CheckBox, StrategyNames.SpeechPart);
+
+        CopyInitialWordForm(sender as CheckBox, dataContext);
+    }
+
+    private static void CopyInitialWordForm(CheckBox? sender, EstonianScreenViewModel dataContext)
+    {
+        // Copy the name of the vocabulary entry into the "Nimetav" or "Ma-infinitiv" word form field.
+        // The name of the vocabulary entry is the same as one of these forms.
+
+        // todo: Если выбран вид части речи.
+
+        if (!(bool)sender!.IsChecked!) return;
+
+        if ((sender.DataContext as SpeechPartToggleItem)!.VerbType != null)
+            dataContext.MaInfinitiveWordForm = dataContext.VocabularyEntryText;
+        else
+            dataContext.NominativeCaseSingularWordForm = dataContext.VocabularyEntryText;
     }
 }
