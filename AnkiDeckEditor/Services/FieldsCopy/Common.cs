@@ -39,7 +39,10 @@ public static class Common
 
         // If there are no highlighted words, return the string unchanged.
         if (!data.Item2.Count.Equals(0))
-            resultBuilder = words.Select((t, i) => MarkWord(t, data.Item2.Contains(i + 1))).ToList();
+            for (var i = 0; i < words.Length; i++)
+                resultBuilder[i] = MarkWord(words[i], data.Item2.Contains(i));
+
+        // resultBuilder = words.Select((t, i) => MarkWord(t, data.Item2.Contains(i))).ToList();
 
         return JoinWordCollection(resultBuilder);
     }
@@ -51,10 +54,15 @@ public static class Common
         if (!isMarked) return $"{result}";
 
         // Only the word without punctuation marks is placed in the marker tag of the selected word.
-        var separatedWords = new StringManipulator(value).SeparateLetters(out var indexes).ToList();
+
+        var separatedWords = new StringManipulator(value).SeparateLetters(out var punctuationIndexes).ToList();
 
         for (var i = 0; i < separatedWords.Count; i++)
-            if (indexes.Contains(i + 1))
+
+            // indexes - punctuations, not words.
+
+            // If this is a word, not a punctuation mark.
+            if (!punctuationIndexes.Contains(i))
                 separatedWords[i] = FieldTags.SelectedEntityTemplate.Replace(
                     FieldTags.GetPlaceMarker(1), separatedWords[i]);
 

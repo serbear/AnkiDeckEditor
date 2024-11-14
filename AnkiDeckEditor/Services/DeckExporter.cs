@@ -33,11 +33,13 @@ public static class DeckExporter
         Dictionary<StrategyNames, string?> copyStrategyDict)
     {
         var sb = new StringBuilder();
-        const string SEPARATOR = "|";
+        const string CARD_SEPARATOR = "\t";
+        const string SEPARATOR_NAME = "tab";
 
+        // Add file header.
+        sb.Append($"#separator:{SEPARATOR_NAME}\n");
+        sb.Append("#html:true\n");
 
-        // Add field separator.
-        sb.Append($"{SEPARATOR}\n");
 
         foreach (var card in cardCollectionItems)
         {
@@ -56,7 +58,7 @@ public static class DeckExporter
 
             // todo: Если не глагол, пропускать глагольные формы слова.
             copyStrategyDataDict.Remove(
-                card.SpeechPart!.IsVerb
+                card.SpeechPart!.VerbType == null
                     ? StrategyNames.VerbWordForms
                     : StrategyNames.NonVerbWordForms);
 
@@ -93,12 +95,14 @@ public static class DeckExporter
 
                 copyContext.DoCopyLogic(result, out var fieldText);
 
-                sb.Append(fieldText);
-                sb.Append(SEPARATOR);
+                // Prepare the file string.
+                fieldText = fieldText.Replace("\"", "\"\"");
+                sb.Append($"\"{fieldText}\"");
+                sb.Append(CARD_SEPARATOR);
             }
 
             // Remove the last separator.
-            sb.Remove(sb.Length - 1, 1);
+            // sb.Remove(sb.Length - 1, 1);
 
             sb.Append("\n");
         }

@@ -102,13 +102,15 @@ public partial class StringManipulator
     [GeneratedRegex("([^a-zA-Zа-яА-ЯõäöüÕÄÖÜ]+)")]
     private static partial Regex SeparateLettersRegex();
 
-    public IEnumerable<string> SeparateLetters(out List<int> letterIndexes)
+    public IEnumerable<string> SeparateLetters(out List<int> punctuationIndexes)
     {
-        letterIndexes = [];
+        punctuationIndexes = [];
 
-        var result = SeparateLettersRegex().Split(_resultString);
-        letterIndexes.AddRange(
-            from s in result where SeparateLettersRegex().IsMatch(s) select result.IndexOf(s));
+        var result = SeparateLettersRegex()
+            .Split(_resultString)
+            // Remove the last empty element.
+            .Where(e => e != "").ToArray();
+        punctuationIndexes.AddRange(from s in result where SeparateLettersRegex().IsMatch(s) select result.IndexOf(s));
 
         return result;
     }
