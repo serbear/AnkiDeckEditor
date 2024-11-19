@@ -12,7 +12,7 @@ public class Context
     // Контекст хранит ссылку на один из объектов Стратегии. Контекст не
     // знает конкретного класса стратегии. Он должен работать со всеми
     // стратегиями через интерфейс Стратегии.
-    private ICopyStrategy _strategy;
+    private ICopyStrategy? _strategy;
 
     public Context()
     {
@@ -20,14 +20,14 @@ public class Context
 
     // Обычно Контекст принимает стратегию через конструктор, а также
     // предоставляет сеттер для её изменения во время выполнения.
-    public Context(ICopyStrategy strategy)
+    public Context(ICopyStrategy? strategy)
     {
         _strategy = strategy;
     }
 
     // Обычно Контекст позволяет заменить объект Стратегии во время
     // выполнения.
-    public void SetStrategy(ICopyStrategy strategy)
+    public void SetStrategy(ICopyStrategy? strategy)
     {
         _strategy = strategy;
     }

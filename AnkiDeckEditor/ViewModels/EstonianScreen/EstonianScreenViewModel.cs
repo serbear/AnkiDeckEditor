@@ -89,7 +89,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         UpdateCollectionCounter();
         UpdateIsRemoveCardButtonEnabledFlag();
         UpdateExportButtonEnableFlag();
-        
+
         IsVisibleAddEntityListButton = true;
         IsSaveEntityListButtonEnabled = false;
         _currentOperationalMode = EditModes.Add;
@@ -128,6 +128,8 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void ExitExecute()
     {
+        // todo: Ask for exit
+
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
             lifetime.Shutdown();
     }

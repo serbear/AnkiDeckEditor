@@ -1,20 +1,15 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-             x:Class="AnkiDeckEditor.Views.Dialogs.ExitDialog">
+             x:Class="AnkiDeckEditor.Views.Dialogs.ExportResultDialog">
     <StackPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Bounds.Width}">
-        <TextBlock>Do you really want to exit?</TextBlock>
+        <TextBlock>The collection successfully exported.</TextBlock>
         <StackPanel Orientation="Horizontal">
             <Button IsDefault="True"
-                    Content="Yes"
+                    Content="OK"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                     AncestorType=dialogHostAvalonia:DialogHost}, Path=CloseDialogCommand}"
                     CommandParameter="{DynamicResource True}" />
-            <Button IsCancel="True"
-                    Content="No"
-                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
-                    AncestorType=dialogHostAvalonia:DialogHost}, Path=CloseDialogCommand}"
-                    CommandParameter="{DynamicResource False}" />
         </StackPanel>
     </StackPanel>
     <UserControl.Styles>
