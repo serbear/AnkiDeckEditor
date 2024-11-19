@@ -13,6 +13,10 @@ namespace AnkiDeckEditor.Services;
 
 public static class DeckExporter
 {
+    private static (string, List<int>) LiteralTranslationContext { get; set; }
+    private static (string, List<int>) LiteraryTranslationContext { get; set; }
+    private static (string, List<int>) OriginalTextContext { get; set; }
+
     public static async void ExportCollection(
         ObservableCollection<EstonianCardRecord> cardCollectionItems,
         Dictionary<StrategyNames, string?> copyStrategyDict)
@@ -30,24 +34,12 @@ public static class DeckExporter
             {
                 if (!copyStrategyDataDict.ContainsKey((StrategyNames)copyStrategy)) continue;
 
-                // var copyStrategyValue = (StrategyNames)copyStrategy;
-                // object strategy;
-                // try
-                // {
-                // strategy = Activator.CreateInstance(Type.GetType(copyStrategyDict[copyStrategyValue]!)!)!;
-                // }
-                // catch (KeyNotFoundException)
-                // {
-                // continue;
-                // }
-
                 // Select a copy strategy
-
                 var strategy = SelectStrategy(copyStrategy, copyStrategyDict);
-
                 if (strategy == null) continue;
 
                 // Forming a data context being copied.
+
                 var copyContext = new Context();
                 copyContext.SetStrategy(strategy.Item2);
 
@@ -76,6 +68,18 @@ public static class DeckExporter
             sb.Append("\n");
         }
 
+        SaveFile(sb);
+
+        // Show the export result message.
+
+        var dialogResult = (bool)(await DialogHost.Show(new ExportResultDialog(), PublicConst.MainDialogHost))!;
+        if (dialogResult)
+        {
+        }
+    }
+
+    private static void SaveFile(StringBuilder sb)
+    {
         // save to file. 
         // todo: settings: add or rewrite.
 
@@ -89,16 +93,8 @@ public static class DeckExporter
         catch (Exception ex)
         {
             Console.WriteLine($"An error occurred: {ex.Message}");
-        }
-
-        // Show the export result message.
-
-        var dialogResult = (bool)(await DialogHost.Show(new ExportResultDialog(), PublicConst.MainDialogHost))!;
-        if (dialogResult)
-        {
-        }
+        }    
     }
-
     private static void AddFileHeader(ref StringBuilder builder)
     {
         const string SEPARATOR_NAME = "tab";
@@ -147,10 +143,6 @@ public static class DeckExporter
 
         return new Tuple<StrategyNames, ICopyStrategy?>(copyStrategyValue, strategy as ICopyStrategy);
     }
-
-    private static (string, List<int>) LiteralTranslationContext { get; set; }
-    private static (string, List<int>) LiteraryTranslationContext { get; set; }
-    private static (string, List<int>) OriginalTextContext { get; set; }
 
     private static void GetContext(EstonianCardRecord card)
     {
