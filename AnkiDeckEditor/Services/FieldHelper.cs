@@ -159,7 +159,7 @@ public static class FieldHelper
     {
         // The index of the selected word in the collection is stored in the record.
         // It is possible that there may be several identical words in a sentence, but only one of them is highlighted.
-        return collection.Select(e => e.IsChecked ? collection.IndexOf(e)-1 : -1).Where(e => e >= 0).ToList();
+        return collection.Select(e => e.IsChecked ? collection.IndexOf(e) : -1).Where(e => e >= 0).ToList();
     }
 
     public static void CheckContextSelectedWords(

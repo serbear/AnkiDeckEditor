@@ -15,7 +15,7 @@ public partial class StringManipulator
     private partial Regex OtherPunctuationAfterSpaceRegex();
 
     [GeneratedRegex(@"(\p{Pf}|\p{Pe})(?!\s)")]
-    private partial Regex ClosePunctuationsRegex();
+    public partial Regex ClosePunctuationsRegex();
 
     [GeneratedRegex(@"(\p{Ps}|\p{Pi})\s+")]
     private partial Regex OpenPunctuationsRegex();
@@ -35,6 +35,7 @@ public partial class StringManipulator
     {
         _resultString = targetString;
     }
+    public StringManipulator(){}
 
     private static string ReplaceByRegexp(Regex generatedPattern, string value, string replaceWith)
     {

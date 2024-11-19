@@ -35,12 +35,40 @@ public static class Common
     public static string ProcessTuple(ValueTuple<string, List<int>> data)
     {
         var words = data.Item1.Split(SEPARATOR);
-        List<string> resultBuilder = [..words];
+
+        // Separate words from punctuation marks.
+
+        List<string> resultBuilder = [];
+
+        foreach (var word in words)
+        {
+            var separatedWords = new StringManipulator(word).SeparateLetters(out _).ToList();
+            resultBuilder.AddRange(separatedWords);
+        }
+
+        // Mark word by tag
+
+        foreach (var i in data.Item2)
+        {
+            resultBuilder[i] = FieldTags.SelectedEntityTemplate.Replace(
+                FieldTags.GetPlaceMarker(1), 
+                resultBuilder[i]); 
+        }
+
+        // var x = new StringManipulator().ClosePunctuationsRegex();
+        
+        // var result = string.Join(" ", resultBuilder);
+
+        // result = new StringManipulator(result).RemoveLeftSpaceClosePunctuation().ResultString;
+        // result = new StringManipulator(result).RemoveRightSpaceClosePunctuation().ResultString;
+        // result = new StringManipulator(result).RemoveLeftSpaceFromPunctuation().ResultString;
+        
+        // List<string> resultBuilder = [..words];
 
         // If there are no highlighted words, return the string unchanged.
-        if (!data.Item2.Count.Equals(0))
-            for (var i = 0; i < words.Length; i++)
-                resultBuilder[i] = MarkWord(words[i], data.Item2.Contains(i));
+        // if (!data.Item2.Count.Equals(0))
+            // for (var i = 0; i < words.Length; i++)
+                // resultBuilder[i] = MarkWord(words[i], data.Item2.Contains(i));
 
         // resultBuilder = words.Select((t, i) => MarkWord(t, data.Item2.Contains(i))).ToList();
 
@@ -74,7 +102,7 @@ public static class Common
     private static string JoinWordCollection(IEnumerable<string> resultBuilder)
     {
         var sm = new StringManipulator(string.Join(SEPARATOR, resultBuilder).Trim())
-            .AddSpaseAfterCloseHtmlTag()
+            // .AddSpaseAfterCloseHtmlTag()
             .RemoveLeftSpaceFromPunctuation()
             .AddSpaceAfterClosePunctuation()
             .RemoveRightSpaceClosePunctuation()
