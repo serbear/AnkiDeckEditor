@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Text;
 using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Models;
@@ -10,22 +9,6 @@ using AnkiDeckEditor.Services.FieldsCopy;
 
 namespace AnkiDeckEditor.Services;
 
-// 1 line - separator.
-
-// apple;banana;grape
-// some text;other text;yet more text
-
-//Because quotes are used to mark where a field begins and ends, if you wish to include them inside your field, you need to replace a single doublequote with two doublequotes to "escape" them from the regular handling, like so:
-// 
-// field one;"field two with ""escaped quotes"" inside it"
-
-// You need to turn on the "allow HTML in fields" checkbox in the import dialog for HTML newlines to work. 
-
-// If you wish to use HTML for formatting your file but also wish to include angle brackets or ampersands, you may use the following replacements:
-// Character	Replacement
-// <	&lt;
-// >	&gt;
-// &	&amp;
 public static class DeckExporter
 {
     public static void ExportCollection(
@@ -39,8 +22,7 @@ public static class DeckExporter
         // Add file header.
         sb.Append($"#separator:{SEPARATOR_NAME}\n");
         sb.Append("#html:true\n");
-
-
+        
         foreach (var card in cardCollectionItems)
         {
             GetContext(card);
@@ -56,7 +38,7 @@ public static class DeckExporter
                 { StrategyNames.VocabularyEntry, card.VocabularyEntryText }
             };
 
-            // todo: Если не глагол, пропускать глагольные формы слова.
+            // Если не глагол, пропускать глагольные формы слова.
             copyStrategyDataDict.Remove(
                 card.SpeechPart!.VerbType == null
                     ? StrategyNames.VerbWordForms
@@ -100,10 +82,6 @@ public static class DeckExporter
                 sb.Append($"\"{fieldText}\"");
                 sb.Append(CARD_SEPARATOR);
             }
-
-            // Remove the last separator.
-            // sb.Remove(sb.Length - 1, 1);
-
             sb.Append("\n");
         }
 
