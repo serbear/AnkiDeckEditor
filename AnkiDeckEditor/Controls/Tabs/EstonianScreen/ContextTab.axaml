@@ -13,6 +13,7 @@
 
         <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
         <TextBlock Text="Выделение:" />
+
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding WordByWordContextSelectedItems}">
                 <ItemsRepeater.Layout>
@@ -21,7 +22,8 @@
                 </ItemsRepeater.Layout>
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 0 0 16">
                             <ToggleButton IsChecked="{Binding IsChecked}"
                                           IsVisible="{Binding !IsPunctuation}"
                                           Content="{Binding Title}" />
@@ -48,7 +50,8 @@
                 </ItemsRepeater.Layout>
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 0 0 16">
                             <ToggleButton IsChecked="{Binding IsChecked}"
                                           IsVisible="{Binding !IsPunctuation}"
                                           Content="{Binding Title}" />
@@ -75,7 +78,8 @@
                 </ItemsRepeater.Layout>
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="0 0 0 16">
                             <ToggleButton IsChecked="{Binding IsChecked}"
                                           IsVisible="{Binding !IsPunctuation}"
                                           Content="{Binding Title}" />
