@@ -68,8 +68,8 @@ public partial class EstonianScreenViewModel
     [Reactive] public bool IsClearCardCollectionButtonEnabled { get; set; }
     [Reactive] public bool IsVisibleAddEntityListButton { get; set; }
     [Reactive] public bool IsSaveEntityListButtonEnabled { get; set; }
-    [Reactive] public bool IsExportButtonEnabled{ get; set; }
-                
+    [Reactive] public bool IsExportButtonEnabled { get; set; }
+
     #endregion
 
 
@@ -84,4 +84,9 @@ public partial class EstonianScreenViewModel
     public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
     private Dictionary<StrategyNames, string?> CopyStrategyDict { get; } = new();
     private Dictionary<StrategyNames, object> CopyStrategyDataDict { get; set; }
+
+    // other
+
+    [Reactive] public char[] SpeechGovernmentFilterLetters { get; set; }
+    [Reactive] public char[] SelectedSpeechGovernmentFilterLetters { get; set; }
 }

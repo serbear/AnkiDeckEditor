@@ -67,9 +67,13 @@
                            x:Name="SpeechPartGovernmentTitleLabel"
                            HorizontalAlignment="Center" />
 
+                <!-- Filter Buttons -->
+                <controls:SpeechGovernmentFilter Letters="{Binding SpeechGovernmentFilterLetters}"
+                                                 SelectedLetters="{Binding SelectedSpeechGovernmentFilterLetters}"
+                                                 LetterChanged="SpeechGovernmentFilter_OnLetterChanged" />
+
                 <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Auto"
-                              Background="Chocolate">
+                              HorizontalScrollBarVisibility="Auto">
 
                     <ScrollViewer.Resources>
                         <converters:SumControlHeightConverter x:Key="SumControlHeightConverter" />
@@ -84,7 +88,8 @@
                         </MultiBinding>
                     </ScrollViewer.Height>
 
-                    <ItemsRepeater Margin="10,0,0,0"
+                    <ItemsRepeater x:Name="SpeechPartGovernmentFilterItems"
+                                   Margin="10,0,0,0"
                                    ItemsSource="{Binding VerbControlItems}">
                         <ItemsRepeater.Layout>
                             <StackLayout Spacing="0"
@@ -92,7 +97,8 @@
                         </ItemsRepeater.Layout>
                         <ItemsRepeater.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal"
+                                            IsVisible="{Binding IsVisible}">
                                     <CheckBox IsChecked="{Binding IsChecked}"
                                               Content="{Binding Title}"
                                               IsCheckedChanged="ToggleButton_OnIsCheckedChanged" />

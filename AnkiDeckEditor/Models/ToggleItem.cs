@@ -9,6 +9,8 @@ public class ToggleItem : ReactiveObject
 {
     private string? _title;
     private bool _isChecked;
+    private bool _isVisible;
+
 
     /// <summary>
     /// The text label of the checkbox control.
@@ -32,5 +34,12 @@ public class ToggleItem : ReactiveObject
     {
         Title = title;
         IsChecked = isChecked;
+        IsVisible = true;
+    }
+
+    public bool IsVisible
+    {
+        get => _isVisible;
+        set => this.RaiseAndSetIfChanged(ref _isVisible, value);
     }
 }

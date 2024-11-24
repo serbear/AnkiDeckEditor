@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
@@ -49,7 +50,7 @@ public partial class EstonianScreenViewModel
         this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.LiteraryTranslationText)
             .Subscribe(OnFieldTextChanged);
         this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.OriginalText).Subscribe(OnFieldTextChanged);
-   }
+    }
 
     private void InitializeCommands()
     {
@@ -70,6 +71,8 @@ public partial class EstonianScreenViewModel
     private void InitializeCollections()
     {
         VerbControlItems = CollectionLoader.LoadVerbControls();
+        SpeechGovernmentFilterLetters = GetSpeechPartGovernmentFilterLetters();
+
         SpeechPartItems = CollectionLoader.LoadSpeechParts();
 
         WordByWordContextSelectedItems = [];
@@ -98,6 +101,16 @@ public partial class EstonianScreenViewModel
             { StrategyNames.NonVerbWordForms, (Func<NonVerbWordFormCollection>)GetNonVerbWordForms },
             { StrategyNames.VerbWordForms, (Func<VerbWordFormCollection>)GetVerbWordForms }
         };
+    }
+
+    private char[] GetSpeechPartGovernmentFilterLetters()
+    {
+        return VerbControlItems
+            .Aggregate(new HashSet<char>(), (current, verbControlItem) =>
+            {
+                current.Add(char.ToUpper(verbControlItem.Title![0]));
+                return current;
+            }).ToArray();
     }
 
     private void InitializeFlags()
