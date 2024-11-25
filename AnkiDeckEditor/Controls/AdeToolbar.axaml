@@ -50,7 +50,9 @@
 
         <controls:ToolbarSeparator />
 
+        <!-- Field copy menu -->
         <Button Name="ActionsButton"
+                IsVisible="False"
                 Content="Copy Field">
             <Button.Flyout>
                 <MenuFlyout Placement="BottomEdgeAlignedLeft">
