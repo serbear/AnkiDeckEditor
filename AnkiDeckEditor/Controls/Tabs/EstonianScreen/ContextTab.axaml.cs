@@ -42,13 +42,13 @@ public partial class ContextTab : UserControl
     {
         if (sender is not TextBox textBox) return;
 
-        var split = textBox.Text?.Trim().Split(" ").ToList();
+        List<string?>? split = textBox.Text?.Trim().Split(" ").ToList();
 
         if (split == null) return;
 
         // ----- Word [word] word.
 
-        List<string?> output = [];
+        List<string?>? output = [];
 
         foreach (var s in split)
         {

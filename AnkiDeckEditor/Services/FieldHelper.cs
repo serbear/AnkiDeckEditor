@@ -155,7 +155,7 @@ public static class FieldHelper
         else throw new InvalidOperationException("The speech part check box not found.");
     }
 
-    public static List<int> GetContextSelectedWordIndexes(ObservableCollection<ContextToggleItem> collection)
+    public static List<int> GetContextSelectedWordIndexes(ObservableCollection<ContextToggleItem>? collection)
     {
         // The index of the selected word in the collection is stored in the record.
         // It is possible that there may be several identical words in a sentence, but only one of them is highlighted.
@@ -164,7 +164,7 @@ public static class FieldHelper
 
     public static void CheckContextSelectedWords(
         List<int>? indexesCollection,
-        ObservableCollection<ContextToggleItem> targetCollection)
+        ObservableCollection<ContextToggleItem>? targetCollection)
     {
         if (indexesCollection == null || indexesCollection.Count == 0) return;
 

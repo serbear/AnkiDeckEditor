@@ -76,14 +76,14 @@ public partial class EstonianScreenViewModel
     // Collections
 
     [Reactive] public ObservableCollection<EstonianCardRecord> CardCollectionItems { get; set; } = [];
-    [Reactive] public ObservableCollection<SpeechPartToggleItem> SpeechPartItems { get; set; }
-    [Reactive] public ObservableCollection<ContextToggleItem> WordByWordContextSelectedItems { get; set; }
-    [Reactive] public ObservableCollection<ContextToggleItem> LiteraryContextSelectedItems { get; set; }
-    [Reactive] public ObservableCollection<ContextToggleItem> OriginalContextSelectedItems { get; set; }
-    public ObservableCollection<ToggleItem> VerbControlItems { get; set; }
-    public Dictionary<string, ObservableCollection<ContextToggleItem>> EntityContextCollections { get; set; }
+    [Reactive] public ObservableCollection<SpeechPartToggleItem>? SpeechPartItems { get; set; }
+    [Reactive] public ObservableCollection<ContextToggleItem>? WordByWordContextSelectedItems { get; set; }
+    [Reactive] public ObservableCollection<ContextToggleItem>? LiteraryContextSelectedItems { get; set; }
+    [Reactive] public ObservableCollection<ContextToggleItem>? OriginalContextSelectedItems { get; set; }
+    public ObservableCollection<ToggleItem>? VerbControlItems { get; set; }
+    public Dictionary<string, ObservableCollection<ContextToggleItem>?> EntityContextCollections { get; set; }
     private Dictionary<StrategyNames, string?> CopyStrategyDict { get; } = new();
-    private Dictionary<StrategyNames, object> CopyStrategyDataDict { get; set; }
+    private Dictionary<StrategyNames, object?> CopyStrategyDataDict { get; set; }
 
     // other
 

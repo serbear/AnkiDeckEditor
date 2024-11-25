@@ -45,7 +45,7 @@ public partial class VocabularyEntryTab : UserControl
         SwitchTabItems(ref dataContext, ref sender);
     }
 
-    private static void UncheckAllCheckBoxes(ref ObservableCollection<SpeechPartToggleItem> toggleItems)
+    private static void UncheckAllCheckBoxes(ref ObservableCollection<SpeechPartToggleItem>? toggleItems)
     {
         // Uncheck all items in the "Part of Speech" list.
         foreach (var check in toggleItems) check.IsChecked = false;

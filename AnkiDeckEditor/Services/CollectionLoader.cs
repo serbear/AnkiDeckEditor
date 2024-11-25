@@ -1,38 +1,35 @@
 using System.Collections.ObjectModel;
 using System.Linq;
-using AnkiDeckEditor.Libs;
 using AnkiDeckEditor.Models;
 
 namespace AnkiDeckEditor.Services;
 
+// todo: где хранить коллекции? 
 public static class CollectionLoader
 {
     public static ObservableCollection<ToggleItem> LoadVerbControls()
     {
-        // todo: put the collection to a file.
-        const string COLLECTION =
-            "et\nkas\nkeda\nkeda + millest\nkeda + mis\nkelle eest\nkelle juurde\nkelle juures\nkelle järele\nkelle käest\nkelle käest + mida\nkelle otsa\nkelle peale\nkelle pärast\nkelle tõttu\nkelle vastu\nkellega\nkellega + milles\nkelleks\nkellel + mida teha\nkellele\nkellele + mida\nkellelt\nkellelt käest\nkellesse\nkellest\nkelleta\nkuhu\nkuhu + millega\nkui palju\nkuidas\nkus\nkust\nkust + kuhu\nmida\nmida tegema\nmida tegemas\nmida tegemast\nmida tegevat\nmida teha\nmidagi tegemata\nmille all\nmille alla\nmille eest\nmille järele\nmille järgi\nmille kohta\nmille käes\nmille otsa\nmille peale\nmille poolest\nmille pärast\nmille tõttu\nmille vastu\nmille üle\nmillega\nmilleks\nmillele\nmilles\nmillesse\nmillest\nmilleta\nmilline\nmilliseks\nmillisena\nmis keelde\nmis keelest\nmissuguseks";
-        var collectionArray = COLLECTION.Split("\n");
+        const string FILE_PATH = "/home/sergei/Developments/AnkiDeckEditor/AnkiDeckEditor/speech_part_government.json";
+        var collectionArray = JsonFileReader.Read<string[]>(FILE_PATH);
+
+        if (collectionArray.Length == 0)
+        {
+            // todo: Collection is empty. exception?
+        }
+
         var output = new ObservableCollection<ToggleItem>(
-            collectionArray.Select(
-                vc => new ToggleItem(vc, false)).ToList());
+            collectionArray.Select(vc => new ToggleItem(vc.Trim(), false)).ToList());
 
         return new ObservableCollection<ToggleItem>(output.OrderBy(e => e.Title));
     }
 
-    public static ObservableCollection<SpeechPartToggleItem> LoadSpeechParts()
+    public static ObservableCollection<SpeechPartToggleItem>? LoadSpeechParts()
     {
-        ObservableCollection<SpeechPartToggleItem> output =
-        [
-            new SpeechPartToggleItem("существительное", "nimisõna", false),
-            new SpeechPartToggleItem("наречие", "määrsõna", false),
-            new SpeechPartToggleItem("прилагательное", "omadussõna", false),
-            new SpeechPartToggleItem("местоимение", "asesõna", false),
-            new SpeechPartToggleItem("глагол", "tegusõna", VerbTypes.Simple, false),
-            new SpeechPartToggleItem("глагол составной", "ühendtegusõna", VerbTypes.Compound, false)
-        ];
-        return output;
+        const string FILE_PATH = "/home/sergei/Developments/AnkiDeckEditor/AnkiDeckEditor/speech_part.json";
+        return JsonFileReader.Read<ObservableCollection<SpeechPartToggleItem>>(FILE_PATH);
     }
+    
+    
 }
 
 public struct FieldTags

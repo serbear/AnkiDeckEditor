@@ -70,8 +70,7 @@ public partial class EstonianScreenViewModel
 
     private void InitializeCollections()
     {
-        VerbControlItems = CollectionLoader.LoadVerbControls();
-        SpeechGovernmentFilterLetters = GetSpeechPartGovernmentFilterLetters();
+        LoadSpeechPartGovernmentList();
 
         SpeechPartItems = CollectionLoader.LoadSpeechParts();
 
@@ -79,7 +78,7 @@ public partial class EstonianScreenViewModel
         LiteraryContextSelectedItems = [];
         OriginalContextSelectedItems = [];
 
-        EntityContextCollections = new Dictionary<string, ObservableCollection<ContextToggleItem>>
+        EntityContextCollections = new Dictionary<string, ObservableCollection<ContextToggleItem>?>
         {
             { "LiteralTranslationText", WordByWordContextSelectedItems },
             { "LiteraryTranslationText", LiteraryContextSelectedItems },
@@ -91,7 +90,7 @@ public partial class EstonianScreenViewModel
             // Value - tuple (the copy strategy class full name, data to copy, FieldTags string)
             CopyStrategyDict.Add(name, name.StrategyFullName());
 
-        CopyStrategyDataDict = new Dictionary<StrategyNames, object>
+        CopyStrategyDataDict = new Dictionary<StrategyNames, object?>
         {
             { StrategyNames.LiteralTranslation, WordByWordContextSelectedItems },
             { StrategyNames.LiteraryTranslation, LiteraryContextSelectedItems },
@@ -102,6 +101,14 @@ public partial class EstonianScreenViewModel
             { StrategyNames.VerbWordForms, (Func<VerbWordFormCollection>)GetVerbWordForms }
         };
     }
+
+    private void LoadSpeechPartGovernmentList()
+    {
+        VerbControlItems = CollectionLoader.LoadVerbControls();
+        if (VerbControlItems != null)
+            SpeechGovernmentFilterLetters = GetSpeechPartGovernmentFilterLetters();
+    }
+
 
     private char[] GetSpeechPartGovernmentFilterLetters()
     {
