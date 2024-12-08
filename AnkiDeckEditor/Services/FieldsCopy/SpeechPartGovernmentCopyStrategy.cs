@@ -12,12 +12,14 @@ public class SpeechPartGovernmentCopyStrategy : BaseCopyStrategy
         var selectedVerbControls = data.Where(e => (e as ToggleItem)!.IsChecked);
         var result = selectedVerbControls
             .Select(verbControl =>
-                FieldTags.VerbControlItemTemplate.Replace(
+                PublicConst.EstonianDeckTemplates["VerbControlItemTemplate"].Replace(
                     FieldTags.GetPlaceMarker(1),
                     (verbControl as ToggleItem)?.Title))
             .Aggregate("", (current, item) => current + item);
 
-        result = FieldTags.VerbControlTemplate.Replace(FieldTags.GetPlaceMarker(1), result);
+        result = PublicConst.EstonianDeckTemplates["VerbControlTemplate"].Replace(
+            FieldTags.GetPlaceMarker(1),
+            result);
         return result;
     }
 
@@ -27,12 +29,14 @@ public class SpeechPartGovernmentCopyStrategy : BaseCopyStrategy
 
         var result = data
             .Select(verbControl =>
-                FieldTags.VerbControlItemTemplate.Replace(
+                PublicConst.EstonianDeckTemplates["VerbControlItemTemplate"].Replace(
                     FieldTags.GetPlaceMarker(1),
                     verbControl))
             .Aggregate("", (current, item) => current + item);
 
-        result = FieldTags.VerbControlTemplate.Replace(FieldTags.GetPlaceMarker(1), result);
+        result = PublicConst.EstonianDeckTemplates["VerbControlTemplate"].Replace(
+            FieldTags.GetPlaceMarker(1),
+            result);
         return result;
     }
 }

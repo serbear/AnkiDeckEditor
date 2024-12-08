@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace AnkiDeckEditor;
 
 public struct PublicConst
@@ -13,6 +15,8 @@ public struct PublicConst
     public const string LongDashHtmlCode = "&mdash;";
 
     public const string PasteTextBoxMainTextBoxName = "MainTextBox";
+
+    public static Dictionary<string, string>? EstonianDeckTemplates = null!;
 }
 
 /// <summary>

@@ -18,7 +18,7 @@ public class SpeechPartCopyStrategy : BaseCopyStrategy
 
     public override string DoCopySpeechPart(SpeechPartToggleItem speechPartToggleItem)
     {
-        var result = FieldTags.SpeechPartTemplate
+        var result = PublicConst.EstonianDeckTemplates["SpeechPartTemplate"]
             .Replace(FieldTags.GetPlaceMarker(1), speechPartToggleItem!.Title)
             .Replace(FieldTags.GetPlaceMarker(2), speechPartToggleItem.Translation);
 

@@ -7,10 +7,9 @@ public class WordFormsCopyStrategy : BaseCopyStrategy
 {
     private readonly Dictionary<object, string> _tagTemplates = new()
     {
-        { typeof(NonVerbWordFormCollection), FieldTags.SimpleWordItemsWithSseFormTemplate },
-        { typeof(VerbWordFormCollection), FieldTags.VerbItemsTemplate }
+        { typeof(NonVerbWordFormCollection), PublicConst.EstonianDeckTemplates["SimpleWordItemsWithSseFormTemplate"] },
+        { typeof(VerbWordFormCollection), PublicConst.EstonianDeckTemplates["VerbItemsTemplate"] }
     };
-
 
     public override string DoCopyWordForms(WordFormsCollectionBase data)
     {
@@ -26,7 +25,7 @@ public class WordFormsCopyStrategy : BaseCopyStrategy
             wordForms = wordForms.Replace(FieldTags.GetPlaceMarker(fieldIndex), replacement);
         }
 
-        var result = FieldTags.SimpleWordTemplate
+        var result = PublicConst.EstonianDeckTemplates["SimpleWordTemplate"]
             .Replace(FieldTags.GetPlaceMarker(1), wordForms)
             .Replace("\n", "");
 

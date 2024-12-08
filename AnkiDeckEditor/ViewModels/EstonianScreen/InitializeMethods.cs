@@ -71,6 +71,7 @@ public partial class EstonianScreenViewModel
     private void InitializeCollections()
     {
         LoadSpeechPartGovernmentList();
+        PublicConst.EstonianDeckTemplates =    CollectionLoader.LoadFieldTags();
 
         SpeechPartItems = CollectionLoader.LoadSpeechParts();
 

@@ -37,7 +37,7 @@ public static class Common
 
         // Mark word by tag
         foreach (var i in data.Item2)
-            resultBuilder[i] = FieldTags.SelectedEntityTemplate.Replace(
+            resultBuilder[i] = PublicConst.EstonianDeckTemplates["SelectedEntityTemplate"].Replace(
                 FieldTags.GetPlaceMarker(1),
                 resultBuilder[i]);
 
@@ -58,8 +58,9 @@ public static class Common
 
             // If this is a word, not a punctuation mark.
             if (!punctuationIndexes.Contains(i))
-                separatedWords[i] = FieldTags.SelectedEntityTemplate.Replace(
-                    FieldTags.GetPlaceMarker(1), separatedWords[i]);
+                separatedWords[i] = PublicConst.EstonianDeckTemplates["SelectedEntityTemplate"].Replace(
+                    FieldTags.GetPlaceMarker(1),
+                    separatedWords[i]);
 
         result = string.Join("", separatedWords);
 
@@ -74,6 +75,8 @@ public static class Common
             .AddSpaceAfterClosePunctuation()
             .RemoveRightSpaceClosePunctuation()
             .RemoveLeftSpaceClosePunctuation();
-        return FieldTags.TranslationOriginalTemplate.Replace(FieldTags.GetPlaceMarker(1), sm.ResultString);
+        return PublicConst.EstonianDeckTemplates["TranslationOriginalTemplate"].Replace(
+            FieldTags.GetPlaceMarker(1),
+            sm.ResultString);
     }
 }
