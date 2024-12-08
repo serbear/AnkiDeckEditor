@@ -1,17 +1,22 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using AnkiDeckEditor.Libs;
 using AnkiDeckEditor.Models;
 
 namespace AnkiDeckEditor.Services;
 
-// todo: где хранить коллекции? 
 public static class CollectionLoader
 {
+    private const string APPLICATION_NAME = "AnkiDeckEditor";
+    private const string SPEECH_PART_GOVERNMENT_JSON = "speech_part_government.json";
+    private const string SPEECH_PART_JSON = "speech_part.json";
+    private const string FIELD_TEMPLATES_JSON = "field_templates.json";
+
     public static ObservableCollection<ToggleItem> LoadVerbControls()
     {
-        const string FILE_PATH = "/home/sergei/Developments/AnkiDeckEditor/AnkiDeckEditor/speech_part_government.json";
-        var collectionArray = JsonFileReader.Read<string[]>(FILE_PATH);
+        var collectionArray = JsonFileReader.Read<string[]>(
+            Path.ConfigPath(APPLICATION_NAME, SPEECH_PART_GOVERNMENT_JSON));
 
         if (collectionArray is { Length: 0 })
         {
@@ -26,14 +31,14 @@ public static class CollectionLoader
 
     public static ObservableCollection<SpeechPartToggleItem>? LoadSpeechParts()
     {
-        const string FILE_PATH = "/home/sergei/Developments/AnkiDeckEditor/AnkiDeckEditor/speech_part.json";
-        return JsonFileReader.Read<ObservableCollection<SpeechPartToggleItem>>(FILE_PATH);
+        return JsonFileReader.Read<ObservableCollection<SpeechPartToggleItem>>(
+            Path.ConfigPath(APPLICATION_NAME, SPEECH_PART_JSON));
     }
 
     public static Dictionary<string, string>? LoadFieldTags()
     {
-        const string FILE_PATH = "/home/sergei/Developments/AnkiDeckEditor/AnkiDeckEditor/field_templates.json";
-        return JsonFileReader.Read<Dictionary<string, string>>(FILE_PATH);
+        return JsonFileReader.Read<Dictionary<string, string>>(
+            Path.ConfigPath(APPLICATION_NAME, FIELD_TEMPLATES_JSON));
     }
 }
 
