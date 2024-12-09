@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+             x:Class="AnkiDeckEditor.Views.Dialogs.ExportCollectionDialog">
+    <StackPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Bounds.Width}">
+        <TextBlock>
+            Коллекция не была импортирована.
+            Импортировать коллекцию?
+        </TextBlock>
+        <StackPanel Orientation="Horizontal">
+            <Button IsDefault="True"
+                    Content="Yes"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                    AncestorType=dialogHostAvalonia:DialogHost}, Path=CloseDialogCommand}"
+                    CommandParameter="{DynamicResource True}" />
+            <Button IsCancel="True"
+                    Content="No"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                    AncestorType=dialogHostAvalonia:DialogHost}, Path=CloseDialogCommand}"
+                    CommandParameter="{DynamicResource False}" />
+        </StackPanel>
+    </StackPanel>
+    <UserControl.Styles>
+        <Style Selector="StackPanel, TextBlock, Button">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Styles>
+</UserControl>

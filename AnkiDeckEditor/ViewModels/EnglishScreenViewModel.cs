@@ -1,5 +1,5 @@
 namespace AnkiDeckEditor.ViewModels;
 
-public class EnglishScreenViewModel : ViewModelBase
+public class EnglishScreenViewModel : DeckScreenViewModel
 {
 }

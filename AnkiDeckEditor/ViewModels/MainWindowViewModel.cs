@@ -21,18 +21,18 @@ public class MainWindowViewModel : ViewModelBase
     private async void ShutdownApplicationExecute()
     {
         // Ask user for exit confirmation.
-        var dialogResult = (bool)(await DialogHost.Show(new ExitDialog(), PublicConst.MainDialogHost))!;
+        // var dialogResult = (bool)(await DialogHost.Show(new ExitDialog(), PublicConst.MainDialogHost))!;
 
         // Other values - Exit is not confirmed.
-        bool[] checks =
-        [
-            dialogResult,
-            Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime
-        ];
+        // bool[] checks =
+        // [
+        // dialogResult,
+        // Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime
+        // ];
 
         // Check the user's answer.
         // True, True - User has confirmed exit.
-        if (checks is not [true, true]) return;
+        // if (checks is not [true, true]) return;
         ((ClassicDesktopStyleApplicationLifetime)Application.Current?.ApplicationLifetime!).Shutdown();
     }
 }

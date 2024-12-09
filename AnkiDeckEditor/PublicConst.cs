@@ -16,6 +16,7 @@ public struct PublicConst
 
     public const string PasteTextBoxMainTextBoxName = "MainTextBox";
 
+    // todo: not a constant.
     public static Dictionary<string, string>? EstonianDeckTemplates = null!;
 }
 

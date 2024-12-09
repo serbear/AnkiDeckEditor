@@ -6,8 +6,7 @@ using System.Text;
 using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services.FieldsCopy;
-using AnkiDeckEditor.Views.Dialogs;
-using DialogHostAvalonia;
+
 
 namespace AnkiDeckEditor.Services;
 
@@ -17,12 +16,20 @@ public static class DeckExporter
     private static (string, List<int>) LiteraryTranslationContext { get; set; }
     private static (string, List<int>) OriginalTextContext { get; set; }
 
-    public static async void ExportCollection(
+    public static bool ExportCollection(
         ObservableCollection<EstonianCardRecord> cardCollectionItems,
         Dictionary<StrategyNames, string?> copyStrategyDict)
     {
+        var sb = PrepareFileContent(cardCollectionItems, copyStrategyDict);
+        return SaveFile(sb);
+    }
+
+    private static StringBuilder PrepareFileContent(
+        ObservableCollection<EstonianCardRecord> cardCollectionItems,
+        IReadOnlyDictionary<StrategyNames, string?> copyStrategyDict)
+    {
         var sb = new StringBuilder();
-        const string CARD_SEPARATOR = "\t";
+        const char CARD_SEPARATOR = '\t';
 
         AddFileHeader(ref sb);
 
@@ -65,25 +72,22 @@ public static class DeckExporter
                 sb.Append(CARD_SEPARATOR);
             }
 
-            sb.Append("\n");
+            sb.Append('\n');
         }
 
-        SaveFile(sb);
-
-        // Show the export result message.
-
-        var dialogResult = (bool)(await DialogHost.Show(new ExportResultDialog(), PublicConst.MainDialogHost))!;
-        if (dialogResult)
-        {
-        }
+        return sb;
     }
 
-    private static void SaveFile(StringBuilder sb)
+    private static bool SaveFile(StringBuilder sb)
     {
         // save to file. 
         // todo: settings: add or rewrite.
 
         const string FILE_PATH = "example.csv";
+
+        var result = true;
+
+        // todo: save dialog
 
         try
         {
@@ -92,9 +96,13 @@ public static class DeckExporter
         }
         catch (Exception ex)
         {
+            result = false;
             Console.WriteLine($"An error occurred: {ex.Message}");
-        }    
+        }
+
+        return result;
     }
+
     private static void AddFileHeader(ref StringBuilder builder)
     {
         const string SEPARATOR_NAME = "tab";

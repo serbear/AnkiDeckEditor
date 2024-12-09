@@ -12,17 +12,21 @@ using AnkiDeckEditor.Services.FieldsCopy;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using AnkiDeckEditor.Views.Dialogs;
+using DialogHostAvalonia;
 
 namespace AnkiDeckEditor.ViewModels.EstonianScreen;
 
-public partial class EstonianScreenViewModel : ViewModelBase
+// Changing the IsCollectionExported flag in the current version of the application:
+// Controlling changes in the number of word cards in the collection.
+
+public partial class EstonianScreenViewModel : DeckScreenViewModel
 {
     private const string CARD_COLLECTION_DATA_GRID_NAME = "CardCollectionDataGrid";
     private const string ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME = "DeckConfigTabControl";
     private const string COLLECTION_COUNTER_NAME = "CollectionCounter";
     private const string COLLECTION_COUNTER_TEXT_BLOCK_NAME = "CollectionCounterValue";
     private EstonianCardRecord? _currentEditCard;
-
     private EditModes _currentOperationalMode;
 
     public EstonianScreenViewModel()
@@ -92,6 +96,9 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
         IsVisibleAddEntityListButton = true;
         IsSaveEntityListButtonEnabled = false;
+
+        IsCollectionExported = CardCollectionItems.Count == 0;
+
         _currentOperationalMode = EditModes.Add;
     }
 
@@ -128,15 +135,28 @@ public partial class EstonianScreenViewModel : ViewModelBase
 
     private void ExitExecute()
     {
-        // todo: Ask for exit
-
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
             lifetime.Shutdown();
     }
 
-    private void ExportFileExecute()
+    private async void ExportFileExecute()
     {
-        DeckExporter.ExportCollection(CardCollectionItems, CopyStrategyDict);
+        var saveResult = DeckExporter.ExportCollection(CardCollectionItems, CopyStrategyDict);
+        IsCollectionExported = saveResult;
+
+        if (saveResult)
+        {
+            // Show the export result message.
+
+            var dialogResult = (bool)(await DialogHost.Show(new ExportResultDialog(), PublicConst.MainDialogHost))!;
+            if (dialogResult)
+            {
+            }
+        }
+        else
+        {
+            Console.WriteLine("Cannot save.");
+        }
     }
 
     private void ClearFormExecute()
@@ -152,10 +172,10 @@ public partial class EstonianScreenViewModel : ViewModelBase
         PropertySetter.Set(ref estonianScreenViewModel, ref newCard);
 
         // Set the speech part and the speech part government checkbox.
-        newCard.SpeechPart = SpeechPartItems.FirstOrDefault(sp => sp.IsChecked.Equals(true));
+        newCard.SpeechPart = SpeechPartItems!.FirstOrDefault(sp => sp.IsChecked.Equals(true));
         // newCard.SpeechPart = SpeechPartItems.FirstOrDefault(sp => sp.IsChecked.Equals(true))?.Title!;
 
-        newCard.SpeechPartGovernment = VerbControlItems
+        newCard.SpeechPartGovernment = VerbControlItems!
             .Where(e => e.IsChecked.Equals(true))
             .Select(e => e.Title).ToList();
 
@@ -204,6 +224,7 @@ public partial class EstonianScreenViewModel : ViewModelBase
         // ...
 
         _currentOperationalMode = EditModes.Add;
+        IsCollectionExported = false;
         CancelEditCommandExecute();
     }
 
@@ -347,5 +368,6 @@ public partial class EstonianScreenViewModel : ViewModelBase
         UpdateIsRemoveCardButtonEnabledFlag();
         UpdateCollectionCounter();
         UpdateExportButtonEnableFlag();
+        IsCollectionExported = true;
     }
 }

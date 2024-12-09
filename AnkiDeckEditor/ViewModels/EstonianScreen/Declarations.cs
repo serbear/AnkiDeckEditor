@@ -72,7 +72,6 @@ public partial class EstonianScreenViewModel
 
     #endregion
 
-
     // Collections
 
     [Reactive] public ObservableCollection<EstonianCardRecord> CardCollectionItems { get; set; } = [];
