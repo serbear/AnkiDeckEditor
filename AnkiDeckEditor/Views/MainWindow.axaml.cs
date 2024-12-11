@@ -1,12 +1,10 @@
 using System;
 using System.ComponentModel;
 using AnkiDeckEditor.ViewModels;
-using AnkiDeckEditor.ViewModels.EstonianScreen;
 using AnkiDeckEditor.Views.Screens;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using AnkiDeckEditor.Views.Dialogs;
-using Avalonia;
 using DialogHostAvalonia;
 
 namespace AnkiDeckEditor.Views;
