@@ -1,5 +1,7 @@
 using System;
+using System.ComponentModel;
 using AnkiDeckEditor.ViewModels;
+using AnkiDeckEditor.ViewModels.EstonianScreen;
 using AnkiDeckEditor.Views.Screens;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -35,27 +37,21 @@ public partial class MainWindow : Window
         _deckTypeSelectScreen!.IsVisible = false;
     }
 
-    private async void OnWindowClosing(object? sender, System.ComponentModel.CancelEventArgs e)
+    private async void OnWindowClosing(object? sender, CancelEventArgs e)
     {
-        if (_currentDeck == null) return;
+        if (_currentDeck == null || _currentDeck.IsCollectionExported) return;
+        
+        e.Cancel = true;
 
-        if (!_currentDeck.IsCollectionExported)
-        {
-            // todo: ask for exporting collection.
+        var dialogResult = (bool)(await DialogHost.Show(new ExportCollectionDialog(), PublicConst.MainDialogHost))!;
 
-            e.Cancel = true;
+        if (!dialogResult) return;
 
-            var dialogResult = (bool)(await DialogHost.Show(new ExportCollectionDialog(), PublicConst.MainDialogHost))!;
+        var result = _currentDeck.ExportDeck();
 
-            if (dialogResult)
-            {
-                // todo: export
-            }
-            else
-            {
-                _currentDeck.IsCollectionExported = true;
-                Close();
-            }
-        }
+        if (!result) return;
+
+        _currentDeck.IsCollectionExported = true;
+        Close();
     }
 }
