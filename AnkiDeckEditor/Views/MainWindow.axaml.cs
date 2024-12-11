@@ -35,10 +35,11 @@ public partial class MainWindow : Window
         _deckTypeSelectScreen!.IsVisible = false;
     }
 
+    [Obsolete("Obsolete")]
     private async void OnWindowClosing(object? sender, CancelEventArgs e)
     {
         if (_currentDeck == null || _currentDeck.IsCollectionExported) return;
-        
+
         e.Cancel = true;
 
         var dialogResult = (bool)(await DialogHost.Show(new ExportCollectionDialog(), PublicConst.MainDialogHost))!;

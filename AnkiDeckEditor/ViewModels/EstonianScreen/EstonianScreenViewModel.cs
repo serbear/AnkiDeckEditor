@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using AnkiDeckEditor.Controls;
 using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Libs;
@@ -139,9 +140,10 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
             lifetime.Shutdown();
     }
 
+    [Obsolete("Obsolete")]
     private async void ExportFileExecute()
     {
-        var saveResult = ExportDeck();
+        var saveResult =  ExportDeck();
 
         // Show the export result message on successful export.
         if (saveResult)
@@ -150,13 +152,21 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
             Console.WriteLine("Cannot save.");
     }
 
+    [Obsolete("Obsolete")]
     public override bool ExportDeck()
     {
         // todo: Various export errors. Show messages.
 
-        var saveResult = DeckExporter.ExportCollection(CardCollectionItems, CopyStrategyDict);
+        var collectionFileName = FileDialogs.GetSaveFilePath();
+
+        // todo: status - no file name.
+        if (collectionFileName.Result == null) return false;
+
+        var saveResult = DeckExporter.ExportCollection(
+            CardCollectionItems, CopyStrategyDict, collectionFileName.Result);
+
         IsCollectionExported = saveResult;
-        
+
         return saveResult;
     }
 

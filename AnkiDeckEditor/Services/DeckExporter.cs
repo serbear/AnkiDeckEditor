@@ -16,12 +16,11 @@ public static class DeckExporter
     private static (string, List<int>) LiteraryTranslationContext { get; set; }
     private static (string, List<int>) OriginalTextContext { get; set; }
 
-    public static bool ExportCollection(
-        ObservableCollection<EstonianCardRecord> cardCollectionItems,
-        Dictionary<StrategyNames, string?> copyStrategyDict)
+    public static bool ExportCollection(ObservableCollection<EstonianCardRecord> cardCollectionItems,
+        Dictionary<StrategyNames, string?> copyStrategyDict, string collectionFileName)
     {
         var sb = PrepareFileContent(cardCollectionItems, copyStrategyDict);
-        return SaveFile(sb);
+        return SaveFile(sb, collectionFileName);
     }
 
     private static StringBuilder PrepareFileContent(
@@ -78,21 +77,16 @@ public static class DeckExporter
         return sb;
     }
 
-    private static bool SaveFile(StringBuilder sb)
+    private static bool SaveFile(StringBuilder sb, string collectionFileName)
     {
-        // save to file. 
         // todo: settings: add or rewrite.
 
-        const string FILE_PATH = "example.csv";
-
         var result = true;
-
-        // todo: save dialog
 
         try
         {
             // todo: возможность записи. доступность директории.
-            File.WriteAllText(FILE_PATH, sb.ToString());
+            File.WriteAllText(collectionFileName, sb.ToString());
         }
         catch (Exception ex)
         {
