@@ -1,37 +1,61 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:AnkiDeckEditor.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AnkiDeckEditor.Views.Screens.DeckTypeSelectScreen"
              x:DataType="vm:MainWindowViewModel"
              x:CompileBindings="True">
-
     <Grid ColumnDefinitions="*"
           RowDefinitions="*,*,*,*,*"
           HorizontalAlignment="Center"
           VerticalAlignment="Center">
-        <TextBlock Text="Anki Deck Editor"
-                   Grid.Column="0"
-                   Grid.Row="0" />
-        <TextBlock Text="Выберите тип колоды:"
-                   Grid.Column="0"
-                   Grid.Row="1" />
+        <TextBlock Grid.Column="0"
+                   Grid.Row="0"
+                   HorizontalAlignment="Center"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Foreground="#F2E9E4"
+                   Text="Anki Deck Editor" />
+        <TextBlock Grid.Column="0"
+                   Grid.Row="1"
+                   HorizontalAlignment="Center"
+                   Margin="0 64 0 0"
+                   Foreground="#F2E9E4"
+                   FontWeight="Light"
+                   Text="Выберите тип колоды:" />
         <!-- <Button HorizontalAlignment="Center" -->
         <!--         Content="Английский язык" -->
         <!--         Grid.Column="0" -->
         <!--         Grid.Row="2" -->
         <!--         Click="ShowEnglishScreenButton_OnClick" /> -->
         <Button HorizontalAlignment="Center"
-                Content="Эстонский язык"
                 Grid.Column="0"
                 Grid.Row="3"
-                Click="ShowEstonianScreenButton_OnClick" />
+                Click="ShowEstonianScreenButton_OnClick"
+                Margin="0 32 0 0"
+                Background="#4A4E69">
+            <Button.Content>
+                <StackPanel Orientation="Vertical">
+                    <Image Source="avares://AnkiDeckEditor/Assets/estonian_flag.png"
+                           Width="64"
+                           Height="64" />
+                    <TextBlock Text="Eesti Keel"
+                               Foreground="#F2E9E4" />
+                </StackPanel>
+            </Button.Content>
+        </Button>
         <Button HorizontalAlignment="Center"
-                Content="Выход"
                 Grid.Column="0"
                 Grid.Row="4"
-                Command="{Binding ShutdownCommand}" />
+                Margin="0 64 0 0"
+                Background="#4A4E69"
+                Command="{Binding ShutdownCommand}">
+            <StackPanel Orientation="Vertical">
+                <Image Source="avares://AnkiDeckEditor/Assets/exit.png"
+                       Width="32"
+                       Height="32" />
+                <TextBlock Text="Выход"
+                           Foreground="#F2E9E4" />
+            </StackPanel>
+        </Button>
     </Grid>
 </UserControl>

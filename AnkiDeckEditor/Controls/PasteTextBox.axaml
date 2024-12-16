@@ -1,12 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:AnkiDeckEditor.Converters"
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
-             mc:Ignorable="d"
-             d:DesignWidth="800"
-             d:DesignHeight="450"
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.PasteTextBox"
              x:Name="PasteTextBoxUserControl"
@@ -58,9 +53,12 @@
                     RelativePanel.AlignRightWith="MainTextBox"
                     RelativePanel.AlignVerticalCenterWith="MainTextBox"
                     TabIndex="2"
-                    Content="PASTE"
                     Command="{Binding PasteCommand}"
-                    CommandParameter="{Binding ElementName=MainTextBox}" />
+                    CommandParameter="{Binding ElementName=MainTextBox}">
+                <Image Source="avares://AnkiDeckEditor/Assets/paste.png"
+                       Width="16"
+                       Height="16" />
+            </Button>
         </RelativePanel>
     </Grid>
 </UserControl>

@@ -1,10 +1,28 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
-             xmlns:enums="clr-namespace:AnkiDeckEditor.Enums"
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.AdeToolbar">
+
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#4A4E69" />
+            <Setter Property="Foreground" Value="#F2E9E4" />
+        </Style>
+        <Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#4A4E69" />
+            <Setter Property="Opacity" Value="0.25" />
+        </Style>
+        <Style Selector="Image">
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Height" Value="32" />
+        </Style>
+        <Style Selector="StackPanel">
+            <Setter Property="Orientation" Value="Vertical" />
+        </Style>
+    </UserControl.Styles>
+
     <StackPanel Orientation="Horizontal">
         <!-- Deck... -->
         <Button Name="SelectDeckToolButton"
@@ -15,25 +33,42 @@
         <!-- ...Deck -->
 
         <Button Name="NewDictionaryEntityToolButton"
-                Content="New"
-                Command="{Binding NewEntityCommand}" />
+
+                Command="{Binding NewEntityCommand}">
+            <StackPanel>
+                <Image Source="avares://AnkiDeckEditor/Assets/blank.png" />
+                <TextBlock Text="New" />
+            </StackPanel>
+        </Button>
 
         <controls:ToolbarSeparator />
 
         <Button Name="AddEntityListButton"
                 IsEnabled="{Binding IsAddEntityButtonEnabled}"
                 IsVisible="{Binding IsVisibleAddEntityListButton}"
-                Content="Add"
-                Command="{Binding AddListCommand}" />
+                Command="{Binding AddListCommand}">
+            <StackPanel>
+                <Image Source="avares://AnkiDeckEditor/Assets/add.png" />
+                <TextBlock Text="Add" />
+            </StackPanel>
+        </Button>
         <Button Name="SaveEntityListButton"
                 IsEnabled="{Binding IsSaveEntityListButtonEnabled}"
                 IsVisible="{Binding !IsVisibleAddEntityListButton}"
-                Content="Save"
-                Command="{Binding SaveListCommand}" />
+                Command="{Binding SaveListCommand}">
+            <StackPanel>
+                <Image Source="avares://AnkiDeckEditor/Assets/save.png" />
+                <TextBlock Text="Save" />
+            </StackPanel>
+        </Button>
         <Button Name="CancelEditButton"
                 IsVisible="{Binding !IsVisibleAddEntityListButton}"
-                Content="Cancel"
-                Command="{Binding CancelEditCommand}" />
+                Command="{Binding CancelEditCommand}">
+            <StackPanel>
+                <Image Source="avares://AnkiDeckEditor/Assets/undo.png" />
+                <TextBlock Text="Cancel" />
+            </StackPanel>
+        </Button>
 
         <!-- Card collection manipulation buttons -->
 
@@ -41,63 +76,40 @@
 
         <Button Name="RemoveEntityListButton"
                 IsEnabled="{Binding IsRemoveCardButtonEnabled}"
-                Content="Remove"
-                Command="{Binding RemoveListCommand}" />
+                Command="{Binding RemoveListCommand}">
+            <StackPanel>
+                <Image Source="avares://AnkiDeckEditor/Assets/remove.png" />
+                <TextBlock Text="Remove" />
+            </StackPanel>
+        </Button>
         <Button Name="ClearCardCollectionButton"
                 IsEnabled="{Binding IsClearCardCollectionButtonEnabled}"
-                Content="Clear"
-                Command="{Binding ClearCardCollectionCommand}" />
+                Command="{Binding ClearCardCollectionCommand}">
+            <StackPanel>
+                <Image Source="avares://AnkiDeckEditor/Assets/clear.png" />
+                <TextBlock Text="Clear" />
+            </StackPanel>
+        </Button>
 
         <controls:ToolbarSeparator />
 
-        <!-- Field copy menu -->
-        <Button Name="ActionsButton"
-                IsVisible="False"
-                Content="Copy Field">
-            <Button.Flyout>
-                <MenuFlyout Placement="BottomEdgeAlignedLeft">
-                    <!-- todo: refact: Меню, как коллекция.  -->
-                    <MenuItem Header="Словарная статья"
-                              Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="{x:Static enums:StrategyNames.VocabularyEntry}" />
-                    <MenuItem Header="Дословный перевод"
-                              Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="{x:Static enums:StrategyNames.LiteralTranslation}" />
-                    <MenuItem Header="Литературный перевод"
-                              Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="{x:Static enums:StrategyNames.LiteraryTranslation}" />
-                    <MenuItem Header="Оригинал"
-                              Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="{x:Static enums:StrategyNames.OriginalText}" />
-                    <MenuItem Header="Часть речи"
-                              Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="{x:Static enums:StrategyNames.SpeechPart}" />
-                    <MenuItem Header="Формы слова"
-                              IsVisible="{Binding IsWordFormsTabItemVisible}"
-                              Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="{x:Static enums:StrategyNames.NonVerbWordForms}" />
-                    <MenuItem Header="Формы глагола"
-                              IsVisible="{Binding IsVerbFormsTabItemVisible}"
-                              Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="{x:Static enums:StrategyNames.VerbWordForms}" />
-                    <MenuItem Header="Управление частью речи"
-                              Command="{Binding CopyFieldClipboardCommand}"
-                              CommandParameter="{x:Static enums:StrategyNames.SpeechPartGovernment}" />
-                </MenuFlyout>
-            </Button.Flyout>
-        </Button>
-
         <Button Name="ExportFileButton"
-                Content="Export"
-                Command="{Binding ExportFileCommand}" 
-                IsEnabled="{Binding IsExportButtonEnabled}"
-                />
+                Command="{Binding ExportFileCommand}"
+                IsEnabled="{Binding IsExportButtonEnabled}">
+            <StackPanel>
+                <Image Source="avares://AnkiDeckEditor/Assets/export.png" />
+                <TextBlock Text="Export" />
+            </StackPanel>
+        </Button>
 
         <controls:ToolbarSeparator />
 
         <Button Name="ExitButton"
-                Content="Exit"
-                Command="{Binding ExitCommand}"
-                />
+                Command="{Binding ExitCommand}">
+            <StackPanel>
+                <Image Source="avares://AnkiDeckEditor/Assets/exit.png" />
+                <TextBlock Text="Exit" />
+            </StackPanel>
+        </Button>
     </StackPanel>
 </UserControl>

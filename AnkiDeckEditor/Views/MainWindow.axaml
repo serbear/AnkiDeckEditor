@@ -16,7 +16,8 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="AnkiDeckEditor"
         Width="1024"
-        Height="768">
+        Height="768"
+        Background="#4A4E69">
 
     <dialogHostAvalonia:DialogHost Identifier="MainDialogHost"
                                    DialogMargin="0"
