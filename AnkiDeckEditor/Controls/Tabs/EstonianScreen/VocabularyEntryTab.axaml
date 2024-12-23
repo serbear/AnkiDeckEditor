@@ -4,7 +4,10 @@
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.VocabularyEntryTab">
-    <StackPanel Orientation="Vertical">
+
+    <StackPanel x:Name="MainStackPanel"
+                Orientation="Vertical"
+                VerticalAlignment="Center">
 
         <!-- The vocabulary entry title -->
 
@@ -14,24 +17,36 @@
 
         <!-- Parts' of speech checkboxes -->
 
-        <TextBlock Text="Часть речи:" />
-        <WrapPanel Orientation="Horizontal">
-            <ItemsRepeater ItemsSource="{Binding SpeechPartItems}">
-                <ItemsRepeater.Layout>
-                    <StackLayout Spacing="0"
-                                 Orientation="Horizontal" />
-                </ItemsRepeater.Layout>
-                <ItemsRepeater.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox IsChecked="{Binding IsChecked}"
-                                      Content="{Binding Title}"
-                                      Tag="{Binding VerbType}"
-                                      IsCheckedChanged="SpeechPartCheckBox_OnIsCheckedChanged" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsRepeater.ItemTemplate>
-            </ItemsRepeater>
-        </WrapPanel>
+        <Grid ColumnDefinitions="*,Auto,*"
+              RowDefinitions="Auto,Auto"
+              Margin="-32 0 0 0">
+
+            <TextBlock Grid.Column="1"
+                       Grid.Row="0"
+                       Text="Часть речи:"
+                       Margin="0 32 0 16" />
+
+            <WrapPanel Grid.Column="1"
+                       Grid.Row="1"
+                       Orientation="Vertical">
+
+                <ItemsRepeater ItemsSource="{Binding SpeechPartItems}">
+                    <ItemsRepeater.Layout>
+                        <StackLayout Spacing="0"
+                                     Orientation="Vertical" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding IsChecked}"
+                                          Content="{Binding Title}"
+                                          Tag="{Binding VerbType}"
+                                          IsCheckedChanged="SpeechPartCheckBox_OnIsCheckedChanged" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </WrapPanel>
+        </Grid>
     </StackPanel>
 </UserControl>

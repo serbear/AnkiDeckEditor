@@ -3,27 +3,41 @@
              xmlns:controls="clr-namespace:AnkiDeckEditor.Controls"
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              x:DataType="estonianScreen:EstonianScreenViewModel"
-             x:Class="AnkiDeckEditor.Controls.AdeToolbar">
+             x:Class="AnkiDeckEditor.Controls.AdeToolbar"
+             Background="#22223B">
 
     <UserControl.Styles>
         <Style Selector="Button">
-            <Setter Property="Background" Value="#4A4E69" />
-            <Setter Property="Foreground" Value="#F2E9E4" />
+            <Setter Property="Background"
+                    Value="#22223B" />
+            <Setter Property="Foreground"
+                    Value="#F2E9E4" />
+            <Setter Property="Width"
+                    Value="72" />
         </Style>
         <Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background" Value="#4A4E69" />
-            <Setter Property="Opacity" Value="0.25" />
+            <Setter Property="Background"
+                    Value="#22223B" />
+            <Setter Property="Opacity"
+                    Value="0.25" />
         </Style>
         <Style Selector="Image">
-            <Setter Property="Width" Value="32" />
-            <Setter Property="Height" Value="32" />
+            <Setter Property="Width"
+                    Value="32" />
+            <Setter Property="Height"
+                    Value="32" />
         </Style>
         <Style Selector="StackPanel">
-            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="Orientation"
+                    Value="Vertical" />
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="HorizontalAlignment"
+                    Value="Center" />
         </Style>
     </UserControl.Styles>
 
-    <StackPanel Orientation="Horizontal">
+    <StackPanel Orientation="Vertical">
         <!-- Deck... -->
         <Button Name="SelectDeckToolButton"
                 Content="Deck"
@@ -33,7 +47,6 @@
         <!-- ...Deck -->
 
         <Button Name="NewDictionaryEntityToolButton"
-
                 Command="{Binding NewEntityCommand}">
             <StackPanel>
                 <Image Source="avares://AnkiDeckEditor/Assets/blank.png" />

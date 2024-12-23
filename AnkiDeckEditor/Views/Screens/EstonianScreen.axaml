@@ -11,10 +11,9 @@
              x:CompileBindings="True">
     <DockPanel x:Name="MyDockPanel">
         <!-- Toolbar -->
-        <controls:AdeToolbar DockPanel.Dock="Top" />
+        <controls:AdeToolbar DockPanel.Dock="Left" />
         <!-- Tabs -->
         <TabControl x:Name="DeckConfigTabControl"
-                    DockPanel.Dock="Top"
                     SelectionChanged="DeckConfigTabControl_OnSelectionChanged">
             <!-- MainEntity Anki field -->
             <TabItem Header="Словарная статья">

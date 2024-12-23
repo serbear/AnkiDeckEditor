@@ -4,8 +4,7 @@
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.PasteTextBox"
-             x:Name="PasteTextBoxUserControl"
-             x:CompileBindings="True">
+             x:Name="PasteTextBoxUserControl">
     <Grid ColumnDefinitions="*"
           RowDefinitions="Auto,Auto">
 
@@ -15,7 +14,8 @@
                    Grid.Row="0"
                    Text="{Binding Title, Mode=OneWay, ElementName=PasteTextBoxUserControl}"
                    TabIndex="0"
-                   x:Name="PasteTextBoxTitleLabel">
+                   x:Name="PasteTextBoxTitleLabel"
+                   Margin="0 16 0 8">
             <TextBlock.Resources>
                 <converters:TextToVisibleConverter x:Key="TextToVisibleConverter" />
             </TextBlock.Resources>

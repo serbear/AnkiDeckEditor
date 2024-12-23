@@ -1,10 +1,11 @@
 using System.Collections.ObjectModel;
 using AnkiDeckEditor.Enums;
+using AnkiDeckEditor.Libs;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
 using AnkiDeckEditor.ViewModels.EstonianScreen;
+using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
@@ -17,6 +18,13 @@ public partial class VocabularyEntryTab : UserControl
     {
         InitializeComponent();
         Loaded += OnLoaded;
+        SizeChanged += OnWindowSizeChanged;
+    }
+
+    private void OnWindowSizeChanged(object? sender, SizeChangedEventArgs e)
+    {
+        var offset = Common.GetGoldenGoldenRatioOffset(e.NewSize.Height);
+        this.FindControl<StackPanel>("MainStackPanel")!.Margin = new Thickness(0, 0, 0, offset);
     }
 
     private void OnLoaded(object? sender, RoutedEventArgs e)

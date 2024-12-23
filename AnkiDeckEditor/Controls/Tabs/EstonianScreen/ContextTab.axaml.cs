@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using AnkiDeckEditor.Libs;
 using AnkiDeckEditor.Models;
 using AnkiDeckEditor.Services;
 using AnkiDeckEditor.ViewModels.EstonianScreen;
@@ -21,13 +22,18 @@ public partial class ContextTab : UserControl
     public ContextTab()
     {
         InitializeComponent();
+        SizeChanged += OnWindowSizeChanged;
     }
 
     private void InitializeComponent()
     {
         AvaloniaXamlLoader.Load(this);
     }
-
+    private void OnWindowSizeChanged(object? sender, SizeChangedEventArgs e)
+    {
+        var offset = Common.GetGoldenGoldenRatioOffset(e.NewSize.Height);
+        this.FindControl<StackPanel>("ContextStackPanel")!.Margin = new Thickness(0, 0, 0, offset);
+    }
     protected override void OnLoaded(RoutedEventArgs routedEventArgs)
     {
         var pasteTextBoxes = FieldHelper.GetChildrenList<PasteTextBox>(this);

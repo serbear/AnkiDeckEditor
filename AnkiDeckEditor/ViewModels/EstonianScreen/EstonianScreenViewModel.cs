@@ -14,7 +14,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using AnkiDeckEditor.Views.Dialogs;
+using Avalonia.Controls.Templates;
 using DialogHostAvalonia;
+using ReactiveUI.Fody.Helpers;
 
 namespace AnkiDeckEditor.ViewModels.EstonianScreen;
 
@@ -50,6 +52,8 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
     /// </summary>
     // ReSharper disable once UnusedAutoPropertyAccessor.Local
     private Control FirstFocusControl { get; set; }
+
+    [Reactive] public string VerticalOffset { get; set; }
 
 
     private void OnFieldTextChanged(string newText)
@@ -143,7 +147,7 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
     [Obsolete("Obsolete")]
     private async void ExportFileExecute()
     {
-        var saveResult =  ExportDeck();
+        var saveResult = ExportDeck();
 
         // Show the export result message on successful export.
         if (saveResult)

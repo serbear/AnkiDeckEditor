@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
 using Avalonia.Markup.Xaml;
 
 namespace AnkiDeckEditor.Controls;
@@ -9,14 +8,14 @@ namespace AnkiDeckEditor.Controls;
 public partial class PasteTextBox : UserControl
 {
     private string _text;
+    private string _title;
 
     public static readonly DirectProperty<PasteTextBox, string> TextProperty =
         AvaloniaProperty.RegisterDirect<PasteTextBox, string>("Text", o => o.Text, (o, v) => o.Text = v);
 
-    private string _title;
-
     public static readonly DirectProperty<PasteTextBox, string> TitleProperty =
         AvaloniaProperty.RegisterDirect<PasteTextBox, string>("Title", o => o.Title, (o, v) => o.Title = v);
+
 
     public PasteTextBox()
     {
@@ -27,6 +26,7 @@ public partial class PasteTextBox : UserControl
     {
         AvaloniaXamlLoader.Load(this);
     }
+
 
     public string Text
     {

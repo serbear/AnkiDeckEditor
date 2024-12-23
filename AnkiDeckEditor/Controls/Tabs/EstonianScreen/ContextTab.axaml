@@ -4,7 +4,10 @@
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.ContextTab">
-    <StackPanel>
+    <StackPanel x:Name="ContextStackPanel"
+                Orientation="Vertical"
+                VerticalAlignment="Center"
+                >
         <!-- The PasteTextBox container name must match a key in the EntityContextCollections.  -->
 
         <controls:PasteTextBox x:Name="LiteralTranslationText"
@@ -12,8 +15,9 @@
                                Text="{Binding LiteralTranslationText, Mode=TwoWay}" />
 
         <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
-        <TextBlock Text="Выделение:" />
-
+        <TextBlock Text="Выделение:" 
+                   Margin="0 8 0 8"
+                   Foreground="#9A8C98" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding WordByWordContextSelectedItems}">
                 <ItemsRepeater.Layout>
@@ -41,7 +45,9 @@
                                Text="{Binding LiteraryTranslationText, Mode=TwoWay}" />
 
         <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
-        <TextBlock Text="Выделение:" />
+        <TextBlock Text="Выделение:" 
+                   Margin="0 8 0 8"
+                   Foreground="#9A8C98" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding LiteraryContextSelectedItems}">
                 <ItemsRepeater.Layout>
@@ -69,7 +75,9 @@
                                Text="{Binding OriginalText, Mode=TwoWay}" />
 
         <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
-        <TextBlock Text="Выделение:" />
+        <TextBlock Text="Выделение:" 
+                   Margin="0 8 0 8"
+                   Foreground="#9A8C98" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding OriginalContextSelectedItems}">
                 <ItemsRepeater.Layout>
