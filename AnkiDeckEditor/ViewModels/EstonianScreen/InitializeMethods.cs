@@ -52,6 +52,7 @@ public partial class EstonianScreenViewModel
         this.WhenAnyValue<EstonianScreenViewModel, string>(x => x.OriginalText).Subscribe(OnFieldTextChanged);
     }
 
+
     private void InitializeCommands()
     {
         CopyFieldClipboardCommand = ReactiveCommand.Create<StrategyNames>(CopyDeckFieldClipboardExecute);

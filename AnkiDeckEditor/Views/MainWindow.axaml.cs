@@ -19,8 +19,11 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         _deckTypeSelectScreen = this.FindControl<DeckTypeSelectScreen>("DeckTypeSelectScreen");
+
         _deckTypeSelectScreen!.OnScreenChangedEvent += MyUserControlOnScreenChangedEvent;
         Closing += OnWindowClosing;
+
+        PublicConst.MainWindowReference = this;
     }
 
     private void InitializeComponent()
@@ -38,19 +41,19 @@ public partial class MainWindow : Window
     [Obsolete("Obsolete")]
     private async void OnWindowClosing(object? sender, CancelEventArgs e)
     {
-        if (_currentDeck == null || _currentDeck.IsCollectionExported) return;
+        // if (_currentDeck == null || _currentDeck.IsCollectionExported) return;
 
-        e.Cancel = true;
+        // e.Cancel = true;
 
-        var dialogResult = (bool)(await DialogHost.Show(new ExportCollectionDialog(), PublicConst.MainDialogHost))!;
+        // var dialogResult = (bool)(await DialogHost.Show(new ExportCollectionDialog(), PublicConst.MainDialogHost))!;
 
-        if (!dialogResult) return;
+        // if (!dialogResult) return;
 
-        var result = _currentDeck.ExportDeck();
+        // var result = _currentDeck.ExportDeck().Result;
 
-        if (!result) return;
+        // if (!result) return;
 
-        _currentDeck.IsCollectionExported = true;
-        Close();
+        // _currentDeck.IsCollectionExported = true;
+        // Close();
     }
 }

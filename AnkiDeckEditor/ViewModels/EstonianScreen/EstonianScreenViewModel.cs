@@ -14,7 +14,6 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using AnkiDeckEditor.Views.Dialogs;
-using Avalonia.Controls.Templates;
 using DialogHostAvalonia;
 using ReactiveUI.Fody.Helpers;
 
@@ -29,8 +28,10 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
     private const string ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME = "DeckConfigTabControl";
     private const string COLLECTION_COUNTER_NAME = "CollectionCounter";
     private const string COLLECTION_COUNTER_TEXT_BLOCK_NAME = "CollectionCounterValue";
+
     private EstonianCardRecord? _currentEditCard;
     private EditModes _currentOperationalMode;
+    private bool _saveResult;
 
     public EstonianScreenViewModel()
     {
@@ -55,13 +56,11 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
 
     [Reactive] public string VerticalOffset { get; set; }
 
-
     private void OnFieldTextChanged(string newText)
     {
         if (_currentOperationalMode == EditModes.Add) AddModeTextChanged();
         if (_currentOperationalMode == EditModes.Edit) EditModeTextChanged();
     }
-
 
     private void AddModeTextChanged()
     {
@@ -79,7 +78,6 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
         // of the corresponding vocabulary card field.
         IsSaveEntityListButtonEnabled = FieldHelper.IsFieldsChanged<PasteTextBox>(RootControl, _currentEditCard);
     }
-
 
     private void RemoveListCommandExecute()
     {
@@ -106,7 +104,6 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
 
         _currentOperationalMode = EditModes.Add;
     }
-
 
     private NonVerbWordFormCollection GetNonVerbWordForms()
     {
@@ -138,7 +135,7 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
         ]);
     }
 
-    private void ExitExecute()
+    private static void ExitExecute()
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
             lifetime.Shutdown();
@@ -147,35 +144,44 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
     [Obsolete("Obsolete")]
     private async void ExportFileExecute()
     {
-        var saveResult = ExportDeck();
+        await ExportDeck();
 
         // Show the export result message on successful export.
-        if (saveResult)
+        if (_saveResult)
             _ = (bool)(await DialogHost.Show(new ExportResultDialog(), PublicConst.MainDialogHost))!;
         else
             Console.WriteLine("Cannot save.");
     }
 
     [Obsolete("Obsolete")]
-    public override bool ExportDeck()
+    public override async Task ExportDeck()
     {
         // todo: Various export errors. Show messages.
 
-        var collectionFileName = FileDialogs.GetSaveFilePath();
+        const string FILE_DIALOG_TITLE = "Сохранить коллекцию";
+        const string FILE_TYPE_NAME = "CSV Text Files";
+        const string FILE_TYPE_EXTENSION = "csv";
 
-        // todo: status - no file name.
-        if (collectionFileName.Result == null) return false;
+        var saveFileDialog = new SaveFileDialog
+        {
+            Title = FILE_DIALOG_TITLE,
+            Filters = [new FileDialogFilter { Name = FILE_TYPE_NAME, Extensions = { FILE_TYPE_EXTENSION } }],
+            DefaultExtension = FILE_TYPE_EXTENSION
+        };
 
-        var saveResult = DeckExporter.ExportCollection(
-            CardCollectionItems, CopyStrategyDict, collectionFileName.Result);
+        var filePath = await saveFileDialog.ShowAsync(PublicConst.MainWindowReference!);
 
-        IsCollectionExported = saveResult;
+        if (!string.IsNullOrEmpty(filePath))
+            _saveResult = DeckExporter.ExportCollection(CardCollectionItems, CopyStrategyDict, filePath);
 
-        return saveResult;
+        // todo: no file name actions.
+
+        IsCollectionExported = _saveResult;
     }
 
-    private void ClearFormExecute()
+    private static void ClearFormExecute()
     {
+        // todo: implement
         throw new NotImplementedException();
     }
 
@@ -261,9 +267,9 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
 
     private void ClearContextSelectedItems()
     {
-        WordByWordContextSelectedItems.Clear();
-        LiteraryContextSelectedItems.Clear();
-        OriginalContextSelectedItems.Clear();
+        WordByWordContextSelectedItems?.Clear();
+        LiteraryContextSelectedItems?.Clear();
+        OriginalContextSelectedItems?.Clear();
     }
 
     internal void UpdateIsRemoveCardButtonEnabledFlag()
@@ -343,8 +349,9 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
         ClearAndSwitchVocabularyEntry();
     }
 
-    private void SelectDeckExecute()
+    private static void SelectDeckExecute()
     {
+        // todo: implement
         throw new NotImplementedException();
     }
 

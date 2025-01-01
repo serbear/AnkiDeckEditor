@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Avalonia.Controls;
 
 namespace AnkiDeckEditor;
 
@@ -18,6 +19,8 @@ public struct PublicConst
 
     // todo: not a constant.
     public static Dictionary<string, string>? EstonianDeckTemplates = null!;
+
+    public static Window? MainWindowReference = null;
 }
 
 /// <summary>
