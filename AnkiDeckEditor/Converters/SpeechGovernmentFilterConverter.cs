@@ -15,12 +15,8 @@ public class SpeechGovernmentFilterConverter : IMultiValueConverter
 
         try
         {
-            var totalWidth = values
-                .Skip(1)
-                .OfType<double>()
-                .Sum();
-
-            return (double)values[0]! - totalWidth;
+            // var totalWidth = values.OfType<double>().Sum();
+            return 0;
         }
         catch
         {

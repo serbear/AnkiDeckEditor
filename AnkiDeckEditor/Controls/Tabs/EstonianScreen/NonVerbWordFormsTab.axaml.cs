@@ -16,7 +16,6 @@ public partial class NonVerbWordFormsTab : UserControl
     private void OnWindowSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         // todo: refact: duplicate code.
-
         var offset = Common.GetGoldenGoldenRatioOffset(e.NewSize.Height);
         this.FindControl<StackPanel>("NonVerbWordFormsStackPanel")!.Margin = new Thickness(0, 0, 0, offset);
     }

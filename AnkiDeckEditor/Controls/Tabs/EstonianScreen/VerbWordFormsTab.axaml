@@ -7,108 +7,118 @@
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Name="VerbWordFormsTabUserControl">
 
-    <Grid ColumnDefinitions="*,*"
-          RowDefinitions="*,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
+    <StackPanel x:Name="VerbWordFormsStackPanel"
+                Orientation="Vertical"
+                VerticalAlignment="Center">
 
-        <controls:PasteTextBox Grid.Column="0"
-                               Grid.Row="1"
-                               x:Name="MaInfinitiveWordForm"
-                               Title="MA-инфинитив:"
-                               Text="{Binding MaInfinitiveWordForm, Mode=TwoWay}" />
-        <controls:PasteTextBox Grid.Column="0"
-                               Grid.Row="2"
-                               x:Name="DaInfinitiveWordForm"
-                               Title="DA-инфинитив:"
-                               Text="{Binding DaInfinitiveWordForm, Mode=TwoWay}" />
-        <controls:PasteTextBox Grid.Column="0"
-                               Grid.Row="3"
-                               x:Name="IndicativeMoodWordForm"
-                               Title="Изъявительное наклонение (3 лицо):"
-                               Text="{Binding IndicativeMoodWordForm, Mode=TwoWay}" />
-        <!-- todo: tooltip: страдательное причастие прошедшего времени -->
-        <controls:PasteTextBox Grid.Column="0"
-                               Grid.Row="4"
-                               x:Name="PassiveParticiplePastTenseWordForm"
-                               Title="Причастие (страд., прош.):"
-                               Text="{Binding PassiveParticiplePastTenseWordForm, Mode=TwoWay}" />
-        <controls:PasteTextBox Grid.Column="0"
-                               Grid.Row="5"
-                               x:Name="ThirdPersonPastTenseWordForm"
-                               Title="Изъявительное наклонение (3 лицо, прош.):"
-                               Text="{Binding ThirdPersonPastTenseWordForm, Mode=TwoWay}" />
-        <!-- todo: tooltip: действительное причастие прошедшего времени -->
-        <controls:PasteTextBox Grid.Column="0"
-                               Grid.Row="6"
-                               x:Name="ActiveParticipleWordForm"
-                               Title="Причастие (действ. прош.):"
-                               Text="{Binding ActiveParticipleWordForm, Mode=TwoWay}" />
-        <controls:PasteTextBox Grid.Column="0"
-                               Grid.Row="7"
-                               x:Name="ImperativeMoodSingularWordForm"
-                               Title="Повелительное наклонение (ед.ч.):"
-                               Text="{Binding ImperativeMoodSingularWordForm, Mode=TwoWay}" />
-        <controls:PasteTextBox Grid.Column="0"
-                               Grid.Row="8"
-                               x:Name="PassiveVoicePresentTenseWordForm"
-                               Title="Страдательный залог (наст.):"
-                               Text="{Binding PassiveVoicePresentTenseWordForm, Mode=TwoWay}" />
+        <Grid ColumnDefinitions="*,16,*"
+              RowDefinitions="*,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,*">
 
-        <!-- Part of speech government -->
+            <controls:PasteTextBox Grid.Column="0"
+                                   Grid.Row="1"
+                                   x:Name="MaInfinitiveWordForm"
+                                   Title="MA-инфинитив:"
+                                   Text="{Binding MaInfinitiveWordForm, Mode=TwoWay}" />
+            <controls:PasteTextBox Grid.Column="0"
+                                   Grid.Row="2"
+                                   x:Name="DaInfinitiveWordForm"
+                                   Title="DA-инфинитив:"
+                                   Text="{Binding DaInfinitiveWordForm, Mode=TwoWay}" />
+            <controls:PasteTextBox Grid.Column="0"
+                                   Grid.Row="3"
+                                   x:Name="IndicativeMoodWordForm"
+                                   Title="Изъявительное наклонение (3 лицо):"
+                                   Text="{Binding IndicativeMoodWordForm, Mode=TwoWay}" />
+            <!-- todo: tooltip: страдательное причастие прошедшего времени -->
+            <controls:PasteTextBox Grid.Column="0"
+                                   Grid.Row="4"
+                                   x:Name="PassiveParticiplePastTenseWordForm"
+                                   Title="Причастие (страд., прош.):"
+                                   Text="{Binding PassiveParticiplePastTenseWordForm, Mode=TwoWay}" />
+            <controls:PasteTextBox Grid.Column="0"
+                                   Grid.Row="5"
+                                   x:Name="ThirdPersonPastTenseWordForm"
+                                   Title="Изъявительное наклонение (3 лицо, прош.):"
+                                   Text="{Binding ThirdPersonPastTenseWordForm, Mode=TwoWay}" />
+            <!-- todo: tooltip: действительное причастие прошедшего времени -->
+            <controls:PasteTextBox Grid.Column="0"
+                                   Grid.Row="6"
+                                   x:Name="ActiveParticipleWordForm"
+                                   Title="Причастие (действ. прош.):"
+                                   Text="{Binding ActiveParticipleWordForm, Mode=TwoWay}" />
+            <controls:PasteTextBox Grid.Column="0"
+                                   Grid.Row="7"
+                                   x:Name="ImperativeMoodSingularWordForm"
+                                   Title="Повелительное наклонение (ед.ч.):"
+                                   Text="{Binding ImperativeMoodSingularWordForm, Mode=TwoWay}" />
+            <controls:PasteTextBox Grid.Column="0"
+                                   Grid.Row="8"
+                                   x:Name="PassiveVoicePresentTenseWordForm"
+                                   Title="Страдательный залог (наст.):"
+                                   Text="{Binding PassiveVoicePresentTenseWordForm, Mode=TwoWay}" />
 
-        <Border Grid.Column="1"
-                Grid.Row="0"
-                Grid.RowSpan="11"
-                BorderThickness="1"
-                BorderBrush="red">
+            <!-- Part of speech government -->
 
-            <StackPanel Orientation="Vertical">
+            <Border Grid.Column="2"
+                    Grid.Row="0"
+                    Grid.RowSpan="11"
+                    BorderThickness="1"
+                    BorderBrush="red"
+                           >
 
-                <TextBlock Text="Управление частью речи:"
-                           x:Name="SpeechPartGovernmentTitleLabel"
-                           HorizontalAlignment="Center" />
+                <StackPanel Orientation="Vertical">
 
-                <!-- Filter Buttons -->
-                <controls:SpeechGovernmentFilter Letters="{Binding SpeechGovernmentFilterLetters}"
-                                                 SelectedLetters="{Binding SelectedSpeechGovernmentFilterLetters}"
-                                                 LetterChanged="SpeechGovernmentFilter_OnLetterChanged" />
+                    <TextBlock Text="Управление частью речи:"
+                               x:Name="SpeechPartGovernmentTitleLabel"
+                               HorizontalAlignment="Center"
+                               Margin="0 0 0 16" />
 
-                <ScrollViewer VerticalScrollBarVisibility="Auto"
-                              HorizontalScrollBarVisibility="Auto">
+                    <!-- Filter -->
 
-                    <ScrollViewer.Resources>
-                        <converters:SumControlHeightConverter x:Key="SumControlHeightConverter" />
-                    </ScrollViewer.Resources>
+                    <controls:SpeechGovernmentFilter Letters="{Binding SpeechGovernmentFilterLetters}"
+                                                     SelectedLetters="{Binding SelectedSpeechGovernmentFilterLetters}"
+                                                     LetterChanged="SpeechGovernmentFilter_OnLetterChanged" 
+                                                     Margin="0 0 0 16"/>
 
-                    <ScrollViewer.Height>
-                        <MultiBinding Converter="{StaticResource SumControlHeightConverter }">
-                            <!-- Первым элементов должен идти заголовок. 
+                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Auto"
+                                >
+
+                        <ScrollViewer.Resources>
+                            <converters:SumControlHeightConverter x:Key="SumControlHeightConverter" />
+                        </ScrollViewer.Resources>
+
+                        <ScrollViewer.Height>
+                            <MultiBinding Converter="{StaticResource SumControlHeightConverter }">
+                                <!-- Первым элементов должен идти заголовок. 
                             Его высота будет вычитаться из общей суммы высот элементов в массиве. -->
-                            <Binding ElementName="SpeechPartGovernmentTitleLabel" Path="Bounds.Height" />
-                            <Binding ElementName="VerbWordFormsTabUserControl" Path="Bounds.Height" />
-                        </MultiBinding>
-                    </ScrollViewer.Height>
+                                <Binding ElementName="SpeechPartGovernmentTitleLabel" Path="Bounds.Height" />
+                                <Binding ElementName="VerbWordFormsTabUserControl" Path="Bounds.Height" />
+                            </MultiBinding>
+                        </ScrollViewer.Height>
 
-                    <ItemsRepeater x:Name="SpeechPartGovernmentFilterItems"
-                                   Margin="10,0,0,0"
-                                   ItemsSource="{Binding VerbControlItems}">
-                        <ItemsRepeater.Layout>
-                            <StackLayout Spacing="0"
-                                         Orientation="Vertical" />
-                        </ItemsRepeater.Layout>
-                        <ItemsRepeater.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal"
-                                            IsVisible="{Binding IsVisible}">
-                                    <CheckBox IsChecked="{Binding IsChecked}"
-                                              Content="{Binding Title}"
-                                              IsCheckedChanged="ToggleButton_OnIsCheckedChanged" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsRepeater.ItemTemplate>
-                    </ItemsRepeater>
-                </ScrollViewer>
+                        <ItemsRepeater x:Name="SpeechPartGovernmentFilterItems"
+                                       Margin="10,0,0,0"
+                                       ItemsSource="{Binding VerbControlItems}">
+                            <ItemsRepeater.Layout>
+                                <StackLayout Spacing="0"
+                                             Orientation="Vertical" />
+                            </ItemsRepeater.Layout>
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal"
+                                                IsVisible="{Binding IsVisible}">
+                                        <CheckBox IsChecked="{Binding IsChecked}"
+                                                  Content="{Binding Title}"
+                                                  IsCheckedChanged="ToggleButton_OnIsCheckedChanged" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
+                        </ItemsRepeater>
+                    </ScrollViewer>
 
-            </StackPanel>
-        </Border>
-    </Grid>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </StackPanel>
 </UserControl>
