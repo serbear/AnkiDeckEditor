@@ -75,14 +75,19 @@
 
                     <!-- Filter -->
 
-                    <controls:SpeechGovernmentFilter Letters="{Binding SpeechGovernmentFilterLetters}"
+                    <controls:SpeechGovernmentFilter x:Name="SpeechGovernmentFilter"
+                        Letters="{Binding SpeechGovernmentFilterLetters}"
                                                      SelectedLetters="{Binding SelectedSpeechGovernmentFilterLetters}"
                                                      LetterChanged="SpeechGovernmentFilter_OnLetterChanged" 
                                                      Margin="0 0 0 16"/>
 
+                    <!-- Government list -->
+                    
+                    <Border BorderBrush="Chartreuse"
+                                  BorderThickness="1" >
+                        
                     <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  HorizontalScrollBarVisibility="Auto"
-                                >
+                                  HorizontalScrollBarVisibility="Auto" >
 
                         <ScrollViewer.Resources>
                             <converters:SumControlHeightConverter x:Key="SumControlHeightConverter" />
@@ -92,8 +97,11 @@
                             <MultiBinding Converter="{StaticResource SumControlHeightConverter }">
                                 <!-- Первым элементов должен идти заголовок. 
                             Его высота будет вычитаться из общей суммы высот элементов в массиве. -->
-                                <Binding ElementName="SpeechPartGovernmentTitleLabel" Path="Bounds.Height" />
                                 <Binding ElementName="VerbWordFormsTabUserControl" Path="Bounds.Height" />
+                                <Binding ElementName="SpeechPartGovernmentTitleLabel" Path="Bounds.Height" />
+                                <Binding ElementName="SpeechPartGovernmentTitleLabel" Path="Margin.Bottom" />
+                                <Binding ElementName="SpeechGovernmentFilter" Path="Bounds.Height" />
+                                <Binding ElementName="SpeechGovernmentFilter" Path="Margin.Bottom" />
                             </MultiBinding>
                         </ScrollViewer.Height>
 
@@ -116,6 +124,8 @@
                             </ItemsRepeater.ItemTemplate>
                         </ItemsRepeater>
                     </ScrollViewer>
+                        
+                    </Border>
 
                 </StackPanel>
             </Border>

@@ -15,12 +15,10 @@ public class SumControlHeightConverter : IMultiValueConverter
 
         try
         {
-            var totalHeight = values
-                .Skip(1)
-                .OfType<double>()
-                .Sum();
+            var totalHeight = values.OfType<double>().Sum();
+            totalHeight -= (double)values[0]!;
 
-            return totalHeight - (double)values[0]!;
+            return (double)values[0]! - totalHeight - 16;
         }
         catch
         {
