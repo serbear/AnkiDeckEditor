@@ -13,12 +13,13 @@ public class SumControlHeightConverter : IMultiValueConverter
     {
         if (values == null || values.Count == 0) return AvaloniaProperty.UnsetValue;
 
+        const double BOTTOM_MARGIN = 16;
         try
         {
             var totalHeight = values.OfType<double>().Sum();
             totalHeight -= (double)values[0]!;
 
-            return (double)values[0]! - totalHeight - 16;
+            return (double)values[0]! - totalHeight - BOTTOM_MARGIN;
         }
         catch
         {

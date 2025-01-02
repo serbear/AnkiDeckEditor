@@ -63,8 +63,7 @@
                     Grid.Row="0"
                     Grid.RowSpan="11"
                     BorderThickness="1"
-                    BorderBrush="red"
-                           >
+                    BorderBrush="red">
 
                 <StackPanel Orientation="Vertical">
 
@@ -76,55 +75,53 @@
                     <!-- Filter -->
 
                     <controls:SpeechGovernmentFilter x:Name="SpeechGovernmentFilter"
-                        Letters="{Binding SpeechGovernmentFilterLetters}"
+                                                     Letters="{Binding SpeechGovernmentFilterLetters}"
                                                      SelectedLetters="{Binding SelectedSpeechGovernmentFilterLetters}"
-                                                     LetterChanged="SpeechGovernmentFilter_OnLetterChanged" 
-                                                     Margin="0 0 0 16"/>
+                                                     LetterChanged="SpeechGovernmentFilter_OnLetterChanged"
+                                                     Margin="0 0 0 16" />
 
                     <!-- Government list -->
-                    
+
                     <Border BorderBrush="Chartreuse"
-                                  BorderThickness="1" >
-                        
-                    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                  HorizontalScrollBarVisibility="Auto" >
+                            BorderThickness="1">
 
-                        <ScrollViewer.Resources>
-                            <converters:SumControlHeightConverter x:Key="SumControlHeightConverter" />
-                        </ScrollViewer.Resources>
+                        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Auto">
 
-                        <ScrollViewer.Height>
-                            <MultiBinding Converter="{StaticResource SumControlHeightConverter }">
-                                <!-- Первым элементов должен идти заголовок. 
-                            Его высота будет вычитаться из общей суммы высот элементов в массиве. -->
-                                <Binding ElementName="VerbWordFormsTabUserControl" Path="Bounds.Height" />
-                                <Binding ElementName="SpeechPartGovernmentTitleLabel" Path="Bounds.Height" />
-                                <Binding ElementName="SpeechPartGovernmentTitleLabel" Path="Margin.Bottom" />
-                                <Binding ElementName="SpeechGovernmentFilter" Path="Bounds.Height" />
-                                <Binding ElementName="SpeechGovernmentFilter" Path="Margin.Bottom" />
-                            </MultiBinding>
-                        </ScrollViewer.Height>
+                            <ScrollViewer.Resources>
+                                <converters:SumControlHeightConverter x:Key="SumControlHeightConverter" />
+                            </ScrollViewer.Resources>
 
-                        <ItemsRepeater x:Name="SpeechPartGovernmentFilterItems"
-                                       Margin="10,0,0,0"
-                                       ItemsSource="{Binding VerbControlItems}">
-                            <ItemsRepeater.Layout>
-                                <StackLayout Spacing="0"
-                                             Orientation="Vertical" />
-                            </ItemsRepeater.Layout>
-                            <ItemsRepeater.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal"
-                                                IsVisible="{Binding IsVisible}">
-                                        <CheckBox IsChecked="{Binding IsChecked}"
-                                                  Content="{Binding Title}"
-                                                  IsCheckedChanged="ToggleButton_OnIsCheckedChanged" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ItemsRepeater.ItemTemplate>
-                        </ItemsRepeater>
-                    </ScrollViewer>
-                        
+                            <ScrollViewer.Height>
+                                <MultiBinding Converter="{StaticResource SumControlHeightConverter }">
+                                    <Binding ElementName="VerbWordFormsTabUserControl" Path="Bounds.Height" />
+                                    <Binding ElementName="SpeechPartGovernmentTitleLabel" Path="Bounds.Height" />
+                                    <Binding ElementName="SpeechPartGovernmentTitleLabel" Path="Margin.Bottom" />
+                                    <Binding ElementName="SpeechGovernmentFilter" Path="Bounds.Height" />
+                                    <Binding ElementName="SpeechGovernmentFilter" Path="Margin.Bottom" />
+                                </MultiBinding>
+                            </ScrollViewer.Height>
+
+                            <ItemsRepeater x:Name="SpeechPartGovernmentFilterItems"
+                                           Margin="10 0 0 0"
+                                           ItemsSource="{Binding VerbControlItems}">
+                                <ItemsRepeater.Layout>
+                                    <StackLayout Spacing="0"
+                                                 Orientation="Vertical" />
+                                </ItemsRepeater.Layout>
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal"
+                                                    IsVisible="{Binding IsVisible}">
+                                            <CheckBox IsChecked="{Binding IsChecked}"
+                                                      Content="{Binding Title}"
+                                                      IsCheckedChanged="ToggleButton_OnIsCheckedChanged" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                            </ItemsRepeater>
+                        </ScrollViewer>
+
                     </Border>
 
                 </StackPanel>
