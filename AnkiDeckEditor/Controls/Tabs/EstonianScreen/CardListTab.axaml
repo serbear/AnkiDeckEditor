@@ -23,7 +23,8 @@
                   Background="{Binding Background, ElementName=PropertyDonorTextBox}"
                   CornerRadius="{Binding CornerRadius, ElementName=PropertyDonorTextBox}"
                   DoubleTapped="InputElement_OnDoubleTapped"
-                  Tapped="CardCollectionDataGrid_OnTapped">
+                  Tapped="CardCollectionDataGrid_OnTapped"
+                  Margin="0 16 0 0">
             <DataGrid.Styles>
                 <!-- Disable the data grid cell border on focus. -->
                 <Style Selector="DataGrid:focus DataGridCell:current /template/ Grid#FocusVisual">
@@ -41,7 +42,7 @@
         </DataGrid>
         <TextBlock Grid.Column="1"
                    Grid.Row="1"
-                   Text="Double click to edit."
+                   Text="Двойной щелчок для правки карточки."
                    Margin="0 16 0 16" />
     </Grid>
 </UserControl>

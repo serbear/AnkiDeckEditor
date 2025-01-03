@@ -10,7 +10,7 @@
         Title="AnkiDeckEditor"
         Width="1024"
         Height="768"
-        Background="#4A4E69">
+        Background="#524C42">
 
     <dialogHostAvalonia:DialogHost Identifier="MainDialogHost"
                                    DialogMargin="0"

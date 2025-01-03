@@ -5,6 +5,39 @@
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.PasteTextBox"
              x:Name="PasteTextBoxUserControl">
+    
+   
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#32012F" />
+        </Style>
+        <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#F97300" />
+        </Style>
+        
+        
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="#E2DFD0"/> 
+        </Style>
+
+        
+        <Style Selector="TextBox:focus /template/ Border">
+            <Setter Property="Background">
+                <SolidColorBrush Color="#E2DFD0"/>
+            </Setter>
+        </Style>
+        
+        <Style Selector="TextBox:pointerover /template/ Border"> 
+            <Setter Property="Background">
+                <SolidColorBrush Color="#E2DFD0"/>
+            </Setter>
+        </Style> 
+        
+    </UserControl.Styles> 
+    
+    
+    
+    
     <Grid ColumnDefinitions="*"
           RowDefinitions="Auto,Auto">
 
@@ -36,7 +69,8 @@
                      AcceptsReturn="False"
                      TabIndex="1"
                      TextChanged="MainTextBox_OnTextChanged"
-                     Text="{Binding Text, Mode=TwoWay, ElementName=PasteTextBoxUserControl}">
+                     Text="{Binding Text, Mode=TwoWay, ElementName=PasteTextBoxUserControl}"
+                    >
                 <TextBox.Resources>
                     <converters:WidthToPaddingConverter x:Key="WidthToPaddingConverter" />
                 </TextBox.Resources>
@@ -54,7 +88,7 @@
                     RelativePanel.AlignVerticalCenterWith="MainTextBox"
                     TabIndex="2"
                     Command="{Binding PasteCommand}"
-                    CommandParameter="{Binding ElementName=MainTextBox}">
+                    CommandParameter="{Binding ElementName=MainTextBox}" >
                 <Image Source="avares://AnkiDeckEditor/Assets/paste.png"
                        Width="16"
                        Height="16" />

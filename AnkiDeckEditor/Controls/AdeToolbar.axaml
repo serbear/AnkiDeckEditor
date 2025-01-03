@@ -4,43 +4,41 @@
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.AdeToolbar"
-             Background="#22223B">
+             Background="#32012F">
 
     <UserControl.Styles>
         <Style Selector="Button">
-            <Setter Property="Background"
-                    Value="#22223B" />
-            <Setter Property="Foreground"
-                    Value="#F2E9E4" />
-            <Setter Property="Width"
-                    Value="72" />
+            <Setter Property="Background" Value="#32012F" />
+            <Setter Property="Foreground" Value="#E2DFD0" />
+            <Setter Property="Width" Value="80" />
+            <Setter Property="Margin" Value="4 4 4 4" />
         </Style>
         <Style Selector="Button:disabled /template/ ContentPresenter#PART_ContentPresenter">
-            <Setter Property="Background"
-                    Value="#22223B" />
-            <Setter Property="Opacity"
-                    Value="0.25" />
+            <Setter Property="Background" Value="#32012F" />
+            <Setter Property="Opacity" Value="0.25" />
         </Style>
+        <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#F97300" />
+            <Setter Property="Foreground" Value="#32012F" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
         <Style Selector="Image">
-            <Setter Property="Width"
-                    Value="32" />
-            <Setter Property="Height"
-                    Value="32" />
+            <Setter Property="Width" Value="32" />
+            <Setter Property="Height" Value="32" />
         </Style>
         <Style Selector="StackPanel">
-            <Setter Property="Orientation"
-                    Value="Vertical" />
+            <Setter Property="Orientation" Value="Vertical" />
         </Style>
         <Style Selector="TextBlock">
-            <Setter Property="HorizontalAlignment"
-                    Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
     </UserControl.Styles>
 
     <StackPanel Orientation="Vertical">
         <!-- Deck... -->
         <Button Name="SelectDeckToolButton"
-                Content="Deck"
+                Content="Колода"
                 Command="{Binding SelectDeckCommand}"
                 IsVisible="False" />
         <controls:ToolbarSeparator IsVisible="False" />
@@ -50,7 +48,7 @@
                 Command="{Binding NewEntityCommand}">
             <StackPanel>
                 <Image Source="avares://AnkiDeckEditor/Assets/blank.png" />
-                <TextBlock Text="New" />
+                <TextBlock Text="Новая" />
             </StackPanel>
         </Button>
 
@@ -62,7 +60,7 @@
                 Command="{Binding AddListCommand}">
             <StackPanel>
                 <Image Source="avares://AnkiDeckEditor/Assets/add.png" />
-                <TextBlock Text="Add" />
+                <TextBlock Text="Добавить" />
             </StackPanel>
         </Button>
         <Button Name="SaveEntityListButton"
@@ -71,7 +69,7 @@
                 Command="{Binding SaveListCommand}">
             <StackPanel>
                 <Image Source="avares://AnkiDeckEditor/Assets/save.png" />
-                <TextBlock Text="Save" />
+                <TextBlock Text="Сохранить" />
             </StackPanel>
         </Button>
         <Button Name="CancelEditButton"
@@ -79,7 +77,7 @@
                 Command="{Binding CancelEditCommand}">
             <StackPanel>
                 <Image Source="avares://AnkiDeckEditor/Assets/undo.png" />
-                <TextBlock Text="Cancel" />
+                <TextBlock Text="Отмена" />
             </StackPanel>
         </Button>
 
@@ -92,7 +90,7 @@
                 Command="{Binding RemoveListCommand}">
             <StackPanel>
                 <Image Source="avares://AnkiDeckEditor/Assets/remove.png" />
-                <TextBlock Text="Remove" />
+                <TextBlock Text="Удалить" />
             </StackPanel>
         </Button>
         <Button Name="ClearCardCollectionButton"
@@ -100,7 +98,7 @@
                 Command="{Binding ClearCardCollectionCommand}">
             <StackPanel>
                 <Image Source="avares://AnkiDeckEditor/Assets/clear.png" />
-                <TextBlock Text="Clear" />
+                <TextBlock Text="Очистить" />
             </StackPanel>
         </Button>
 
@@ -111,7 +109,7 @@
                 IsEnabled="{Binding IsExportButtonEnabled}">
             <StackPanel>
                 <Image Source="avares://AnkiDeckEditor/Assets/export.png" />
-                <TextBlock Text="Export" />
+                <TextBlock Text="Экспорт" />
             </StackPanel>
         </Button>
 
@@ -121,7 +119,7 @@
                 Command="{Binding ExitCommand}">
             <StackPanel>
                 <Image Source="avares://AnkiDeckEditor/Assets/exit.png" />
-                <TextBlock Text="Exit" />
+                <TextBlock Text="Выход" />
             </StackPanel>
         </Button>
     </StackPanel>

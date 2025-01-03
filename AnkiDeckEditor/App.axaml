@@ -5,8 +5,8 @@
     x:CompileBindings="True"
     xmlns:local="using:AnkiDeckEditor"
     xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-    xmlns:system="clr-namespace:System;assembly=System.Runtime"
-    RequestedThemeVariant="Dark">
+    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <!-- RequestedThemeVariant="Dark" -->
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>

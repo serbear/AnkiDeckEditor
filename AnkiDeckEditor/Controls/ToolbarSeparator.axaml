@@ -1,13 +1,14 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="AnkiDeckEditor.Controls.ToolbarSeparator">
-    <Border Background="Red"
-            Width="32"
+    <Border Background="#000000"
+            Width="72"
             Height="2"
             Margin="2 2 2 2">
         <Border.Styles>
             <Style Selector="Border">
                 <Setter Property="RenderTransform" Value="rotate(0deg)" />
+                <Setter Property="Opacity" Value="0.25" />
             </Style>
         </Border.Styles>
     </Border>

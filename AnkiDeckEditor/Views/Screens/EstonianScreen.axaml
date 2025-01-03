@@ -7,8 +7,8 @@
              xmlns:estonianScreen1="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              d:DataContext="{x:Static fluentContentDialog:App.EstonianScreen}"
              x:Class="AnkiDeckEditor.Views.Screens.EstonianScreen"
-             x:DataType="estonianScreen1:EstonianScreenViewModel"
-             x:CompileBindings="True">
+             x:DataType="estonianScreen1:EstonianScreenViewModel">
+
     <DockPanel x:Name="MyDockPanel">
         <!-- Toolbar -->
         <controls:AdeToolbar DockPanel.Dock="Left" />
