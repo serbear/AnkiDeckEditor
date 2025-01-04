@@ -8,9 +8,7 @@ using AnkiDeckEditor.Services;
 using AnkiDeckEditor.ViewModels.EstonianScreen;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Interactivity;
-using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.VisualTree;
 
@@ -29,11 +27,13 @@ public partial class ContextTab : UserControl
     {
         AvaloniaXamlLoader.Load(this);
     }
+
     private void OnWindowSizeChanged(object? sender, SizeChangedEventArgs e)
     {
         var offset = Common.GetGoldenGoldenRatioOffset(e.NewSize.Height);
         this.FindControl<StackPanel>("ContextStackPanel")!.Margin = new Thickness(0, 0, 0, offset);
     }
+
     protected override void OnLoaded(RoutedEventArgs routedEventArgs)
     {
         var pasteTextBoxes = FieldHelper.GetChildrenList<PasteTextBox>(this);

@@ -19,6 +19,7 @@
         <TextBox Grid.Column="1"
                  Grid.Row="0"
                  x:Name="PropertyDonorTextBox"
+                 BorderThickness="0"
                  IsVisible="False" />
 
         <Border Grid.Column="1"

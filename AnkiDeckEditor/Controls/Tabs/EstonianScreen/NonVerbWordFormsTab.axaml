@@ -5,93 +5,105 @@
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.NonVerbWordFormsTab">
 
+    <UserControl.Styles>
+
+        <Style Selector="Grid > TextBlock">
+
+            <Setter Property="TextAlignment" Value="Center" />
+
+            <Style Selector="^[Tag=NumberLabel]">
+                <Setter Property="Margin" Value="0 0 0 32" />
+                <Setter Property="FontWeight" Value="DemiBold" />
+                <Setter Property="Foreground" Value="#32012F" />
+            </Style>
+
+            <Style Selector="^[Tag=Case]">
+                <Setter Property="Margin" Value="0 0 0 -64" />
+            </Style>
+
+        </Style>
+
+        <Style Selector="Grid > controls|PasteTextBox">
+            <Setter Property="Margin" Value="0 -16 0 16" />
+        </Style>
+
+    </UserControl.Styles>
+
+
     <StackPanel x:Name="NonVerbWordFormsStackPanel"
                 Orientation="Vertical"
                 VerticalAlignment="Center">
-        
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+
+        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
               ColumnDefinitions="*,16,*">
 
             <!-- Number of persons. -->
 
             <TextBlock Grid.Column="0"
                        Grid.Row="0"
-                       TextAlignment="Center"
                        Text="ЕДИНСТВЕННОЕ ЧИСЛО"
-                       x:Name="SingularTitleTextBlock" 
-                       Margin="0 0 0 32" />
+                       Tag="NumberLabel"
+                       x:Name="SingularTitleTextBlock" />
             <TextBlock Grid.Column="2"
                        Grid.Row="0"
-                       TextAlignment="Center"
-                       Text="МНОЖЕСТВЕННОЕ ЧИСЛО" 
-                       Margin="0 0 0 32" />
+                       Text="МНОЖЕСТВЕННОЕ ЧИСЛО"
+                       Tag="NumberLabel" />
 
             <!-- Cases -->
-            
+
             <TextBlock Grid.Column="0"
                        Grid.Row="1"
                        Grid.ColumnSpan="3"
-                       TextAlignment="Center"
                        Text="Именительный падеж"
-                       Margin="0 0 0 -64" />
+                       Tag="Case" />
             <controls:PasteTextBox Grid.Column="0"
                                    Grid.Row="2"
                                    x:Name="NominativeCaseSingularWordForm"
-                                   Text="{Binding NominativeCaseSingularWordForm, Mode=TwoWay}"
-                                   Margin="0 -16 0 16" />
+                                   Text="{Binding NominativeCaseSingularWordForm, Mode=TwoWay}" />
             <controls:PasteTextBox Grid.Column="2"
                                    Grid.Row="2"
                                    x:Name="NominativeCasePluralWordForm"
-                                   Text="{Binding NominativeCasePluralWordForm, Mode=TwoWay}"
-                                   Margin="0 -16 0 16" />
+                                   Text="{Binding NominativeCasePluralWordForm, Mode=TwoWay}" />
 
             <TextBlock Grid.Column="0"
                        Grid.Row="3"
                        Grid.ColumnSpan="3"
-                       TextAlignment="Center"
                        Text="Родительный падеж"
-                       Margin="0 0 0 -64" />
+                       Tag="Case" />
             <controls:PasteTextBox Grid.Column="0"
                                    Grid.Row="4"
                                    x:Name="GenitiveCaseSingularWordForm"
-                                   Text="{Binding GenitiveCaseSingularWordForm, Mode=TwoWay}"
-                                   Margin="0 -16 0 16" />
+                                   Text="{Binding GenitiveCaseSingularWordForm, Mode=TwoWay}" />
             <controls:PasteTextBox Grid.Column="2"
                                    Grid.Row="4"
                                    x:Name="GenitiveCasePluralWordForm"
-                                   Text="{Binding GenitiveCasePluralWordForm, Mode=TwoWay}"
-                                   Margin="0 -16 0 16" />
+                                   Text="{Binding GenitiveCasePluralWordForm, Mode=TwoWay}" />
 
             <TextBlock Grid.Column="0"
                        Grid.Row="5"
                        Grid.ColumnSpan="3"
-                       TextAlignment="Center"
                        Text="Партитив"
-                       Margin="0 0 0 -64" />
+                       Tag="Case" />
             <controls:PasteTextBox Grid.Column="0"
                                    Grid.Row="6"
                                    x:Name="PartitiveCaseSingularWordForm"
-                                   Text="{Binding PartitiveCaseSingularWordForm, Mode=TwoWay}"
-                                   Margin="0 -16 0 16" />
+                                   Text="{Binding PartitiveCaseSingularWordForm, Mode=TwoWay}" />
             <controls:PasteTextBox Grid.Column="2"
                                    Grid.Row="6"
                                    x:Name="PartitiveCasePluralWordForm"
-                                   Text="{Binding PartitiveCasePluralWordForm, Mode=TwoWay}"
-                                   Margin="0 -16 0 16" />
+                                   Text="{Binding PartitiveCasePluralWordForm, Mode=TwoWay}" />
 
             <TextBlock Grid.Column="0"
                        Grid.Row="7"
                        Grid.ColumnSpan="3"
-                       TextAlignment="Center"
                        Text="Короткая форма иллатива"
-                       Margin="0 0 0 -64" />
+                       Tag="Case" />
             <controls:PasteTextBox Grid.Column="0"
                                    Grid.Row="8"
                                    Grid.ColumnSpan="3"
                                    x:Name="ShortIllativeCaseWordForm"
                                    Width="{Binding #SingularTitleTextBlock.Bounds.Width }"
-                                   Text="{Binding ShortIllativeCaseWordForm, Mode=TwoWay}"
-                                   Margin="0 -16 0 16" />
+                                   Text="{Binding ShortIllativeCaseWordForm, Mode=TwoWay}" />
         </Grid>
     </StackPanel>
 </UserControl>

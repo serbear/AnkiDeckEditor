@@ -4,8 +4,6 @@
              x:Class="AnkiDeckEditor.Views.Screens.DeckTypeSelectScreen"
              x:DataType="vm:MainWindowViewModel">
 
-    <!-- todo: поднять на золотое сечение -->
-
     <UserControl.Styles>
         <Style Selector="Button">
             <Setter Property="Background" Value="#524C42" />
@@ -22,53 +20,58 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid ColumnDefinitions="*"
-          RowDefinitions="*,*,*,*,*"
-          HorizontalAlignment="Center"
-          VerticalAlignment="Center">
-        <TextBlock Grid.Column="0"
-                   Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   FontSize="32"
-                   FontWeight="Bold"
-                   Text="Anki Deck Editor"
-                   Foreground="#32012F" />
-        <TextBlock Grid.Column="0"
-                   Grid.Row="1"
-                   HorizontalAlignment="Center"
-                   Margin="0 64 0 0"
-                   FontWeight="Light"
-                   Text="Выберите тип колоды:" />
-        <!-- <Button HorizontalAlignment="Center" -->
-        <!--         Content="Английский язык" -->
-        <!--         Grid.Column="0" -->
-        <!--         Grid.Row="2" -->
-        <!--         Click="ShowEnglishScreenButton_OnClick" /> -->
-        <Button HorizontalAlignment="Center"
-                Grid.Column="0"
-                Grid.Row="3"
-                Click="ShowEstonianScreenButton_OnClick"
-                Margin="0 32 0 0">
-            <Button.Content>
+    <StackPanel x:Name="DeckTypeSelectionStackPanel"
+                Orientation="Vertical"
+                VerticalAlignment="Center">
+
+        <Grid ColumnDefinitions="*"
+              RowDefinitions="*,*,*,*,*"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+            <TextBlock Grid.Column="0"
+                       Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       FontSize="32"
+                       FontWeight="Bold"
+                       Text="Anki Deck Editor"
+                       Foreground="#F97300" />
+            <TextBlock Grid.Column="0"
+                       Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       Margin="0 64 0 0"
+                       FontWeight="Light"
+                       Text="Выберите тип колоды:" />
+            <!-- <Button HorizontalAlignment="Center" -->
+            <!--         Content="Английский язык" -->
+            <!--         Grid.Column="0" -->
+            <!--         Grid.Row="2" -->
+            <!--         Click="ShowEnglishScreenButton_OnClick" /> -->
+            <Button HorizontalAlignment="Center"
+                    Grid.Column="0"
+                    Grid.Row="3"
+                    Click="ShowEstonianScreenButton_OnClick"
+                    Margin="0 32 0 0">
+                <Button.Content>
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="avares://AnkiDeckEditor/Assets/estonian_flag.png"
+                               Width="64"
+                               Height="64" />
+                        <TextBlock Text="Eesti Keel" />
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button HorizontalAlignment="Center"
+                    Grid.Column="0"
+                    Grid.Row="4"
+                    Margin="0 64 0 0"
+                    Command="{Binding ShutdownCommand}">
                 <StackPanel Orientation="Vertical">
-                    <Image Source="avares://AnkiDeckEditor/Assets/estonian_flag.png"
-                           Width="64"
-                           Height="64" />
-                    <TextBlock Text="Eesti Keel" />
+                    <Image Source="avares://AnkiDeckEditor/Assets/exit.png"
+                           Width="32"
+                           Height="32" />
+                    <TextBlock Text="Выход" />
                 </StackPanel>
-            </Button.Content>
-        </Button>
-        <Button HorizontalAlignment="Center"
-                Grid.Column="0"
-                Grid.Row="4"
-                Margin="0 64 0 0"
-                Command="{Binding ShutdownCommand}">
-            <StackPanel Orientation="Vertical">
-                <Image Source="avares://AnkiDeckEditor/Assets/exit.png"
-                       Width="32"
-                       Height="32" />
-                <TextBlock Text="Выход" />
-            </StackPanel>
-        </Button>
-    </Grid>
+            </Button>
+        </Grid>
+    </StackPanel>
 </UserControl>

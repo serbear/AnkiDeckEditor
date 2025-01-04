@@ -1,4 +1,6 @@
 using System;
+using AnkiDeckEditor.Libs;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -11,6 +13,13 @@ public partial class DeckTypeSelectScreen : UserControl
     public DeckTypeSelectScreen()
     {
         InitializeComponent();
+        SizeChanged += OnWindowSizeChanged;
+    }
+
+    private void OnWindowSizeChanged(object? sender, SizeChangedEventArgs e)
+    {
+        var offset = Common.GetGoldenGoldenRatioOffset(e.NewSize.Height);
+        this.FindControl<StackPanel>("DeckTypeSelectionStackPanel")!.Margin = new Thickness(0, 0, 0, offset);
     }
 
     private void InitializeComponent()

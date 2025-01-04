@@ -8,6 +8,7 @@
 
         <TextBox x:Name="PropertyDonorTextBox"
                  IsVisible="False"
+                 BorderThickness="0"
                  Grid.Column="1"
                  Grid.Row="0" />
 

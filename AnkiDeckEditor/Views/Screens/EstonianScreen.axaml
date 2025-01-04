@@ -9,33 +9,60 @@
              x:Class="AnkiDeckEditor.Views.Screens.EstonianScreen"
              x:DataType="estonianScreen1:EstonianScreenViewModel">
 
+    <UserControl.Styles>
+
+        <Style Selector="TabItem">
+
+            <Style Selector="^:selected /template/ Border#PART_SelectedPipe">
+                <Setter Property="Background" Value="#F97300" />
+                <Setter Property="Height" Value="4" />
+            </Style>
+
+        </Style>
+
+    </UserControl.Styles>
+
     <DockPanel x:Name="MyDockPanel">
+
         <!-- Toolbar -->
+
         <controls:AdeToolbar DockPanel.Dock="Left" />
+
         <!-- Tabs -->
+
         <TabControl x:Name="DeckConfigTabControl"
                     SelectionChanged="DeckConfigTabControl_OnSelectionChanged">
+
             <!-- MainEntity Anki field -->
+
             <TabItem Header="Словарная статья">
                 <estonianScreen:VocabularyEntryTab />
             </TabItem>
+
             <!-- Non-verb word forms -->
+
             <TabItem Header="Формы слова"
                      x:Name="WordFormsTabItem"
                      IsVisible="{Binding IsWordFormsTabItemVisible}">
                 <estonianScreen:NonVerbWordFormsTab />
             </TabItem>
+
             <!-- Verb forms -->
+
             <TabItem Header="Формы глагола"
                      IsVisible="{Binding IsVerbFormsTabItemVisible}"
                      x:Name="VerbFormsTabItem">
                 <estonianScreen:VerbWordFormsTab />
             </TabItem>
+
             <!-- Context -->
+
             <TabItem Header="Контекст">
                 <estonianScreen:ContextTab />
             </TabItem>
+
             <!-- Vocabulary card list -->
+
             <TabItem>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal"
@@ -58,6 +85,7 @@
                 </TabItem.Header>
                 <estonianScreen:CardListTab />
             </TabItem>
+
         </TabControl>
     </DockPanel>
 </UserControl>

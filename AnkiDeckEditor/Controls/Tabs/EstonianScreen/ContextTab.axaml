@@ -4,6 +4,27 @@
              xmlns:estonianScreen="clr-namespace:AnkiDeckEditor.ViewModels.EstonianScreen"
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.ContextTab">
+
+    <UserControl.Styles>
+
+        <Style Selector="StackPanel > TextBlock">
+            <Setter Property="Margin" Value="0 8 0 8" />
+            <Setter Property="Foreground" Value="#9A8C98" />
+        </Style>
+
+        <Style Selector="StackPanel[Tag=ToggleButtons]">
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="Margin" Value="0 0 0 16" />
+
+            <Style Selector="^ > TextBlock">
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+
+        </Style>
+
+    </UserControl.Styles>
+
+
     <StackPanel x:Name="ContextStackPanel"
                 Orientation="Vertical"
                 VerticalAlignment="Center">
@@ -14,9 +35,7 @@
                                Text="{Binding LiteralTranslationText, Mode=TwoWay}" />
 
         <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
-        <TextBlock Text="Выделение:"
-                   Margin="0 8 0 8"
-                   Foreground="#9A8C98" />
+        <TextBlock Text="Выделение:" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding WordByWordContextSelectedItems}">
                 <ItemsRepeater.Layout>
@@ -25,13 +44,11 @@
                 </ItemsRepeater.Layout>
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal"
-                                    Margin="0 0 0 16">
+                        <StackPanel Tag="ToggleButtons">
                             <ToggleButton IsChecked="{Binding IsChecked}"
                                           IsVisible="{Binding !IsPunctuation}"
                                           Content="{Binding Title}" />
-                            <TextBlock VerticalAlignment="Center"
-                                       IsVisible="{Binding IsPunctuation}"
+                            <TextBlock IsVisible="{Binding IsPunctuation}"
                                        Text="{Binding Title}" />
                         </StackPanel>
                     </DataTemplate>
@@ -44,9 +61,7 @@
                                Text="{Binding LiteraryTranslationText, Mode=TwoWay}" />
 
         <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
-        <TextBlock Text="Выделение:"
-                   Margin="0 8 0 8"
-                   Foreground="#9A8C98" />
+        <TextBlock Text="Выделение:" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding LiteraryContextSelectedItems}">
                 <ItemsRepeater.Layout>
@@ -55,13 +70,11 @@
                 </ItemsRepeater.Layout>
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal"
-                                    Margin="0 0 0 16">
+                        <StackPanel Tag="ToggleButtons">
                             <ToggleButton IsChecked="{Binding IsChecked}"
                                           IsVisible="{Binding !IsPunctuation}"
                                           Content="{Binding Title}" />
-                            <TextBlock VerticalAlignment="Center"
-                                       IsVisible="{Binding IsPunctuation}"
+                            <TextBlock IsVisible="{Binding IsPunctuation}"
                                        Text="{Binding Title}" />
                         </StackPanel>
                     </DataTemplate>
@@ -74,9 +87,7 @@
                                Text="{Binding OriginalText, Mode=TwoWay}" />
 
         <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
-        <TextBlock Text="Выделение:"
-                   Margin="0 8 0 8"
-                   Foreground="#9A8C98" />
+        <TextBlock Text="Выделение:" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding OriginalContextSelectedItems}">
                 <ItemsRepeater.Layout>
@@ -85,13 +96,11 @@
                 </ItemsRepeater.Layout>
                 <ItemsRepeater.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal"
-                                    Margin="0 0 0 16">
+                        <StackPanel Tag="ToggleButtons">
                             <ToggleButton IsChecked="{Binding IsChecked}"
                                           IsVisible="{Binding !IsPunctuation}"
                                           Content="{Binding Title}" />
-                            <TextBlock VerticalAlignment="Center"
-                                       IsVisible="{Binding IsPunctuation}"
+                            <TextBlock IsVisible="{Binding IsPunctuation}"
                                        Text="{Binding Title}" />
                         </StackPanel>
                     </DataTemplate>

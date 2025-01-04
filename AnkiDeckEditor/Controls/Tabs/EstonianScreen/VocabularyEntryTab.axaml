@@ -5,6 +5,36 @@
              x:DataType="estonianScreen:EstonianScreenViewModel"
              x:Class="AnkiDeckEditor.Controls.Tabs.EstonianScreen.VocabularyEntryTab">
 
+    <UserControl.Styles>
+
+        <Style Selector="CheckBox">
+
+            <Style Selector="^:unchecked /template/ Border#NormalRectangle">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Background" Value="#E2DFD0" />
+            </Style>
+
+            <Style Selector="^:pointerover /template/ Border#NormalRectangle">
+                <Setter Property="Background" Value="#F97300" />
+            </Style>
+
+            <Style Selector="^:checked">
+                <Style Selector="^ /template/ Path#CheckGlyph">
+                    <Setter Property="Fill" Value="#E2DFD0" />
+                    <Setter Property="Width" Value="10" />
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+
+                <Style Selector="^ /template/ Border#NormalRectangle">
+                    <Setter Property="Background" Value="#F97300" />
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </Style>
+
+        </Style>
+
+    </UserControl.Styles>
+
     <StackPanel x:Name="MainStackPanel"
                 Orientation="Vertical"
                 VerticalAlignment="Center">
@@ -41,6 +71,7 @@
                                 <CheckBox IsChecked="{Binding IsChecked}"
                                           Content="{Binding Title}"
                                           Tag="{Binding VerbType}"
+
                                           IsCheckedChanged="SpeechPartCheckBox_OnIsCheckedChanged" />
                             </StackPanel>
                         </DataTemplate>

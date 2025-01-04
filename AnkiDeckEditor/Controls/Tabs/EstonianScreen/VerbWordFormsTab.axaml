@@ -85,6 +85,7 @@
                     <!-- Government list -->
 
                     <TextBox x:Name="PropertyDonorTextBox"
+                             BorderThickness="0"
                              IsVisible="False" />
 
                     <Border BorderBrush="{Binding BorderBrush, ElementName=PropertyDonorTextBox}"
