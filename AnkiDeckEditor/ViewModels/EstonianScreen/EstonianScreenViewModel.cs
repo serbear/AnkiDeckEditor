@@ -42,9 +42,6 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
 
         // Set default work mode of deck editor.
         _currentOperationalMode = EditModes.Add;
-
-        // # DEBUG
-        _ = DialogHost.Show(new ExportResultDialog(), PublicConst.MainDialogHost);
     }
 
     // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
