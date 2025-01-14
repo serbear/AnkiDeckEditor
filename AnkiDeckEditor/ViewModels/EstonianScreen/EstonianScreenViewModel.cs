@@ -277,14 +277,25 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
         var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CARD_COLLECTION_DATA_GRID_NAME);
         List<bool> removeCardCondition =
         [
-            // The card collection contains the elements.
+            // The card collection contains selected elements.
             (dataGrid as DataGrid)?.SelectedItems.Count > 0,
             // The tab with the list of cards is active.
             RootControl.FindControl<TabControl>(ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME)!.SelectedIndex.Equals(
                 (int)EstonianDeckTabs.CardCollectionTab)
         ];
         IsRemoveCardButtonEnabled = removeCardCondition.All(e => e.Equals(true));
-        IsClearCardCollectionButtonEnabled = removeCardCondition[1];
+
+
+        List<bool> clearDeckCondition =
+        [
+            // The tab with the list of cards is active.
+            RootControl.FindControl<TabControl>(ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME)!.SelectedIndex.Equals(
+                (int)EstonianDeckTabs.CardCollectionTab),
+            // There is at least one item in the list.
+            CardCollectionItems.Count > 0
+        ];
+        
+        IsClearCardCollectionButtonEnabled = clearDeckCondition.All(e =>e.Equals(true)); // removeCardCondition[1];
     }
 
     public void EditCardListEntry(EstonianCardRecord? cardListEntry)
