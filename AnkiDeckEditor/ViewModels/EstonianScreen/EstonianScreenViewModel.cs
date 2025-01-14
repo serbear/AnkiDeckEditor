@@ -16,6 +16,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using AnkiDeckEditor.Views.Dialogs;
 using DialogHostAvalonia;
 using ReactiveUI.Fody.Helpers;
+using Common = AnkiDeckEditor.Libs.Common;
 
 namespace AnkiDeckEditor.ViewModels.EstonianScreen;
 
@@ -275,27 +276,27 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
     internal void UpdateIsRemoveCardButtonEnabledFlag()
     {
         var dataGrid = FieldHelper.GetChildren<DataGrid>(RootControl, CARD_COLLECTION_DATA_GRID_NAME);
+        var isListTabActive = RootControl.FindControl<TabControl>(ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME)!
+            .SelectedIndex.Equals((int)EstonianDeckTabs.CardCollectionTab);
+
+        // Conditions
         List<bool> removeCardCondition =
         [
             // The card collection contains selected elements.
             (dataGrid as DataGrid)?.SelectedItems.Count > 0,
             // The tab with the list of cards is active.
-            RootControl.FindControl<TabControl>(ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME)!.SelectedIndex.Equals(
-                (int)EstonianDeckTabs.CardCollectionTab)
+            isListTabActive
         ];
-        IsRemoveCardButtonEnabled = removeCardCondition.All(e => e.Equals(true));
-
-
         List<bool> clearDeckCondition =
         [
             // The tab with the list of cards is active.
-            RootControl.FindControl<TabControl>(ESTONIAN_DECK_MAIN_TAB_CONTROL_NAME)!.SelectedIndex.Equals(
-                (int)EstonianDeckTabs.CardCollectionTab),
+            isListTabActive,
             // There is at least one item in the list.
             CardCollectionItems.Count > 0
         ];
-        
-        IsClearCardCollectionButtonEnabled = clearDeckCondition.All(e =>e.Equals(true)); // removeCardCondition[1];
+
+        IsRemoveCardButtonEnabled = Common.IsAllValuesAreTrue(removeCardCondition);
+        IsClearCardCollectionButtonEnabled = Common.IsAllValuesAreTrue(clearDeckCondition);
     }
 
     public void EditCardListEntry(EstonianCardRecord? cardListEntry)
