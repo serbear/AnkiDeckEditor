@@ -16,7 +16,7 @@
                                    DialogMargin="0"
                                    dialogHostAvalonia:DialogHostStyle.CornerRadius="0"
                                    OverlayBackground="Black"
-                                   Background="Chocolate">
+                                   Background="#F97300">
         <Panel>
             <screens:DeckTypeSelectScreen x:Name="DeckTypeSelectScreen"
                                           IsVisible="True" />

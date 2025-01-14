@@ -2,19 +2,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              x:Class="AnkiDeckEditor.Views.Dialogs.ExportResultDialog">
-    <StackPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Bounds.Width}">
-        <TextBlock>The collection successfully exported.</TextBlock>
-        <StackPanel Orientation="Horizontal">
+
+    <UserControl.Styles>
+        <Style Selector="StackPanel, TextBlock, Button">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#524C42" />
+            <Setter Property="Foreground" Value="#32012F" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </UserControl.Styles>
+
+    <StackPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Bounds.Width}"
+                Margin="0 32 0 32">
+        <TextBlock Foreground="#32012F"
+                   FontWeight="Bold">
+            Коллекция была экспортирована успешно.
+        </TextBlock>
+
+        <StackPanel Orientation="Horizontal"
+                    Margin="0 32 0 0">
             <Button IsDefault="True"
                     Content="OK"
+                    Background="#32012F"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
                     AncestorType=dialogHostAvalonia:DialogHost}, Path=CloseDialogCommand}"
                     CommandParameter="{DynamicResource True}" />
         </StackPanel>
     </StackPanel>
-    <UserControl.Styles>
-        <Style Selector="StackPanel, TextBlock, Button">
-            <Setter Property="HorizontalAlignment" Value="Center" />
-        </Style>
-    </UserControl.Styles>
+
 </UserControl>

@@ -15,7 +15,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using AnkiDeckEditor.Views.Dialogs;
 using DialogHostAvalonia;
-using ReactiveUI.Fody.Helpers;
 using Common = AnkiDeckEditor.Libs.Common;
 
 namespace AnkiDeckEditor.ViewModels.EstonianScreen;
@@ -43,6 +42,9 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
 
         // Set default work mode of deck editor.
         _currentOperationalMode = EditModes.Add;
+
+        // # DEBUG
+        _ = DialogHost.Show(new ExportResultDialog(), PublicConst.MainDialogHost);
     }
 
     // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local
@@ -54,8 +56,6 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
     /// </summary>
     // ReSharper disable once UnusedAutoPropertyAccessor.Local
     private Control FirstFocusControl { get; set; }
-
-    [Reactive] public string VerticalOffset { get; set; }
 
     private void OnFieldTextChanged(string newText)
     {
@@ -158,6 +158,7 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
     public override async Task ExportDeck()
     {
         // todo: Various export errors. Show messages.
+        // todo: Move strings to resources.
 
         const string FILE_DIALOG_TITLE = "Сохранить коллекцию";
         const string FILE_TYPE_NAME = "CSV Text Files";

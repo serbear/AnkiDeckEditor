@@ -2,12 +2,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
              x:Class="AnkiDeckEditor.Views.Dialogs.ExportCollectionDialog">
-    <StackPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Bounds.Width}">
-        <TextBlock>
+
+    <UserControl.Styles>
+        <Style Selector="StackPanel, TextBlock, Button">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#32012F" />
+            <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="#524C42" />
+                <Setter Property="Foreground" Value="#32012F" />
+                <Setter Property="FontWeight" Value="Bold" />
+            </Style>
+        </Style>
+    </UserControl.Styles>
+
+    <StackPanel Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Window}, Path=Bounds.Width}"
+                Margin="0 32 0 32">
+        <TextBlock Foreground="#32012F"
+                   FontWeight="Bold">
             Коллекция не была импортирована.
             Импортировать коллекцию?
         </TextBlock>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal"
+                    Margin="0 32 0 0">
             <Button IsDefault="True"
                     Content="Yes"
                     Command="{Binding RelativeSource={RelativeSource FindAncestor, 
@@ -20,9 +38,5 @@
                     CommandParameter="{DynamicResource False}" />
         </StackPanel>
     </StackPanel>
-    <UserControl.Styles>
-        <Style Selector="StackPanel, TextBlock, Button">
-            <Setter Property="HorizontalAlignment" Value="Center" />
-        </Style>
-    </UserControl.Styles>
+
 </UserControl>

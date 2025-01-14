@@ -85,7 +85,8 @@ public static class DeckExporter
 
         try
         {
-            // todo: возможность записи. доступность директории.
+            // todo: file write permissions
+
             File.WriteAllText(collectionFileName, sb.ToString());
         }
         catch (Exception ex)
