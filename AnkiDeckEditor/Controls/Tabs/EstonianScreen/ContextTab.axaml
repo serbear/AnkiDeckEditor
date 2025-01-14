@@ -9,19 +9,20 @@
 
         <Style Selector="StackPanel > TextBlock">
             <Setter Property="Margin" Value="0 8 0 8" />
-            <Setter Property="Foreground" Value="#9A8C98" />
+            <Setter Property="Foreground" Value="#32012F" />
         </Style>
 
         <Style Selector="StackPanel[Tag=ToggleButtons]">
             <Setter Property="Orientation" Value="Horizontal" />
             <Setter Property="Margin" Value="0 0 0 16" />
-
             <Style Selector="^ > TextBlock">
                 <Setter Property="VerticalAlignment" Value="Center" />
             </Style>
-
         </Style>
 
+        <Style Selector="ToggleButton:checked /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="#F97300" />
+        </Style>
     </UserControl.Styles>
 
 
@@ -35,7 +36,7 @@
                                Text="{Binding LiteralTranslationText, Mode=TwoWay}" />
 
         <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
-        <TextBlock Text="Выделение:" />
+        <TextBlock Text="Маркер:" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding WordByWordContextSelectedItems}">
                 <ItemsRepeater.Layout>
@@ -61,7 +62,7 @@
                                Text="{Binding LiteraryTranslationText, Mode=TwoWay}" />
 
         <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
-        <TextBlock Text="Выделение:" />
+        <TextBlock Text="Маркер:" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding LiteraryContextSelectedItems}">
                 <ItemsRepeater.Layout>
@@ -87,7 +88,7 @@
                                Text="{Binding OriginalText, Mode=TwoWay}" />
 
         <!-- todo: refact: выделение вынести в отдельный элемент управления. -->
-        <TextBlock Text="Выделение:" />
+        <TextBlock Text="Маркер:" />
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsRepeater ItemsSource="{Binding OriginalContextSelectedItems}">
                 <ItemsRepeater.Layout>
