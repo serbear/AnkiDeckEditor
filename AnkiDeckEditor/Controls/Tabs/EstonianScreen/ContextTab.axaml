@@ -25,7 +25,6 @@
         </Style>
     </UserControl.Styles>
 
-
     <StackPanel x:Name="ContextStackPanel"
                 Orientation="Vertical"
                 VerticalAlignment="Center">
