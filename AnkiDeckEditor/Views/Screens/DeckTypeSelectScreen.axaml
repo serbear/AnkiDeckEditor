@@ -55,7 +55,8 @@
                     <StackPanel Orientation="Vertical">
                         <Image Source="avares://AnkiDeckEditor/Assets/estonian_flag.png"
                                Width="64"
-                               Height="64" />
+                               Height="64"
+                               Margin="0 0 0 4" />
                         <TextBlock Text="Eesti Keel" />
                     </StackPanel>
                 </Button.Content>
@@ -66,9 +67,26 @@
                     Margin="0 64 0 0"
                     Command="{Binding ShutdownCommand}">
                 <StackPanel Orientation="Vertical">
-                    <Image Source="avares://AnkiDeckEditor/Assets/exit.png"
-                           Width="32"
-                           Height="32" />
+                    <Image Width="32"
+                           Height="32"
+                           Margin="0 0 0 4">
+                        <Image.Styles>
+                            <Style Selector="Button > StackPanel > Image">
+                                <Setter Property="Source">
+                                    <Setter.Value>
+                                        <SvgImage Source="{DynamicResource ExitIconNormal}" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                            <Style Selector="Button:pointerover > StackPanel > Image">
+                                <Setter Property="Source">
+                                    <Setter.Value>
+                                        <SvgImage Source="{DynamicResource ExitIconHover}" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Image.Styles>
+                    </Image>
                     <TextBlock Text="Выход" />
                 </StackPanel>
             </Button>

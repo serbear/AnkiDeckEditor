@@ -1,0 +1,33 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Normal State -->
+    <SvgSource x:Key="ExitIconNormal" Path="/Assets/Icons/exit.svg" Css="{StaticResource NormalState}" />
+    <SvgSource x:Key="AddCardIconNormal" Path="/Assets/Icons/add_card.svg" Css="{StaticResource NormalState}" />
+    <SvgSource x:Key="ClearDeckIconNormal" Path="/Assets/Icons/clear_deck.svg" Css="{StaticResource NormalState}" />
+    <SvgSource x:Key="ExportIconNormal" Path="/Assets/Icons/export.svg" Css="{StaticResource NormalState}" />
+    <SvgSource x:Key="NewCardIconNormal" Path="/Assets/Icons/new_card.svg" Css="{StaticResource NormalState}" />
+    <SvgSource x:Key="PasteIconNormal" Path="/Assets/Icons/paste.svg" Css="{StaticResource NormalState}" />
+    <SvgSource x:Key="RemoveCardIconNormal" Path="/Assets/Icons/remove_card.svg" Css="{StaticResource NormalState}" />
+    <SvgSource x:Key="SaveIconNormal" Path="/Assets/Icons/save.svg" Css="{StaticResource NormalState}" />
+    <SvgSource x:Key="UndoIconNormal" Path="/Assets/Icons/undo.svg" Css="{StaticResource NormalState}" />
+    <!-- Hover State -->
+    <SvgSource x:Key="ExitIconHover" Path="/Assets/Icons/exit.svg" Css="{StaticResource HoverState}" />
+    <SvgSource x:Key="AddCardIconHover" Path="/Assets/Icons/add_card.svg" Css="{StaticResource HoverState}" />
+    <SvgSource x:Key="ClearDeckIconHover" Path="/Assets/Icons/clear_deck.svg" Css="{StaticResource HoverState}" />
+    <SvgSource x:Key="ExportIconHover" Path="/Assets/Icons/export.svg" Css="{StaticResource HoverState}" />
+    <SvgSource x:Key="NewCardIconHover" Path="/Assets/Icons/new_card.svg" Css="{StaticResource HoverState}" />
+    <SvgSource x:Key="PasteIconHover" Path="/Assets/Icons/paste.svg" Css="{StaticResource HoverState}" />
+    <SvgSource x:Key="RemoveCardIconHover" Path="/Assets/Icons/remove_card.svg" Css="{StaticResource HoverState}" />
+    <SvgSource x:Key="SaveIconHover" Path="/Assets/Icons/save.svg" Css="{StaticResource HoverState}" />
+    <SvgSource x:Key="UndoIconHover" Path="/Assets/Icons/undo.svg" Css="{StaticResource HoverState}" />
+    <!-- Disabled State -->
+    <SvgSource x:Key="ExitIconDisabled" Path="/Assets/Icons/exit.svg" Css="{StaticResource DisableState}" />
+    <SvgSource x:Key="AddCardIconDisabled" Path="/Assets/Icons/add_card.svg" Css="{StaticResource DisableState}" />
+    <SvgSource x:Key="ClearDeckIconDisabled" Path="/Assets/Icons/clear_deck.svg" Css="{StaticResource DisableState}" />
+    <SvgSource x:Key="ExportIconDisabled" Path="/Assets/Icons/export.svg" Css="{StaticResource DisableState}" />
+    <SvgSource x:Key="NewCardIconDisabled" Path="/Assets/Icons/new_card.svg" Css="{StaticResource DisableState}" />
+    <SvgSource x:Key="PasteIconDisabled" Path="/Assets/Icons/paste.svg" Css="{StaticResource DisableState}" />
+    <SvgSource x:Key="RemoveCardIconDisabled" Path="/Assets/Icons/remove_card.svg" Css="{StaticResource DisableState}" />
+    <SvgSource x:Key="SaveIconDisabled" Path="/Assets/Icons/save.svg" Css="{StaticResource DisableState}" />
+    <SvgSource x:Key="UndoIconDisabled" Path="/Assets/Icons/undo.svg" Css="{StaticResource DisableState}" />
+</ResourceDictionary>

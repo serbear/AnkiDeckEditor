@@ -94,9 +94,25 @@
                     Command="{Binding PasteCommand}"
                     CommandParameter="{Binding ElementName=MainTextBox}"
                     Height="{Binding ElementName=MainTextBox, Path=Bounds.Height}">
-                <Image Source="avares://AnkiDeckEditor/Assets/paste.png"
-                       Width="16"
-                       Height="16" />
+                <Image Width="16"
+                       Height="16">
+                    <Image.Styles>
+                        <Style Selector="Button > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource PasteIconNormal}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:pointerover > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource PasteIconHover}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Image.Styles>
+                </Image>
             </Button>
         </RelativePanel>
     </Grid>

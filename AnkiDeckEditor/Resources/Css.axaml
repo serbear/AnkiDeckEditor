@@ -1,0 +1,7 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <system:String x:Key="NormalState">.cls-1 { fill: #F97300; }</system:String>
+    <system:String x:Key="HoverState">.cls-1 { fill: #32012F; }</system:String>
+    <system:String x:Key="DisableState">.cls-1 { fill: #F97300; opacity: 0.25; }</system:String>
+</ResourceDictionary>

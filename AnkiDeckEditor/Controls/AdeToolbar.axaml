@@ -9,12 +9,10 @@
     <UserControl.Styles>
 
         <Style Selector="Button">
-
             <Setter Property="Background" Value="#32012F" />
             <Setter Property="Foreground" Value="#E2DFD0" />
             <Setter Property="Width" Value="86" />
             <Setter Property="Margin" Value="4 4 4 4" />
-
             <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="#32012F" />
                 <Setter Property="Opacity" Value="0.25" />
@@ -24,12 +22,12 @@
                 <Setter Property="Foreground" Value="#32012F" />
                 <Setter Property="FontWeight" Value="Bold" />
             </Style>
-
         </Style>
 
         <Style Selector="Image">
             <Setter Property="Width" Value="32" />
             <Setter Property="Height" Value="32" />
+            <Setter Property="Margin" Value="0 0 0 4" />
         </Style>
 
         <Style Selector="StackPanel">
@@ -39,7 +37,6 @@
         <Style Selector="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
-
     </UserControl.Styles>
 
     <StackPanel Orientation="Vertical">
@@ -54,7 +51,31 @@
         <Button Name="NewDictionaryEntityToolButton"
                 Command="{Binding NewEntityCommand}">
             <StackPanel>
-                <Image Source="avares://AnkiDeckEditor/Assets/blank.png" />
+                <Image>
+                    <Image.Styles>
+                        <Style Selector="Button > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource NewCardIconNormal}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:pointerover > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource NewCardIconHover}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:disabled > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource NewCardIconDisabled}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Image.Styles>
+                </Image>
                 <TextBlock Text="Новая" />
             </StackPanel>
         </Button>
@@ -66,7 +87,31 @@
                 IsVisible="{Binding IsVisibleAddEntityListButton}"
                 Command="{Binding AddListCommand}">
             <StackPanel>
-                <Image Source="avares://AnkiDeckEditor/Assets/add.png" />
+                <Image>
+                    <Image.Styles>
+                        <Style Selector="Button > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource AddCardIconNormal}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:pointerover > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource AddCardIconHover}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:disabled > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource AddCardIconDisabled}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Image.Styles>
+                </Image>
                 <TextBlock Text="Добавить" />
             </StackPanel>
         </Button>
@@ -75,7 +120,31 @@
                 IsVisible="{Binding !IsVisibleAddEntityListButton}"
                 Command="{Binding SaveListCommand}">
             <StackPanel>
-                <Image Source="avares://AnkiDeckEditor/Assets/save.png" />
+                <Image>
+                    <Image.Styles>
+                        <Style Selector="Button > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource SaveIconNormal}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:pointerover > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource SaveIconHover}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:disabled > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource SaveIconDisabled}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Image.Styles>
+                </Image>
                 <TextBlock Text="Сохранить" />
             </StackPanel>
         </Button>
@@ -83,7 +152,31 @@
                 IsVisible="{Binding !IsVisibleAddEntityListButton}"
                 Command="{Binding CancelEditCommand}">
             <StackPanel>
-                <Image Source="avares://AnkiDeckEditor/Assets/undo.png" />
+                <Image>
+                    <Image.Styles>
+                        <Style Selector="Button > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource UndoIconNormal}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:pointerover > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource UndoIconHover}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:disabled > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource UndoIconDisabled}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Image.Styles>
+                </Image>
                 <TextBlock Text="Отмена" />
             </StackPanel>
         </Button>
@@ -96,7 +189,31 @@
                 IsEnabled="{Binding IsRemoveCardButtonEnabled}"
                 Command="{Binding RemoveListCommand}">
             <StackPanel>
-                <Image Source="avares://AnkiDeckEditor/Assets/remove.png" />
+                <Image>
+                    <Image.Styles>
+                        <Style Selector="Button > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource RemoveCardIconNormal}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:pointerover > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource RemoveCardIconHover}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:disabled > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource RemoveCardIconDisabled}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Image.Styles>
+                </Image>
                 <TextBlock Text="Удалить" />
             </StackPanel>
         </Button>
@@ -104,7 +221,31 @@
                 IsEnabled="{Binding IsClearCardCollectionButtonEnabled}"
                 Command="{Binding ClearCardCollectionCommand}">
             <StackPanel>
-                <Image Source="avares://AnkiDeckEditor/Assets/clear.png" />
+                <Image>
+                    <Image.Styles>
+                        <Style Selector="Button > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource ClearDeckIconNormal}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:pointerover > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource ClearDeckIconHover}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:disabled > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource ClearDeckIconDisabled}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Image.Styles>
+                </Image>
                 <TextBlock Text="Очистить" />
             </StackPanel>
         </Button>
@@ -115,7 +256,31 @@
                 Command="{Binding ExportFileCommand}"
                 IsEnabled="{Binding IsExportButtonEnabled}">
             <StackPanel>
-                <Image Source="avares://AnkiDeckEditor/Assets/export.png" />
+                <Image>
+                    <Image.Styles>
+                        <Style Selector="Button > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource ExportIconNormal}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:pointerover > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource ExportIconHover}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:disabled > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource ExportIconDisabled}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Image.Styles>
+                </Image>
                 <TextBlock Text="Экспорт" />
             </StackPanel>
         </Button>
@@ -125,7 +290,31 @@
         <Button Name="ExitButton"
                 Command="{Binding ExitCommand}">
             <StackPanel>
-                <Image Source="avares://AnkiDeckEditor/Assets/exit.png" />
+                <Image>
+                    <Image.Styles>
+                        <Style Selector="Button > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource ExitIconNormal}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:pointerover > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource ExitIconHover}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Button:disabled > StackPanel > Image">
+                            <Setter Property="Source">
+                                <Setter.Value>
+                                    <SvgImage Source="{DynamicResource ExitIconDisabled}" />
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Image.Styles>
+                </Image>
                 <TextBlock Text="Выход" />
             </StackPanel>
         </Button>

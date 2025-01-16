@@ -4,8 +4,7 @@
     x:Class="AnkiDeckEditor.App"
     x:CompileBindings="True"
     xmlns:local="using:AnkiDeckEditor"
-    xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
-    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia">
     <!-- RequestedThemeVariant="Dark" -->
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
@@ -20,7 +19,12 @@
     </Application.Styles>
 
     <Application.Resources>
-        <system:Boolean x:Key="True">True</system:Boolean>
-        <system:Boolean x:Key="False">False</system:Boolean>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <MergeResourceInclude Source="/Resources/ButtonIcons.axaml" />
+                <MergeResourceInclude Source="/Resources/Values.axaml" />
+                <MergeResourceInclude Source="/Resources/Css.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
