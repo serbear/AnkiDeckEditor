@@ -33,7 +33,7 @@
                        HorizontalAlignment="Center"
                        FontSize="32"
                        FontWeight="Bold"
-                       Text="Anki Deck Editor"
+                       Text="AD Creator"
                        Foreground="#F97300" />
             <TextBlock Grid.Column="0"
                        Grid.Row="1"
