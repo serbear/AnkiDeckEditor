@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using AnkiDeckEditor.ViewModels;
 using AnkiDeckEditor.Views.Screens;
 using Avalonia.Controls;
@@ -41,19 +42,27 @@ public partial class MainWindow : Window
     [Obsolete("Obsolete")]
     private async void OnWindowClosing(object? sender, CancelEventArgs e)
     {
-        // if (_currentDeck == null || _currentDeck.IsCollectionExported) return;
+        if (_currentDeck == null || _currentDeck.IsCollectionExported) return;
+        e.Cancel = true;
+        var requestResult = await ExportCollectionRequest();
 
-        // e.Cancel = true;
+        if (!requestResult) _currentDeck.IsCollectionExported = true;
 
-        // var dialogResult = (bool)(await DialogHost.Show(new ExportCollectionDialog(), PublicConst.MainDialogHost))!;
+        Close();
+    }
 
-        // if (!dialogResult) return;
+    // todo: для пустой колоды запрос на экспорт не выдавать.
+    // todo: принажатии "выход" не спрашивает об экспорте колоды.
 
-        // var result = _currentDeck.ExportDeck().Result;
 
-        // if (!result) return;
+    [Obsolete("Obsolete")]
+    private async Task<bool> ExportCollectionRequest()
+    {
+        var dialogResult = (bool)(await DialogHost.Show(new ExportCollectionDialog(), PublicConst.MainDialogHost))!;
+        var result = false;
 
-        // _currentDeck.IsCollectionExported = true;
-        // Close();
+        if (dialogResult) result = await _currentDeck?.ExportDeck()!;
+
+        return result;
     }
 }

@@ -5,8 +5,8 @@ namespace AnkiDeckEditor.ViewModels;
 
 public abstract class DeckScreenViewModel : ViewModelBase
 {
-    public bool IsCollectionExported = true;
+    public bool IsCollectionExported;
 
     [Obsolete("Obsolete")]
-    public abstract Task ExportDeck();
+    public abstract Task<bool> ExportDeck();
 }

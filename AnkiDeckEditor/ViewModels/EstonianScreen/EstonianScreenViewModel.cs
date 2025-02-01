@@ -152,7 +152,7 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
     }
 
     [Obsolete("Obsolete")]
-    public override async Task ExportDeck()
+    public override async Task<bool> ExportDeck()
     {
         // todo: Various export errors. Show messages.
         // todo: Move strings to resources.
@@ -176,6 +176,7 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
         // todo: no file name actions.
 
         IsCollectionExported = _saveResult;
+        return _saveResult;
     }
 
     private static void ClearFormExecute()

@@ -4,7 +4,7 @@ namespace AnkiDeckEditor.ViewModels;
 
 public class EnglishScreenViewModel : DeckScreenViewModel
 {
-    public override Task ExportDeck()
+    public override Task<bool> ExportDeck()
     {
         throw new System.NotImplementedException();
     }
