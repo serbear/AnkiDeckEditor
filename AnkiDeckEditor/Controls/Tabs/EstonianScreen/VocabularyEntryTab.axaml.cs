@@ -8,6 +8,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Common = AnkiDeckEditor.Libs.Common;
 
 namespace AnkiDeckEditor.Controls.Tabs.EstonianScreen;
 

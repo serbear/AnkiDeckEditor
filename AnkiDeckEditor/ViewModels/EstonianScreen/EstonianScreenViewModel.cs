@@ -133,8 +133,13 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
         ]);
     }
 
-    private static void ExitExecute()
+    [Obsolete("Obsolete")]
+    private async Task ExitExecute()
     {
+        if (IsCollectionExported) return;
+
+        _ = await Services.Common.ExportDeckOnExit(this);
+
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
             lifetime.Shutdown();
     }

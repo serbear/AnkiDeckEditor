@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive;
+using System.Threading.Tasks;
 using AnkiDeckEditor.Enums;
 using AnkiDeckEditor.Models;
 using Avalonia.Controls;
@@ -50,7 +51,7 @@ public partial class EstonianScreenViewModel
     public ReactiveCommand<Unit, Unit> AddListCommand { get; set; }
     public ReactiveCommand<Unit, Unit> ClearFormCommand { get; set; }
     public ReactiveCommand<Unit, Unit> ExportFileCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> ExitCommand { get; set; }
+    public ReactiveCommand<Unit, Task> ExitCommand { get; set; }
     public ReactiveCommand<Control, Unit> PasteCommand { get; set; }
     public ReactiveCommand<Unit, Unit> RemoveListCommand { get; set; }
     public ReactiveCommand<Unit, Unit> ClearCardCollectionCommand { get; set; }

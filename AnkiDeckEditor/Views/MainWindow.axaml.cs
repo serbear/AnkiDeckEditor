@@ -43,29 +43,12 @@ public partial class MainWindow : Window
     [Obsolete("Obsolete")]
     private async void OnWindowClosing(object? sender, CancelEventArgs e)
     {
-        // Do not ask confirmation if the deck is empty.
-        if (!_currentDeck!.IsCollectionEmpty) return;
-
         if (_currentDeck == null || _currentDeck.IsCollectionExported) return;
         e.Cancel = true;
-        var requestResult = await ExportCollectionRequest();
+        var requestResult = await Services.Common.ExportDeckOnExit(_currentDeck);
 
         if (!requestResult) _currentDeck.IsCollectionExported = true;
 
         Close();
-    }
-
-    // todo: принажатии "выход" не спрашивает об экспорте колоды.
-
-
-    [Obsolete("Obsolete")]
-    private async Task<bool> ExportCollectionRequest()
-    {
-        var dialogResult = (bool)(await DialogHost.Show(new ExportCollectionDialog(), PublicConst.MainDialogHost))!;
-        var result = false;
-
-        if (dialogResult) result = await _currentDeck?.ExportDeck()!;
-
-        return result;
     }
 }

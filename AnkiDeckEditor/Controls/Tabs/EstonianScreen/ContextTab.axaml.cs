@@ -11,6 +11,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.VisualTree;
+using Common = AnkiDeckEditor.Libs.Common;
 
 namespace AnkiDeckEditor.Controls.Tabs.EstonianScreen;
 

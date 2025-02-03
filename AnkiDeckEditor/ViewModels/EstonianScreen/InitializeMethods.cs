@@ -53,6 +53,7 @@ public partial class EstonianScreenViewModel
     }
 
 
+    [Obsolete("Obsolete")]
     private void InitializeCommands()
     {
         CopyFieldClipboardCommand = ReactiveCommand.Create<StrategyNames>(CopyDeckFieldClipboardExecute);
