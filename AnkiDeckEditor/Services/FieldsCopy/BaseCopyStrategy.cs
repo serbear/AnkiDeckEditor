@@ -24,6 +24,11 @@ public abstract class BaseCopyStrategy : ICopyStrategy
 
     public virtual string DoCopyValueTuple((string, List<int>) data)
     {
+        // data 1 = the context usage sample text
+        // data 2 = a marked words collection
+
+        if (data.Item1 == null) return string.Empty;
+
         var result = Common.ProcessTuple(data);
 
         result = new StringManipulator(result).FixDotPunctuation().ResultString;
