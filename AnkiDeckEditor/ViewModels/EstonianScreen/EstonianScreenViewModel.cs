@@ -237,6 +237,7 @@ public partial class EstonianScreenViewModel : DeckScreenViewModel
             throw new InvalidOperationException("The collection counter text block not found.");
 
         counterTextBlock.Text = CardCollectionItems.Count.ToString();
+        IsCollectionEmpty = CardCollectionItems.Count > 0;
     }
 
     private void NewEntityExecute()

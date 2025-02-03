@@ -16,6 +16,7 @@ public partial class MainWindow : Window
     private readonly DeckTypeSelectScreen? _deckTypeSelectScreen;
     private DeckScreenViewModel? _currentDeck;
 
+    [Obsolete("Obsolete")]
     public MainWindow()
     {
         InitializeComponent();
@@ -42,6 +43,9 @@ public partial class MainWindow : Window
     [Obsolete("Obsolete")]
     private async void OnWindowClosing(object? sender, CancelEventArgs e)
     {
+        // Do not ask confirmation if the deck is empty.
+        if (!_currentDeck!.IsCollectionEmpty) return;
+
         if (_currentDeck == null || _currentDeck.IsCollectionExported) return;
         e.Cancel = true;
         var requestResult = await ExportCollectionRequest();
@@ -51,7 +55,6 @@ public partial class MainWindow : Window
         Close();
     }
 
-    // todo: для пустой колоды запрос на экспорт не выдавать.
     // todo: принажатии "выход" не спрашивает об экспорте колоды.
 
 
